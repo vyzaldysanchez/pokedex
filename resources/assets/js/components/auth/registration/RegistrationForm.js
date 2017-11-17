@@ -32,6 +32,14 @@ class RegistrationForm extends Component {
               </Cell>
               <Cell size={6}>
                 <TextField
+                  id="city"
+                  label="Your city here!"
+                  lineDirection="left"
+                  className="md-cell--bottom"
+                />
+              </Cell>
+              <Cell size={6}>
+                <TextField
                   id="email"
                   type="email"
                   label="Your email!"
@@ -39,7 +47,7 @@ class RegistrationForm extends Component {
                   className="md-cell--bottom"
                 />
               </Cell>
-              <Cell size={6}>
+              <Cell size={12}>
                 <TextField
                   id="username"
                   label="Your username!"
