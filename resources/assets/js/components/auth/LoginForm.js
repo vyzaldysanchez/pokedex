@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Button } from 'react-md';
+import { Cell, TextField, Button } from 'react-md';
 
 const LoginForm = props => (
   <form>
@@ -15,18 +15,25 @@ const LoginForm = props => (
       lineDirection="right"
       className="md-cell--bottom"
     />
-    <Button raised primary>
-      Enter
-    </Button>
-    <Button
-      raised
-      primary
-      swapTheming
-      className="pull-right"
-      onClick={props.onForgotPassword}
-    >
-      Forgot password?
-    </Button>
+    <Cell size={12}>
+      <Button raised primary>
+        Enter
+      </Button>
+      <Button
+        raised
+        primary
+        swapTheming
+        className="pull-right"
+        onClick={props.onForgotPassword}
+      >
+        Forgot password?
+      </Button>
+    </Cell>
+    <Cell size={6} desktopOffset={3} className="text-center">
+      <p>
+        Has no account yet? <a href="/register">Register</a>
+      </p>
+    </Cell>
   </form>
 );
 
