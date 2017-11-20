@@ -41,3 +41,15 @@ test('Validator must validate password as valid when password confirmation match
   expect(validator.fields.password.displayError).toBeFalsy();
   expect(validator.fields.passwordConfirmation.displayError).toBeFalsy();
 });
+
+test('Validator must validate telepnone numbers when the number is not valid', () => {
+  validator.fields.telephone.validate('asdasdasdsadas');
+
+  expect(validator.fields.telephone.displayError).toBeTruthy();
+});
+
+test('Validator must validate telepnone numbers when the number is valid', () => {
+  validator.fields.telephone.validate('8096810473');
+
+  expect(validator.fields.telephone.displayError).toBeFalsy();
+});
