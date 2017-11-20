@@ -4,8 +4,24 @@ import { Grid, Cell } from 'react-md';
 import LoginForm from './LoginForm';
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      csrfToken: ''
+    };
+  }
+
   sendToForgotPassword() {
     document.location.href = '/password/recover';
+  }
+
+  componentDidMount() {
+    this.setState({
+      csrfToken: document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute('value')
+    });
   }
 
   render() {
@@ -17,7 +33,10 @@ class Login extends Component {
               Enter your pokedex
             </h1>
 
-            <LoginForm onForgotPassword={this.sendToForgotPassword} />
+            <LoginForm
+              csrfToken={this.state.csrfToken}
+              onForgotPassword={this.sendToForgotPassword}
+            />
           </Cell>
         </Grid>
       </div>

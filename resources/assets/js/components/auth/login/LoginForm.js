@@ -2,21 +2,24 @@ import React from 'react';
 import { Cell, TextField, Button } from 'react-md';
 
 const LoginForm = props => (
-  <form>
+  <form method="POST">
+    <input type="hidden" name="_token" value={props.csrfToken} />
     <TextField
       id="username"
+      name="username"
       label="Enter your username."
       lineDirection="right"
       className="md-cell--bottom"
     />
     <TextField
       id="password"
+      name="password"
       label="Type in your password."
       lineDirection="right"
       className="md-cell--bottom"
     />
     <Cell size={12}>
-      <Button raised primary>
+      <Button raised primary type="submit">
         Enter
       </Button>
       <Button
