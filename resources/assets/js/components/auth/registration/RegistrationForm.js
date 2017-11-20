@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Grid, Cell, TextField, Button } from 'react-md';
 import { validator } from './RegistrationFormValidator';
+import * as axios from 'axios';
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -15,10 +16,10 @@ class RegistrationForm extends Component {
       email: '',
       username: '',
       password: '',
-      passwordConfirmation: '',
-      formIsValid: false
+      passwordConfirmation: ''
     };
     this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validate() {
@@ -38,6 +39,10 @@ class RegistrationForm extends Component {
     );
   }
 
+  formIsValid() {
+    return !this.validator.hasErrors();
+  }
+
   handleUserInput(fieldName, value) {
     this.validator.fields[fieldName].validate(value);
     this.setState({ [`${fieldName}`]: value });
@@ -46,6 +51,13 @@ class RegistrationForm extends Component {
   handlePasswordInput(value, valueConfirmation, passwordField = 'password') {
     this.validator.fields[passwordField].validate(value, valueConfirmation);
     this.setState({ [`${passwordField}`]: value });
+  }
+
+  handleSubmit(event) {
+    this.validate();
+    if (!this.formIsValid()) {
+      event.preventDefault();
+    }
   }
 
   render() {
@@ -57,7 +69,7 @@ class RegistrationForm extends Component {
               Create an account
             </h1>
 
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <Cell size={6}>
                 <TextField
                   id="fullName"
@@ -168,7 +180,7 @@ class RegistrationForm extends Component {
                 />
               </Cell>
               <Cell size={12}>
-                <Button raised primary>
+                <Button raised primary type="submit">
                   Create account
                 </Button>
                 <a href="/login" className="pull-right">

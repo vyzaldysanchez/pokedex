@@ -68,5 +68,10 @@ export const validator = {
         validator.fields.password.validate(against, value);
       }
     }
+  },
+  hasErrors() {
+    return Object.keys
+      .call(this, this.fields)
+      .some(field => this.fields[field].displayError);
   }
 };
