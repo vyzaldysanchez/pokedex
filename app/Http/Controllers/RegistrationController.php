@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RegistrationRequest;
 
 class RegistrationController extends Controller
 {
@@ -15,7 +16,10 @@ class RegistrationController extends Controller
     return view('auth.register');
   }
 
-  public function register()
+  public function register(RegistrationRequest $request)
   {
+    $request->validate();
+
+    return redirect('/');
   }
 }
