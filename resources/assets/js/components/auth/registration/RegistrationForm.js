@@ -16,7 +16,8 @@ export class RegistrationForm extends Component {
       email: '',
       username: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      csrfToken: ''
     };
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -67,6 +68,14 @@ export class RegistrationForm extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({
+      csrfToken: document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute('value')
+    });
+  }
+
   render() {
     return (
       <div>
@@ -78,6 +87,11 @@ export class RegistrationForm extends Component {
 
             <form method="POST" onSubmit={this.handleSubmit}>
               <Cell size={6}>
+                <input
+                  type="hidden"
+                  name="_token"
+                  value={this.state.csrfToken}
+                />
                 <TextField
                   id="fullName"
                   name="fullName"
