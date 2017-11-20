@@ -8,7 +8,8 @@ export const validations = {
     let isValid = !this.isEmpty(email);
 
     return isValid && validEmailRegex.test(email);
-  }
+  },
+  isPasswordValid() {}
 };
 
 const baseValidationField = {
@@ -49,9 +50,10 @@ export const validator = {
       error: 'A password must be provided!',
       validate(value, against) {
         let isConfirmed = value === against,
-          isValid = validations.isEmpty(value) && isConfirmed;
+          isNotEmpty = !validations.isEmpty(value),
+          isValid = isNotEmpty && isConfirmed;
 
-        if (!isConfirmed) {
+        if (isNotEmpty && !isConfirmed) {
           this.error = `Your password and it's confirmation must be equals.`;
         }
 
@@ -62,14 +64,7 @@ export const validator = {
       ...baseValidationField,
       error: 'You must confirm your password!',
       validate(value, against) {
-        let isConfirmed = value === against,
-          isValid = validations.isEmpty(value) && isConfirmed;
-
-        if (!isConfirmed) {
-          this.error = `Your password and it's confirmation must be equals.`;
-        }
-
-        this.displayError = !isValid;
+        validator.fields.password.validate.call(this, value, against);
       }
     }
   }
