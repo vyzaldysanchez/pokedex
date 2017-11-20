@@ -31,5 +31,13 @@ test('Validator must validate passwords when password confirmation does not matc
   expect(validator.fields.password.displayError).toBeTruthy();
   expect(validator.fields.password.error).toBe(
     `Your password and it's confirmation must be equals.`
-  );  
+  );
+});
+
+test('Validator must validate password as valid when password confirmation matches', () => {
+  validator.fields.password.validate('password', 'another_password');
+  validator.fields.passwordConfirmation.validate('password', 'password');
+
+  expect(validator.fields.password.displayError).toBeFalsy();
+  expect(validator.fields.passwordConfirmation.displayError).toBeFalsy();
 });

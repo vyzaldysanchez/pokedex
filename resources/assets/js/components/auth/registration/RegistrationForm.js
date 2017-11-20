@@ -27,16 +27,25 @@ class RegistrationForm extends Component {
     this.handleUserInput('city', this.state.city);
     this.handleUserInput('email', this.state.email);
     this.handleUserInput('username', this.state.username);
-    this.handleUserInput('password', this.state.password);
-    this.handleUserInput(
-      'passwordConfirmation',
+    this.handlePasswordInput(
+      this.state.password,
       this.state.passwordConfirmation
+    );
+    this.handlePasswordInput(
+      this.state.passwordConfirmation,
+      this.state.password,
+      'passwordConfirmation'
     );
   }
 
   handleUserInput(fieldName, value) {
     this.validator.fields[fieldName].validate(value);
     this.setState({ [`${fieldName}`]: value });
+  }
+
+  handlePasswordInput(value, valueConfirmation, passwordField = 'password') {
+    this.validator.fields[passwordField].validate(value, valueConfirmation);
+    this.setState({ [`${passwordField}`]: value });
   }
 
   render() {
@@ -129,7 +138,10 @@ class RegistrationForm extends Component {
                   required
                   value={this.state.password}
                   onChange={password =>
-                    this.handleUserInput('password', password)}
+                    this.handlePasswordInput(
+                      password,
+                      this.state.passwordConfirmation
+                    )}
                   error={this.validator.fields.password.displayError}
                   errorText={this.validator.fields.password.error}
                 />
@@ -144,9 +156,10 @@ class RegistrationForm extends Component {
                   required
                   value={this.state.passwordConfirmation}
                   onChange={passwordConfirmation =>
-                    this.handleUserInput(
-                      'passwordConfirmation',
-                      passwordConfirmation
+                    this.handlePasswordInput(
+                      passwordConfirmation,
+                      this.state.password,
+                      'passwordConfirmation'
                     )}
                   error={
                     this.validator.fields.passwordConfirmation.displayError

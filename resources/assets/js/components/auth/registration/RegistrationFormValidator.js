@@ -65,6 +65,7 @@ export const validator = {
       error: 'You must confirm your password!',
       validate(value, against) {
         validator.fields.password.validate.call(this, value, against);
+        validator.fields.password.validate(against, value);
       }
     }
   }
