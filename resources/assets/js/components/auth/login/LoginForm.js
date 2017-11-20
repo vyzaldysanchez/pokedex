@@ -10,6 +10,11 @@ const LoginForm = props => (
       label="Enter your username."
       lineDirection="right"
       className="md-cell--bottom"
+      required
+      value={props.username.value}
+      onChange={username => props.username.onChange(username)}
+      error={props.username.displayError}
+      errorText={props.username.error}
     />
     <TextField
       id="password"
@@ -17,6 +22,11 @@ const LoginForm = props => (
       label="Type in your password."
       lineDirection="right"
       className="md-cell--bottom"
+      required
+      value={props.password.value}
+      onChange={password => props.password.onChange(password)}
+      error={props.password.displayError}
+      errorText={props.password.error}
     />
     <Cell size={12}>
       <Button raised primary type="submit">

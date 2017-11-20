@@ -7,12 +7,9 @@ import {
 export const validator = {
   ...baseValidator,
   fields: {
-    email: {
+    username: {
       ...baseValidationField,
-      error: 'Your email must be valid!',
-      validate(value) {
-        this.displayError = !validations.isValidEmail(value);
-      }
+      error: 'Your must indicate your username!'
     },
     password: {
       ...baseValidationField,
