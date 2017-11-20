@@ -4,7 +4,7 @@ import { Grid, Cell, TextField, Button } from 'react-md';
 import { validator } from './RegistrationFormValidator';
 import * as axios from 'axios';
 
-class RegistrationForm extends Component {
+export class RegistrationForm extends Component {
   constructor(props) {
     super(props);
 
@@ -76,10 +76,11 @@ class RegistrationForm extends Component {
               Create an account
             </h1>
 
-            <form onSubmit={this.handleSubmit}>
+            <form method="POST" onSubmit={this.handleSubmit}>
               <Cell size={6}>
                 <TextField
                   id="fullName"
+                  name="fullName"
                   label="Your full name here!"
                   lineDirection="right"
                   className="md-cell--bottom"
@@ -94,6 +95,7 @@ class RegistrationForm extends Component {
               <Cell size={6}>
                 <TextField
                   id="tel"
+                  name="telephone"
                   type="tel"
                   label="Your telephone here!"
                   lineDirection="left"
@@ -102,7 +104,10 @@ class RegistrationForm extends Component {
                   value={this.telephone}
                   maxLength={14}
                   onChange={telephone =>
-                    this.handleUserInput('telephone', telephone.replace(/\D/g, ''))}
+                    this.handleUserInput(
+                      'telephone',
+                      telephone.replace(/\D/g, '')
+                    )}
                   error={this.validator.fields.telephone.displayError}
                   errorText={this.validator.fields.telephone.error}
                 />
@@ -110,6 +115,7 @@ class RegistrationForm extends Component {
               <Cell size={6}>
                 <TextField
                   id="city"
+                  name="city"
                   label="Your city here!"
                   lineDirection="left"
                   className="md-cell--bottom"
@@ -123,6 +129,7 @@ class RegistrationForm extends Component {
               <Cell size={6}>
                 <TextField
                   id="email"
+                  name="email"
                   type="email"
                   label="Your email!"
                   lineDirection="left"
@@ -137,6 +144,7 @@ class RegistrationForm extends Component {
               <Cell size={12}>
                 <TextField
                   id="username"
+                  name="username"
                   label="Your username!"
                   lineDirection="right"
                   className="md-cell--bottom"
@@ -151,6 +159,7 @@ class RegistrationForm extends Component {
               <Cell size={6}>
                 <TextField
                   id="password"
+                  name="password"
                   type="password"
                   label="Your password here!"
                   lineDirection="left"
@@ -169,6 +178,7 @@ class RegistrationForm extends Component {
               <Cell size={6}>
                 <TextField
                   id="password_confirmation"
+                  name="password_confirmation"
                   type="password"
                   label="Confirm your password here!"
                   lineDirection="left"
