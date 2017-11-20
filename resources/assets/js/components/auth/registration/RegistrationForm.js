@@ -22,6 +22,13 @@ class RegistrationForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  get telephone() {
+    return this.state.telephone.replace(
+      /^(\d{3})(\d{3})(\d{4})$/,
+      '($1) $2-$3'
+    );
+  }
+
   validate() {
     this.handleUserInput('fullName', this.state.fullName);
     this.handleUserInput('telephone', this.state.telephone);
@@ -92,9 +99,10 @@ class RegistrationForm extends Component {
                   lineDirection="left"
                   className="md-cell--bottom"
                   required
-                  value={this.state.telephone}
+                  value={this.telephone}
+                  maxLength={14}
                   onChange={telephone =>
-                    this.handleUserInput('telephone', telephone)}
+                    this.handleUserInput('telephone', telephone.replace(/\D/g, ''))}
                   error={this.validator.fields.telephone.displayError}
                   errorText={this.validator.fields.telephone.error}
                 />
