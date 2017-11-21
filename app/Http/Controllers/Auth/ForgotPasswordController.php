@@ -18,7 +18,7 @@ class ForgotPasswordController extends Controller
 
   public function index()
   {
-    return view('auth.password.recover');
+    return view('auth.passwords.recover');
   }
 
   public function recover(PasswordReminderRequest $request)
