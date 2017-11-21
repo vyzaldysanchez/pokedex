@@ -30,6 +30,38 @@ class Login extends Component {
         }
       }
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  validate() {
+    const username = this.state.username.value,
+      password = this.state.password.value;
+
+    this.validator.fields.username.validate(username);
+    this.validator.fields.password.validate(password);
+
+    this.setState({
+      username: {
+        ...this.state.username,
+        value: username,
+        displayError: this.validator.fields.username.displayError,
+        error: this.validator.fields.username.error
+      },
+      password: {
+        ...this.state.password,
+        value: password,
+        displayError: this.validator.fields.password.displayError,
+        error: this.validator.fields.password.error
+      }
+    });
+  }
+
+  handleSubmit(e) {
+    this.validate();
+
+    if (this.validator.hasErrors()) {
+      e.preventDefault();
+    }
   }
 
   sendToForgotPassword() {
@@ -58,6 +90,7 @@ class Login extends Component {
               username={this.state.username}
               password={this.state.password}
               onForgotPassword={this.sendToForgotPassword}
+              onSubmit={this.handleSubmit}
             />
           </Cell>
         </Grid>

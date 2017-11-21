@@ -2,7 +2,7 @@ import React from 'react';
 import { Cell, TextField, Button } from 'react-md';
 
 const LoginForm = props => (
-  <form method="POST">
+  <form method="POST" onSubmit={props.onSubmit}>
     <input type="hidden" name="_token" value={props.csrfToken} />
     <TextField
       id="username"
