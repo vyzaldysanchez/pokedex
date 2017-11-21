@@ -4,7 +4,7 @@ import { Grid, Cell } from 'react-md';
 import LoginForm from './LoginForm';
 import { validator } from './LoginFormValidator';
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -59,9 +59,13 @@ class Login extends Component {
   handleSubmit(e) {
     this.validate();
 
-    if (this.validator.hasErrors()) {
+    if (!this.formIsValid()) {
       e.preventDefault();
     }
+  }
+
+  formIsValid() {
+    return !this.validator.hasErrors();
   }
 
   sendToForgotPassword() {
