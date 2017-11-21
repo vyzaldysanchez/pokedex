@@ -33,9 +33,8 @@ class User extends Authenticatable
     return $this->hasMany(Pokemon::class);
   }
 
-
   public function sendPasswordResetNotification($token) : void
   {
-    $this->notify(new PasswordResetRequested($token));
+    $this->notify(new PasswordResetRequested($token, $this->email));
   }
 }

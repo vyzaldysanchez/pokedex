@@ -12,9 +12,12 @@ class PasswordResetRequested extends Notification
 
   protected $token;
 
-  public function __construct(string $token)
+  protected $email;
+
+  public function __construct(string $token, string $email)
   {
     $this->token = $token;
+    $this->email = $email;
   }
 
   /**
@@ -39,7 +42,7 @@ class PasswordResetRequested extends Notification
     return (new MailMessage)
       ->line('You are receiving this email because you requested to change your password.')
       ->line('In case you are not the one who requested this, ignore this message, otherwise:')
-      ->action('Reset your password here!', url('/password/reset/' . $this->token))
+      ->action('Reset your password here!', url('/password/reset/' . $this->token . '/?email=' . $this->email))
       ->line('Thank you for using your Pokedex!');
   }
 
@@ -52,7 +55,8 @@ class PasswordResetRequested extends Notification
   public function toArray($notifiable)
   {
     return [
-      'token' => $this->token
+      'token' => $this->token,
+      'email' => $this->email
     ];
   }
 }
