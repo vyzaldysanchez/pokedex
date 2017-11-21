@@ -7,6 +7,8 @@
 		<div class="alert alert-success">
 			{{session( 'status' )}}
 		</div>
+    <a href="/" class="text-center">Homepage</a>
+
 		@else
 		<h1>Recover your password</h1>
 
