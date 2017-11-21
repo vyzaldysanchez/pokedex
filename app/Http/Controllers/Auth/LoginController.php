@@ -22,8 +22,10 @@ class LoginController extends Controller
   public function login(LoginRequest $request)
   {
     $request->validate();
+    $username = $request->get('username');
+    $password = $request->get('password');
 
-    if (\Auth::attempt($request->all())) {
+    if (\Auth::attempt(compact('username', 'password'))) {
       return redirect('/');
     }
   }
