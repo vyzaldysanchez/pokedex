@@ -19,6 +19,7 @@ const LoginForm = props => (
     <TextField
       id="password"
       name="password"
+      type="password"
       label="Type in your password."
       lineDirection="right"
       className="md-cell--bottom"
