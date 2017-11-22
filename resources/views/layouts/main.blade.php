@@ -3,8 +3,10 @@
     @include ('partials.head')
 
     <body>
-          @yield ('content')
+        <div class="container">
+            @yield ('content')
 
-          @include ('partials.footer')
+            @include ('partials.footer')
+        </div>
     </body>
 </html>
