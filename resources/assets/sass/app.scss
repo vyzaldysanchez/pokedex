@@ -1,9 +1,17 @@
-
 // Fonts
 @import "fonts";
 
 // Variables
-@import "variables";
+@import 'variables';
+
+//React Material Design
+@import '~react-md/src/scss/react-md';
+@include react-md-everything;
+
+//Components bundle
+@import 'generals/_generals';
+@import 'pages/pages';
+@import 'components/bundle';
 
 //React Material Design
 @import  "~react-md/src/scss/react-md";
