@@ -2,7 +2,7 @@ import {
   validations,
   baseValidationField,
   baseValidator
-} from './../../../utils/base-validator';
+} from '@pokedex/assets/js/utils/base-validator';
 
 export const validator = {
   ...baseValidator,
