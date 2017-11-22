@@ -28,7 +28,7 @@ class RegistrationRequest extends FormRequest
       'city' => 'required',
       'email' => 'required|email|unique:users,email',
       'username' => 'required|unique:users,username',
-      'password' => 'required|confirmed'
+      'password' => 'required|min:6|confirmed'
     ];
   }
 }
