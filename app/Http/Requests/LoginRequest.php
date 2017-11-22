@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use \Illuminate\Validation\Rule;
+use \Illuminate\Database\Query\Builder;
+use \App\Rules\IsCredentialIdentifier;
 
 class LoginRequest extends FormRequest
 {
@@ -24,8 +27,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-          'username' => 'required|exists:users',
-          'password'=> 'required'    
+            'identifier' => ['required', new IsCredentialIdentifier],
+            'password'=> 'required'
         ];
     }
 }

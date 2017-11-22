@@ -7,33 +7,35 @@ use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
-  protected $redirectTo = '/';
+    protected $redirectTo = '/';
 
-  public function __construct()
-  {
-    $this->middleware('guest')->except('logout');
-  }
-
-  public function index()
-  {
-    return view('auth.login');
-  }
-
-  public function login(LoginRequest $request)
-  {
-    $request->validate();
-    $username = $request->get('username');
-    $password = $request->get('password');
-
-    if (\Auth::attempt(compact('username', 'password'))) {
-      return redirect('/');
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
     }
-  }
 
-  public function logout()
-  {
-    \Auth::logout();
+    public function index()
+    {
+        return view('auth.login');
+    }
 
-    return redirect('/login');
-  }
+    public function login(LoginRequest $request)
+    {
+        $request->validate();
+        
+        $username = $request->get('identifier');
+        $password = $request->get('password');
+        $usernameFieldName = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (\Auth::attempt(compact('password') + [$usernameFieldName => $username])) {
+            return redirect('/');
+        }
+    }
+
+    public function logout()
+    {
+        \Auth::logout();
+
+        return redirect('/login');
+    }
 }
