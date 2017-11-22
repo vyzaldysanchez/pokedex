@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\PasswordResetRequest;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -27,12 +29,26 @@ class ResetPasswordController extends Controller
     $this->middleware('guest');
   }
 
-  protected function rules() : array
+  public function reset(PasswordResetRequest $request)
+  {
+    $request->validate();
+
+    $response = $this->broker()->reset(
+      $this->credentials($request),
+      function ($user, $password) {
+        $this->resetPassword($user, $password);
+      }
+    );
+
+    return $response == Password::PASSWORD_RESET
+      ? $this->sendResetResponse($response)
+      : $this->sendResetFailedResponse($request, $response);
+  }
+
+  protected function validationErrorMessages() : array
   {
     return [
-      'token' => 'required',
-      'email' => 'required|email|exists:users',
-      'password' => 'required|confirmed|min:6',
+      'password.unique' => 'Can\'t set previous password as new one!'
     ];
   }
 }
