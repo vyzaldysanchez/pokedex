@@ -7,31 +7,33 @@ use App\User;
 
 class RegistrationController extends Controller
 {
-  public function __construct()
-  {
-    $this->middleware('guest');
-  }
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
 
-  public function index()
-  {
-    return view('auth.register');
-  }
+    public function index()
+    {
+        return view('auth.register');
+    }
 
-  public function register(RegistrationRequest $request)
-  {
-    $request->validate();
+    public function register(RegistrationRequest $request)
+    {
+        $request->validate();
 
-    $user = User::create([
-      'username' => $request->get('username'),
-      'full_name' => $request->get('fullName'),
-      'telephone' => $request->get('telephone'),
-      'city' => $request->get('city'),
-      'email' => $request->get('email'),
-      'password' => \Hash::make($request->get('password')),
-    ]);
+        $user = User::create(
+            [
+            'username' => $request->get('username'),
+            'full_name' => $request->get('fullName'),
+            'telephone' => $request->get('telephone'),
+            'city' => $request->get('city'),
+            'email' => $request->get('email'),
+            'password' => \Hash::make($request->get('password')),
+            ]
+        );
 
-    \Auth::login($user);
+        \Auth::login($user);
 
-    return redirect('/');
-  }
+        return redirect('/');
+    }
 }
