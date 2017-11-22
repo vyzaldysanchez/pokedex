@@ -12,11 +12,18 @@ class RegistrationController extends Controller
         $this->middleware('guest');
     }
 
+    /**
+     * @return void
+     */
     public function index()
     {
         return view('auth.register');
     }
 
+    /**
+     * @param RegistrationRequest $request
+     * @return void
+     */
     public function register(RegistrationRequest $request)
     {
         $request->validate();
