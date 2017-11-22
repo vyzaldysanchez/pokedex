@@ -60,7 +60,7 @@
             }
 
             .m-b-md {
-                margin-bottohttps://fonts.googleapis.com/css?family=Raleway:300,400,600m: 30px;
+                margin-bottom: 30px;
             }
         </style>
     </head>
