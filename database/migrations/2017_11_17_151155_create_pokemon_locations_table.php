@@ -13,12 +13,16 @@ class CreatePokemonLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pokemon_locations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->float('latitude', 10, 6);
-            $table->float('longitude', 10, 6);
-            $table->timestamps();
-        });
+        Schema::create(
+            'pokemon_locations', 
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->float('latitude', 10, 6);
+                $table->float('longitude', 10, 6);
+                $table->timestamps();
+                $table->softDeletes();
+            }
+        );
     }
 
     /**
