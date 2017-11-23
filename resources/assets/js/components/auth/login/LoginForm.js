@@ -1,6 +1,10 @@
 import React from 'react';
 import { Cell, TextField, Button } from 'react-md';
-import { TWELVE_COLUMNS, SIX_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
+import {
+	TWELVE_COLUMNS,
+	SIX_COLUMNS,
+	THREE_COLUMNS
+} from '@pokedex/assets/js/utils/ui-columns';
 
 const LoginForm = props => (
 	<form method="POST" onSubmit={props.onSubmit}>
