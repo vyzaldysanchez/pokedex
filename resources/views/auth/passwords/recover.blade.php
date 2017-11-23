@@ -7,6 +7,9 @@
 		<div class="alert alert-success">
 			{{session( 'status' )}}
 		</div>
+        
+        <a href="/" class="text-center">Homepage</a>
+
 		@else
 		<h1>Recover your password</h1>
 
@@ -20,7 +23,7 @@
 
 			<div class="form-group">
 				<button class="btn btn-primary">Recover</button>
-        <a href="/" class="btn pull-right">Home</a>
+                <a href="/" class="btn pull-right">Home</a>
 			</div>
 		</form>
 
