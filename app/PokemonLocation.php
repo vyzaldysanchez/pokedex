@@ -2,8 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class PokemonLocation
+ * @package App
+ */
 class PokemonLocation extends Model
 {
     use SoftDeletes;
