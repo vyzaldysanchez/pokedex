@@ -1,7 +1,6 @@
 <?php
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationRequest;
 use App\User;
@@ -13,11 +12,18 @@ class RegistrationController extends Controller
         $this->middleware('guest');
     }
 
+    /**
+     * @return void
+     */
     public function index()
     {
         return view('auth.register');
     }
 
+    /**
+     * @param RegistrationRequest $request
+     * @return void
+     */
     public function register(RegistrationRequest $request)
     {
         $request->validate();
@@ -29,7 +35,7 @@ class RegistrationController extends Controller
             'telephone' => $request->get('telephone'),
             'city' => $request->get('city'),
             'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password')),
+            'password' => \Hash::make($request->get('password')),
             ]
         );
 
