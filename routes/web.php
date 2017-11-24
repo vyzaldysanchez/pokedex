@@ -1,7 +1,7 @@
 <?php
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->name('home');
     Route::redirect('/home', '/');
 });
 
