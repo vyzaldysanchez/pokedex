@@ -5,6 +5,7 @@ import {
 	NINE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
+import { PokedexSearch } from './PokedexSearch';
 
 export class PokedexBody extends Component {
 	render() {
@@ -17,7 +18,9 @@ export class PokedexBody extends Component {
 				style={{ marginTop: height }}
 			>
 				<Cell size={NINE_COLUMNS}>List</Cell>
-				<Cell size={THREE_COLUMNS}>Header</Cell>
+				<Cell size={THREE_COLUMNS}>
+					<PokedexSearch />
+				</Cell>
 			</Grid>
 		);
 	}
