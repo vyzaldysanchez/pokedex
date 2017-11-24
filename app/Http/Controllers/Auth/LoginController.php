@@ -25,6 +25,10 @@ class LoginController extends Controller
         if (\Auth::attempt(compact('password') + [$usernameFieldName => $username])) {
             return redirect('/');
         }
+
+        \Session::flash('error', 'Wrong username password combination.');
+
+        return back();
     }
 
     public function logout()
