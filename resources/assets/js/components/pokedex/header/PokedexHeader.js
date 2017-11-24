@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Toolbar } from 'react-md';
 import PokedexNav from './PokedexNav';
-import PokedexAccountBox from './account-box/PokedexAccountBox';
+import PokedexAccountBox from '@pokedex/assets/js/components/pokedex/account-box/PokedexAccountBox';
 import { styles } from './styles-vars';
 
 export class PokedexHeader extends Component {
