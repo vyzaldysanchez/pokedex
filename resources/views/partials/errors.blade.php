@@ -6,4 +6,10 @@
 		@endforeach
 	</ul>
 </div>
+@elseif (Session::has('error'))
+<div class="alert alert-danger">
+	<ul>
+		<li>{{ session('error') }}</li>
+	</ul>
+</div>
 @endif
