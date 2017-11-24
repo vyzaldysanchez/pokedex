@@ -3,6 +3,10 @@
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
     Route::redirect('/home', '/');
+
+    Route::prefix('api')->group(function () {
+        Route::resource('/user', 'Auth\SessionsController');
+    });
 });
 
 Route::middleware(['guest'])->group(function () {
