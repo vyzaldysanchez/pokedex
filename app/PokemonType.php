@@ -14,4 +14,13 @@ class PokemonType extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'color' => $this->color
+        ];
+    }
 }
