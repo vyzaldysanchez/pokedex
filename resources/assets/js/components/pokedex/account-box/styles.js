@@ -1,4 +1,4 @@
-import { styles } from '@pokedex/assets/js/components/pokedex/styles-vars';
+import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
 
 export default {
 	position: 'absolute',

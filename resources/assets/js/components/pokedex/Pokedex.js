@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { PokedexHeader } from './PokedexHeader';
+import { PokedexHeader } from './header/PokedexHeader';
+import { PokedexBody } from './body/PokedexBody';
 
-export class Pokedex extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		return <PokedexHeader />;
-	}
-}
+export const Pokedex = () => (
+	<div>
+		<PokedexHeader />
+		<PokedexBody />
+	</div>
+);
 
 const pokedexContainer = document.getElementById('pokedex-box');
 
