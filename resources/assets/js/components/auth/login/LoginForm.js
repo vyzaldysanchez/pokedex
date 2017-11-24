@@ -11,8 +11,8 @@ const LoginForm = props => (
 		<input type="hidden" name="_token" value={props.csrfToken} />
 		<TextField
 			id="username"
-			name="username"
-			label="Enter your username."
+			name="identifier"
+			label="Enter your username or email."
 			lineDirection="right"
 			className="md-cell--bottom"
 			required

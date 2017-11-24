@@ -21,6 +21,10 @@
 			margin: 0;
 		}
 
+        body > .container {
+            height: 100%;
+        }
+
 		.full-height {
 			height: 100vh;
 		}
