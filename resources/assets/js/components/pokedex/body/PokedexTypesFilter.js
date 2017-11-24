@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
 import { Chip } from 'react-md';
 
 export class PokedexTypesFilter extends Component {
@@ -30,11 +30,7 @@ export class PokedexTypesFilter extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/pokemons/types').then(({ data }) => {
-			this.setState({
-				types: data || []
-			});
-		});
+		pokemonTypes.getAll().then(types => this.setState({ types }));
 	}
 
 	render() {
