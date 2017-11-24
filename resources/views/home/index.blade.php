@@ -1,9 +1,7 @@
-@extends ('layouts.main')
+@extends ('layouts.pokedex')
 
 @section('content') 
     @include ('partials.notification')
 
-    <div class="login-container">
-        <div id="pokedex-login"></div>
-    </div>
+    <div id="pokedex-box"></div>
 @endsection
