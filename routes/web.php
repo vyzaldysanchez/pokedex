@@ -6,6 +6,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('api')->group(function () {
         Route::resource('/user', 'Auth\SessionsController');
+
+        Route::resource('/pokemons/types', 'PokemonTypesController');
     });
 });
 
