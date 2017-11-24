@@ -7,7 +7,6 @@ import {
 	CardActions,
 	CardTitle,
 	CardText,
-	Cell,
 	Collapse,
 	Divider,
 	FontIcon,
@@ -39,21 +38,23 @@ const PokedexAccountBox = props => {
 						<small>@username</small>
 					</CardText>
 					<CardActions>
-						<Cell size={FIVE_COLUMNS}>
+						<div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 no-side-padding">
 							<Button
 								raised
 								primary
+								className="center-block"
 								iconEl={<FontIcon>settings</FontIcon>}
 								children="Edit"
 							/>
-						</Cell>
-						<Cell size={SIX_COLUMNS}>
+						</div>
+						<div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 no-side-padding">
 							<Button
 								flat
+								className="center-block"
 								iconEl={<FontIcon>exit_to_app</FontIcon>}
 								children="Logout"
 							/>
-						</Cell>
+						</div>
 					</CardActions>
 				</Card>
 			</div>
