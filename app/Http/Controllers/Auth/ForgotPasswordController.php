@@ -7,24 +7,19 @@ use App\Http\Requests\PasswordReminderRequest;
 
 class ForgotPasswordController extends Controller
 {
-  use SendsPasswordResetEmails;
+    use SendsPasswordResetEmails;
 
-  protected $redirectTo = '/login';
+    protected $redirectTo = '/login';
 
-  public function __construct()
-  {
-    $this->middleware('guest');
-  }
+    public function index()
+    {
+        return view('auth.passwords.recover');
+    }
 
-  public function index()
-  {
-    return view('auth.passwords.recover');
-  }
+    public function recover(PasswordReminderRequest $request)
+    {
+        $request->validate();
 
-  public function recover(PasswordReminderRequest $request)
-  {
-    $request->validate();
-
-    return $this->sendResetLinkEmail($request);
-  }
+        return $this->sendResetLinkEmail($request);
+    }
 }

@@ -10,45 +10,30 @@ use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
-  use ResetsPasswords;
+    use ResetsPasswords;
 
-  /**
-   * Where to redirect users after resetting their password.
-   *
-   * @var string
-   */
-  protected $redirectTo = '/';
+    protected $redirectTo = '/';
 
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
-  public function __construct()
-  {
-    $this->middleware('guest');
-  }
+    public function reset(PasswordResetRequest $request)
+    {
+        $request->validate();
 
-  public function reset(PasswordResetRequest $request)
-  {
-    $request->validate();
+        $response = $this->broker()->reset(
+            $this->credentials($request),
+            function ($user, $password) {
+                $this->resetPassword($user, $password);
+            }
+        );
 
-    $response = $this->broker()->reset(
-      $this->credentials($request),
-      function ($user, $password) {
-        $this->resetPassword($user, $password);
-      }
-    );
+        return $response == Password::PASSWORD_RESET
+        ? $this->sendResetResponse($response)
+        : $this->sendResetFailedResponse($request, $response);
+    }
 
-    return $response == Password::PASSWORD_RESET
-      ? $this->sendResetResponse($response)
-      : $this->sendResetFailedResponse($request, $response);
-  }
-
-  protected function validationErrorMessages() : array
-  {
-    return [
-      'password.unique' => 'Can\'t set previous password as new one!'
-    ];
-  }
+    protected function validationErrorMessages() : array
+    {
+        return [
+            'password.unique' => 'Can\'t set previous password as new one!'
+        ];
+    }
 }
