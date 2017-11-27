@@ -54,6 +54,7 @@ const PokedexAccountBox = props => {
 								className="center-block"
 								iconEl={<FontIcon>exit_to_app</FontIcon>}
 								children="Logout"
+								onClick={() => (window.location = '/logout')}
 							/>
 						</div>
 					</CardActions>
