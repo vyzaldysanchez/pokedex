@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropsTypes from 'prop-types';
 import { Toolbar } from 'react-md';
 import PokedexNav from './PokedexNav';
 import PokedexAccountBox from '@pokedex/assets/js/components/pokedex/account-box/PokedexAccountBox';
@@ -8,8 +9,14 @@ export class PokedexHeader extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { accountBoxCollapsed: true };
+		this.state = { accountBoxCollapsed: true, user: {} };
 		this.toggleAccountBox = this.toggleAccountBox.bind(this);
+    }
+
+	componentDidMount() {
+		axios
+			.get('/api/user')
+			.then(({ data }) => this.setState({ user: data }));
 	}
 
 	toggleAccountBox() {
@@ -33,7 +40,7 @@ export class PokedexHeader extends Component {
 						/>
 					}
 				/>
-				<PokedexAccountBox collapsed={this.state.accountBoxCollapsed} />
+				<PokedexAccountBox collapsed={this.state.accountBoxCollapsed} user={this.state.user} />
 			</div>
 		);
 	}

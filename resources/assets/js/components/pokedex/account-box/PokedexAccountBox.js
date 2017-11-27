@@ -33,9 +33,10 @@ const PokedexAccountBox = props => {
 						/>
 					</Grid>
 					<Divider />
-					<CardText>
-						<h4>Full name</h4>
-						<small>@username</small>
+					<CardText className="text-center">
+						<h4>{props.user.fullName}</h4>
+                        <h6>Since: {props.user.memberSince}</h6>
+						<small>@{props.user.username}</small>
 					</CardText>
 					<CardActions>
 						<div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 no-side-padding">
@@ -53,6 +54,7 @@ const PokedexAccountBox = props => {
 								className="center-block"
 								iconEl={<FontIcon>exit_to_app</FontIcon>}
 								children="Logout"
+								onClick={() => (window.location = '/logout')}
 							/>
 						</div>
 					</CardActions>
@@ -63,7 +65,8 @@ const PokedexAccountBox = props => {
 };
 
 PokedexAccountBox.propTypes = {
-	collapsed: PropTypes.bool
+    collapsed: PropTypes.bool,
+    user: PropTypes.object
 };
 
 export default PokedexAccountBox;
