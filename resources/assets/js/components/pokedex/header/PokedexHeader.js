@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropsTypes from 'prop-types';
-import { Toolbar } from 'react-md';
+import { Button, Toolbar } from 'react-md';
 import PokedexNav from './PokedexNav';
 import PokedexAccountBox from '@pokedex/assets/js/components/pokedex/account-box/PokedexAccountBox';
 import { styles } from './styles-vars';
@@ -10,8 +10,10 @@ export class PokedexHeader extends Component {
 		super(props);
 
 		this.state = { accountBoxCollapsed: true, user: {} };
-        this.toggleAccountBox = this.toggleAccountBox.bind(this);
-        this.sendToAccountEdit = this.sendToAccountEdit.bind(this);
+		this.toggleAccountBox = this.toggleAccountBox.bind(this);
+		this.sendToAccountEdit = this.sendToAccountEdit.bind(this);
+        this.sendToHome = this.sendToHome.bind(this);
+        this.renderHomeButton = this.renderHomeButton.bind(this);
 	}
 
 	componentDidMount() {
@@ -25,8 +27,21 @@ export class PokedexHeader extends Component {
 	}
 
 	sendToAccountEdit() {
-        this.setState({ accountBoxCollapsed: true });
-        this.props.sendToAccountEdit();
+		this.setState({ accountBoxCollapsed: true });
+		this.props.sendToAccountEdit();
+	}
+
+	sendToHome() {
+		this.setState({ accountBoxCollapsed: true });
+		this.props.sendToHome();
+	}
+
+	renderHomeButton() {
+		return (
+			<Button icon primary onClick={this.sendToHome}>
+				home
+			</Button>
+		);
 	}
 
 	render() {
@@ -39,6 +54,7 @@ export class PokedexHeader extends Component {
 					title="Pokedex"
 					titleStyle={{ fontWeight: 900 }}
 					style={{ ...styles }}
+					nav={this.renderHomeButton()}
 					actions={
 						<PokedexNav
 							className="md-paper--2"

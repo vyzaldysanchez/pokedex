@@ -10,6 +10,7 @@ export const Pokedex = () => (
 			render={props => (
 				<div>
 					<PokedexHeader
+						sendToHome={() => props.history.push('/')}
 						sendToAccountEdit={() =>
 							props.history.push('/account/edit')
 						}
