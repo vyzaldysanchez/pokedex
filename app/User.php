@@ -35,4 +35,17 @@ class User extends Authenticatable
     {
         $this->notify(new PasswordResetRequested($token, $this->email));
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'fullName' => $this->full_name,
+            'city' => $this->city,
+            'telephone' => $this->telephone,
+            'email' => $this->email,
+            'username' => $this->username,
+            'memberSince' => $this->created_at->toFormattedDateString()
+        ];
+    }
 }
