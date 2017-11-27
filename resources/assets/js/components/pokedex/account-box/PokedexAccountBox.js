@@ -33,8 +33,9 @@ const PokedexAccountBox = props => {
 						/>
 					</Grid>
 					<Divider />
-					<CardText>
+					<CardText className="text-center">
 						<h4>{props.user.fullName}</h4>
+                        <h6>Since: {props.user.memberSince}</h6>
 						<small>@{props.user.username}</small>
 					</CardText>
 					<CardActions>
