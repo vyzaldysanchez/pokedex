@@ -10,8 +10,9 @@ export class PokedexHeader extends Component {
 		super(props);
 
 		this.state = { accountBoxCollapsed: true, user: {} };
-		this.toggleAccountBox = this.toggleAccountBox.bind(this);
-    }
+        this.toggleAccountBox = this.toggleAccountBox.bind(this);
+        this.sendToAccountEdit = this.sendToAccountEdit.bind(this);
+	}
 
 	componentDidMount() {
 		axios
@@ -21,6 +22,11 @@ export class PokedexHeader extends Component {
 
 	toggleAccountBox() {
 		this.setState({ accountBoxCollapsed: !this.state.accountBoxCollapsed });
+	}
+
+	sendToAccountEdit() {
+        this.setState({ accountBoxCollapsed: true });
+        this.props.sendToAccountEdit();
 	}
 
 	render() {
@@ -40,7 +46,11 @@ export class PokedexHeader extends Component {
 						/>
 					}
 				/>
-				<PokedexAccountBox collapsed={this.state.accountBoxCollapsed} user={this.state.user} />
+				<PokedexAccountBox
+					collapsed={this.state.accountBoxCollapsed}
+					user={this.state.user}
+					onSendToAccountEdit={this.sendToAccountEdit}
+				/>
 			</div>
 		);
 	}
