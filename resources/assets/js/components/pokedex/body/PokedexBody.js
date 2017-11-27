@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Cell, Grid } from 'react-md';
+import axios from 'axios';
 import {
 	THREE_COLUMNS,
 	NINE_COLUMNS
