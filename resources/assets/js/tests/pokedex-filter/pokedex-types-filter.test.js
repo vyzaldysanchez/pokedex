@@ -22,7 +22,7 @@ describe('<PokemonTypesFilter />', () => {
 		component.setState({
 			types: [
 				{ id: 1, name: 'fire', color: 'red' },
-				{ id: 1, name: 'water', color: 'blue' }
+				{ id: 2, name: 'water', color: 'blue' }
 			]
 		});
 
