@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropsTypes from 'prop-types';
 import { Button, Toolbar } from 'react-md';
 import PokedexNav from './PokedexNav';
 import PokedexAccountBox from '@pokedex/assets/js/components/pokedex/account-box/PokedexAccountBox';
 import { styles } from './styles-vars';
+import { LOAD_USER } from '../actions';
 
-export class PokedexHeader extends Component {
+class PokedexHeader extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { accountBoxCollapsed: true, user: {} };
+		this.state = { accountBoxCollapsed: true };
 		this.toggleAccountBox = this.toggleAccountBox.bind(this);
 		this.sendToAccountEdit = this.sendToAccountEdit.bind(this);
-        this.sendToHome = this.sendToHome.bind(this);
+		this.sendToHome = this.sendToHome.bind(this);
         this.renderHomeButton = this.renderHomeButton.bind(this);
+        this.renderNav = this.renderNav.bind(this);
 	}
 
 	componentDidMount() {
 		axios
 			.get('/api/user')
-			.then(({ data }) => this.setState({ user: data }));
+			.then(({ data }) =>
+				this.props.dispatch({ type: LOAD_USER, payload: data })
+			);
 	}
 
 	toggleAccountBox() {
@@ -44,6 +49,15 @@ export class PokedexHeader extends Component {
 		);
 	}
 
+	renderNav() {
+		return (
+			<PokedexNav
+				className="md-paper--2"
+				onClick={this.toggleAccountBox}
+			/>
+		);
+	}
+
 	render() {
 		return (
 			<div className="pokedex-header">
@@ -55,19 +69,20 @@ export class PokedexHeader extends Component {
 					titleStyle={{ fontWeight: 900 }}
 					style={{ ...styles }}
 					nav={this.renderHomeButton()}
-					actions={
-						<PokedexNav
-							className="md-paper--2"
-							onClick={this.toggleAccountBox}
-						/>
-					}
+					actions={this.renderNav()}
 				/>
 				<PokedexAccountBox
 					collapsed={this.state.accountBoxCollapsed}
-					user={this.state.user}
+					user={this.props.user}
 					onSendToAccountEdit={this.sendToAccountEdit}
 				/>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	return { user: state.user || {} };
+};
+
+export default connect(mapStateToProps)(PokedexHeader);
