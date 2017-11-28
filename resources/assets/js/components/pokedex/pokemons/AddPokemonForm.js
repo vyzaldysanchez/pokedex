@@ -16,9 +16,9 @@ import {
 
 const renderPokemonTypeSelection = (type, index) => (
 	<SelectionControl
-		id={`types-checkbox-${index}`}
+		id={`pokemon-types-checkbox-${index}`}
 		key={index}
-		name="pokemon_type_ids"
+		name="pokemon_types_ids"
 		type="checkbox"
 		label={type.name}
 		checkedCheckboxIcon={
@@ -32,7 +32,7 @@ const AddPokemonForm = props => (
 	<form className="add-pokemon-form" onSubmit={props.onSubmit}>
 		<input type="hidden" name="_token" value={props.csrfToken} />
 
-		<TextField name="name" label="The pokemon name here" required />
+		<TextField name="name" id="pokemon-name" label="The pokemon name here" required />
 
 		<Cell size={TWELVE_COLUMNS}>
 			<label style={{ display: 'block' }}>
@@ -44,6 +44,7 @@ const AddPokemonForm = props => (
 		<Cell size={SIX_COLUMNS}>
 			<TextField
 				name="age"
+                id="pokemon-age"
 				label="The pokemon age in years"
 				type="number"
 				min={props.numberMin}
@@ -54,6 +55,7 @@ const AddPokemonForm = props => (
 		<Cell size={SIX_COLUMNS}>
 			<TextField
 				name="pounds"
+                id="pokemon-pounds"
 				label="The pokemon pounds"
 				type="number"
 				min={props.numberMin}
@@ -62,7 +64,7 @@ const AddPokemonForm = props => (
 		</Cell>
 
 		<SelectionControl
-			id="captured-checkbox"
+			id="pokemon-captured-checkbox"
 			name="captured"
 			type="checkbox"
 			label="Captured?"
@@ -71,7 +73,7 @@ const AddPokemonForm = props => (
 		/>
 
 		<SelectionControl
-			id="public-checkbox"
+			id="pokemon-is-public-checkbox"
 			name="public"
 			type="checkbox"
 			label="Public?"
@@ -85,7 +87,7 @@ const AddPokemonForm = props => (
 				label="Choose an image"
 				required
 				accept="image/*"
-				name="file"
+				name="image"
 				className="file-inputs__upload-form__file-upload"
 				primary
 				iconBefore
@@ -93,7 +95,7 @@ const AddPokemonForm = props => (
 			/>
 
 			<TextField
-				id="server-upload-file-field"
+				id="pokemon-image-name-field"
 				placeholder="No image selected"
 				value={props.fileName}
 				className="file-inputs__upload-form__file-field"
@@ -102,7 +104,7 @@ const AddPokemonForm = props => (
 			/>
 		</Cell>
 
-		<TextField label="Provide a description" rows={FIVE_COLUMNS} />
+		<TextField label="Provide a description" id="pokemon-description" name="description" rows={FIVE_COLUMNS} />
 
 		<Button flat secondary swapTheming>
 			Add To Pokedex
