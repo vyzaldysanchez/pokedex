@@ -48,12 +48,13 @@ class AddPokemon extends Component {
 		const typeSelectedIndex = typesIds.indexOf(id);
 
 		if (typeSelectedIndex > -1) {
-			typesIds = pokemonTypes.removeTypeFromCollection();
+			typesIds = pokemonTypes.removeTypeFromCollection(
+				typeSelectedIndex,
+				typesIds
+			);
 		} else {
 			typesIds.push(id);
 		}
-
-		const pokemon = { ...this.state.pokemon, typesIds };
 
 		this.setState({ pokemon: { ...this.state.pokemon, typesIds } });
 	}
