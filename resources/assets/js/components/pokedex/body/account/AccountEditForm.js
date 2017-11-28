@@ -4,11 +4,7 @@ import { Button, TextField } from 'react-md';
 import commonFormatter from '@pokedex/assets/js/utils/common-formatter';
 
 const AccountEditForm = props => (
-	<form
-		action={`/users/${props.userId}/edit/`}
-		method="post"
-		onSubmit={props.onSubmit}
-	>
+	<form action="/users/edit/" method="post" onSubmit={props.onSubmit}>
 		<input type="hidden" name="_method" value="put" />
 		<input type="hidden" name="_token" value={props.csrfToken} />
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Requests\RegistrationUpdateRequest;
 use App\User;
 
 class RegistrationController extends Controller
@@ -31,5 +32,16 @@ class RegistrationController extends Controller
         \Auth::login($user);
 
         return redirect('/');
+    }
+
+    public function update(RegistrationUpdateRequest $request)
+    {
+        $validFields = $request->validate();
+
+        \Auth::user()->update($validFields);
+
+        \Session::flash('status', 'Your information has been successfully updated.');
+
+        return redirect('/account/edit');
     }
 }
