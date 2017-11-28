@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
 import { Chip } from 'react-md';
+import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
+import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
+import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
 
-export class PokedexTypesFilter extends Component {
+class PokedexTypesFilter extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			types: []
-		};
 
 		this.renderChip = this.renderChip.bind(this);
 	}
@@ -30,13 +29,18 @@ export class PokedexTypesFilter extends Component {
 	}
 
 	componentDidMount() {
-		pokemonTypes.getAll().then(types => this.setState({ types }));
+		pokemonTypes.getAll().then(types =>
+			this.props.dispatch({
+				type: LOAD_POKEMON_TYPES,
+				payload: types
+			})
+		);
 	}
 
 	render() {
 		return (
 			<div className="pokedex-search-filter" style={{ marginTop: 10 }}>
-				{this.state.types.map(this.renderChip)}
+				{this.props.pokemonTypes.map(this.renderChip)}
 			</div>
 		);
 	}
@@ -45,3 +49,7 @@ export class PokedexTypesFilter extends Component {
 PokedexTypesFilter.propTypes = {
 	onTypeSelected: PropTypes.func
 };
+
+export default connect(withPokemonTypesMapper.mapStateToProps)(
+	PokedexTypesFilter
+);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontIcon, TextField } from 'react-md';
 import axios from 'axios';
-import { PokedexTypesFilter } from './PokedexTypesFilter';
+import PokedexTypesFilter from './PokedexTypesFilter';
 
 export class PokedexSearch extends Component {
 	constructor(props) {
