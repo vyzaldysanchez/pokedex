@@ -10,8 +10,8 @@ import {
 } from 'react-md';
 import {
 	SIX_COLUMNS,
-	TWELVE_COLUMNS,
-	FIVE_COLUMNS
+	FIVE_COLUMNS,
+	TWELVE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 
 const renderPokemonTypeSelection = (type, index) => (
@@ -32,7 +32,12 @@ const AddPokemonForm = props => (
 	<form className="add-pokemon-form" onSubmit={props.onSubmit}>
 		<input type="hidden" name="_token" value={props.csrfToken} />
 
-		<TextField name="name" id="pokemon-name" label="The pokemon name here" required />
+		<TextField
+			name="name"
+			id="pokemon-name"
+			label="The pokemon name here"
+			required
+		/>
 
 		<Cell size={TWELVE_COLUMNS}>
 			<label style={{ display: 'block' }}>
@@ -44,7 +49,7 @@ const AddPokemonForm = props => (
 		<Cell size={SIX_COLUMNS}>
 			<TextField
 				name="age"
-                id="pokemon-age"
+				id="pokemon-age"
 				label="The pokemon age in years"
 				type="number"
 				min={props.numberMin}
@@ -55,7 +60,7 @@ const AddPokemonForm = props => (
 		<Cell size={SIX_COLUMNS}>
 			<TextField
 				name="pounds"
-                id="pokemon-pounds"
+				id="pokemon-pounds"
 				label="The pokemon pounds"
 				type="number"
 				min={props.numberMin}
@@ -104,11 +109,18 @@ const AddPokemonForm = props => (
 			/>
 		</Cell>
 
-		<TextField label="Provide a description" id="pokemon-description" name="description" rows={FIVE_COLUMNS} />
+		<TextField
+			label="Provide a description"
+			id="pokemon-description"
+			name="description"
+			rows={FIVE_COLUMNS}
+		/>
 
-		<Button flat secondary swapTheming>
-			Add To Pokedex
-		</Button>
+		<Cell size={TWELVE_COLUMNS}>
+			<Button flat secondary swapTheming>
+				Add To Pokedex
+			</Button>
+		</Cell>
 	</form>
 );
 
