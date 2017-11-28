@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Cell, Grid } from 'react-md';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
@@ -8,20 +8,36 @@ import {
 } from '@pokedex/assets/js/utils/ui-columns';
 import AccountEditForm from './AccountEditForm';
 import { validator } from '@pokedex/assets/js/components/auth/registration/RegistrationFormValidator';
+import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
 
-class AccountEdit extends Component {
+class AccountEdit extends BaseFormContainer {
 	constructor(props) {
-		super(props);
+		super(props, validator);
 
-		this.validator = validator;
 		this.state = {
 			csrfToken: '',
 			user: {
 				id: 0,
-				fullName: this.generateField({ value: '' }, 'fullName'),
-				city: this.generateField({ value: '' }, 'city'),
-				email: this.generateField({ value: '' }, 'email'),
-				telephone: this.generateField({ value: '' }, 'telephone')
+				fullName: this.generateField(
+					{ value: '' },
+					'fullName',
+					this.handleUserInput
+				),
+				city: this.generateField(
+					{ value: '' },
+					'city',
+					this.handleUserInput
+				),
+				email: this.generateField(
+					{ value: '' },
+					'email',
+					this.handleUserInput
+				),
+				telephone: this.generateField(
+					{ value: '' },
+					'telephone',
+					this.handleUserInput
+				)
 			}
 		};
 
@@ -32,8 +48,12 @@ class AccountEdit extends Component {
 		this.validator.fields[fieldName].validate(value);
 
 		this.setState({
-			user: Object.assign({ value }, this.state.user, {
-				[fieldName]: this.generateField(base, fieldName)
+			user: Object.assign({}, this.state.user, {
+				[fieldName]: this.generateField(
+					{ value },
+					fieldName,
+					this.handleUserInput
+				)
 			})
 		});
 	}
@@ -52,19 +72,27 @@ class AccountEdit extends Component {
 		this.setState({
 			user: {
 				id,
-				fullName: this.generateField({ value: fullName }, 'fullName'),
-				city: this.generateField({ value: city }, 'city'),
-				email: this.generateField({ value: email }, 'email'),
-				telephone: this.generateField({ value: telephone }, 'telephone')
+				fullName: this.generateField(
+					{ value: fullName },
+					'fullName',
+					this.handleUserInput
+				),
+				city: this.generateField(
+					{ value: city },
+					'city',
+					this.handleUserInput
+				),
+				email: this.generateField(
+					{ value: email },
+					'email',
+					this.handleUserInput
+				),
+				telephone: this.generateField(
+					{ value: telephone },
+					'telephone',
+					this.handleUserInput
+				)
 			}
-		});
-	}
-
-	generateField(obj, fieldName) {
-		return Object.assign({}, obj, {
-			error: this.validator.fields[fieldName].displayError,
-			errorText: this.validator.fields[fieldName].error,
-			onChange: this.handleUserInput.bind(this, fieldName)
 		});
 	}
 

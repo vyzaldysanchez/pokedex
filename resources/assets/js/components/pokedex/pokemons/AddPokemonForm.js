@@ -2,6 +2,7 @@ import React from 'react';
 import {
 	Button,
 	Cell,
+	Divider,
 	FileUpload,
 	FontIcon,
 	TextField,
@@ -30,8 +31,8 @@ const renderPokemonTypeSelection = (onChange, type, index) => (
 	/>
 );
 
-const POKEMON_AGE_MIN = 1;
-const POKEMON_POUNDS_MIN = 0.01;
+export const POKEMON_AGE_MIN = 1;
+export const POKEMON_POUNDS_MIN = 0.0;
 
 const AddPokemonForm = props => {
 	const {
@@ -44,15 +45,18 @@ const AddPokemonForm = props => {
 	} = props;
 
 	return (
-		<form className="add-pokemon-form" onSubmit={onSubmit}>
+		<form className="add-pokemon-form" method="post" onSubmit={onSubmit}>
 			<input type="hidden" name="_token" value={csrfToken} />
 
 			<TextField
 				name="name"
 				id="pokemon-name"
 				label="The pokemon name here"
-				value={pokemon.name}
+				value={pokemon.name.value}
 				required
+				error={pokemon.name.error}
+				errorText={pokemon.name.errorText}
+				onChange={pokemon.name.onChange}
 			/>
 
 			<Cell size={TWELVE_COLUMNS}>
@@ -71,8 +75,11 @@ const AddPokemonForm = props => {
 					label="The pokemon age in years"
 					type="number"
 					min={POKEMON_AGE_MIN}
-					value={pokemon.age}
 					required
+					value={pokemon.age.value}
+					error={pokemon.age.error}
+					errorText={pokemon.age.errorText}
+					onChange={pokemon.age.onChange}
 				/>
 			</Cell>
 
@@ -83,32 +90,41 @@ const AddPokemonForm = props => {
 					label="The pokemon pounds"
 					type="number"
 					min={POKEMON_POUNDS_MIN}
-					value={pokemon.pounds}
 					required
+					value={pokemon.pounds.value}
+					error={pokemon.pounds.error}
+					errorText={pokemon.pounds.errorText}
+					onChange={pokemon.pounds.onChange}
 				/>
 			</Cell>
 
-			<SelectionControl
-				id="pokemon-captured-checkbox"
-				name="captured"
-				type="checkbox"
-				label="Captured?"
-				checkedCheckboxIcon={<FontIcon>check</FontIcon>}
-				inline={true}
-				onChange={null}
-				checked={pokemon.captured}
-			/>
+			<Cell size={TWELVE_COLUMNS}>
+				<SelectionControl
+					id="pokemon-captured-checkbox"
+					name="captured"
+					type="checkbox"
+					label="Captured?"
+					checkedCheckboxIcon={<FontIcon>check</FontIcon>}
+					inline={true}
+					onChange={null}
+					checked={pokemon.captured.value}
+					onChange={pokemon.captured.onChange}
+				/>
 
-			<SelectionControl
-				id="pokemon-is-public-checkbox"
-				name="public"
-				type="checkbox"
-				label="Public?"
-				checkedCheckboxIcon={<FontIcon>check</FontIcon>}
-				inline={true}
-				onChange={null}
-				checked={pokemon.public}
-			/>
+				<SelectionControl
+					id="pokemon-is-public-checkbox"
+					name="public"
+					type="checkbox"
+					label="Public?"
+					checkedCheckboxIcon={<FontIcon>check</FontIcon>}
+					inline={true}
+					onChange={null}
+					checked={pokemon.public.value}
+					onChange={pokemon.public.onChange}
+				/>
+
+				<Divider />
+			</Cell>
 
 			<Cell size={TWELVE_COLUMNS}>
 				<FileUpload
@@ -129,7 +145,7 @@ const AddPokemonForm = props => {
 					className="file-inputs__upload-form__file-field"
 					readOnly
 					fullWidth={false}
-					value={pokemon.imageName}
+					value={pokemon.imageName.value}
 				/>
 			</Cell>
 
@@ -138,17 +154,21 @@ const AddPokemonForm = props => {
 				id="pokemon-description"
 				name="description"
 				rows={FIVE_COLUMNS}
-				value={pokemon.description}
+				required
+				value={pokemon.description.value}
+				error={pokemon.description.error}
+				errorText={pokemon.description.errorText}
+				onChange={pokemon.description.onChange}
 			/>
 
 			<Cell size={TWELVE_COLUMNS}>
 				<Button
-					flat
+					raised
 					secondary
-					swapTheming
 					style={{ backgroundColor: RED }}
 					iconBefore
 					iconEl={<FontIcon>add</FontIcon>}
+                    type="submit"
 				>
 					Add To Pokedex
 				</Button>
