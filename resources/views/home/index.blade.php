@@ -4,4 +4,6 @@
     @include ('partials.notification')
 
     <div id="pokedex-box"></div>
+
+    @include ('partials.errors')
 @endsection
