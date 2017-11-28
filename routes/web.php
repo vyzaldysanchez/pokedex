@@ -11,7 +11,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/pokemons/types', 'PokemonTypesController');
     });
 
-    Route::put('/users/{user}/edit/', 'Auth\RegistrationController@update');
+    Route::put('/users/edit/', 'Auth\RegistrationController@update');
 });
 
 Route::middleware(['guest'])->group(function () {

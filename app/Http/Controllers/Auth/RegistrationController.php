@@ -34,11 +34,11 @@ class RegistrationController extends Controller
         return redirect('/');
     }
 
-    public function update(RegistrationUpdateRequest $request, User $user)
+    public function update(RegistrationUpdateRequest $request)
     {
         $validFields = $request->validate();
 
-        $user->update($validFields);
+        \Auth::user()->update($validFields);
 
         \Session::flash('status', 'Your information has been successfully updated.');
 
