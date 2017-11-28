@@ -12,8 +12,7 @@ export const validations = {
     let isValid = !this.isEmpty(email);
 
     return isValid && validEmailRegex.test(email);
-  },
-  isPasswordValid() {}
+  }
 };
 
 export const baseValidationField = {
