@@ -8,6 +8,7 @@ import {
 	SIX_COLUMNS,
 	TWELVE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
+import commonFormatter from '@pokedex/assets/js/utils/common-formatter';
 
 export class RegistrationForm extends Component {
 	constructor(props) {
@@ -29,10 +30,7 @@ export class RegistrationForm extends Component {
 	}
 
 	get telephone() {
-		return this.state.telephone.replace(
-			/^(\d{3})(\d{3})(\d{4})$/,
-			'($1) $2-$3'
-		);
+		return commonFormatter.formatTelephone(this.state.telephone);
 	}
 
 	validate() {

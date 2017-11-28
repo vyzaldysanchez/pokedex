@@ -3,6 +3,7 @@
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::redirect('/home', '/');
+    Route::view('/account/edit', 'home.index');
 
     Route::prefix('api')->group(function () {
         Route::resource('/user', 'Auth\SessionsController');
