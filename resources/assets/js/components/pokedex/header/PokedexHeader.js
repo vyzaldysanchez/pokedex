@@ -11,7 +11,7 @@ export class PokedexHeader extends Component {
 
 		this.state = { accountBoxCollapsed: true, user: {} };
 		this.toggleAccountBox = this.toggleAccountBox.bind(this);
-    }
+	}
 
 	componentDidMount() {
 		axios
@@ -36,11 +36,14 @@ export class PokedexHeader extends Component {
 					actions={
 						<PokedexNav
 							className="md-paper--2"
-							onClick={this.toggleAccountBox}
+							onDisplayAccountBox={this.toggleAccountBox}
 						/>
 					}
 				/>
-				<PokedexAccountBox collapsed={this.state.accountBoxCollapsed} user={this.state.user} />
+				<PokedexAccountBox
+					collapsed={this.state.accountBoxCollapsed}
+					user={this.state.user}
+				/>
 			</div>
 		);
 	}
