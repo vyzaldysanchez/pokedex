@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Cell, Grid } from 'react-md';
 import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
-import { EIGHT_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
+import {
+	THREE_COLUMNS,
+	SIX_COLUMNS
+} from '@pokedex/assets/js/utils/ui-columns';
 import { AddPokemonForm } from './AddPokemonForm';
+import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
+import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
+import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
 
-export class AddPokemon extends Component {
+class AddPokemon extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			numberMin: 1,
-			pokemonTypes: [],
 			pokemon: {
 				name: '',
 				typesIds: [],
@@ -27,9 +33,14 @@ export class AddPokemon extends Component {
 	}
 
 	componentDidMount() {
-		pokemonTypes
-			.getAll()
-			.then(pokemonTypes => this.setState({ pokemonTypes }));
+		if (!this.props.pokemonTypes.length) {
+			pokemonTypes.getAll().then(types =>
+				this.props.dispatch({
+					type: LOAD_POKEMON_TYPES,
+					payload: types
+				})
+			);
+		}
 	}
 
 	handleTypeSelection(id) {
@@ -51,13 +62,15 @@ export class AddPokemon extends Component {
 	}
 
 	render() {
+		const { height } = styles;
+
 		return (
-			<Grid>
-				<Cell size={EIGHT_COLUMNS}>
+			<Grid className="add-pokemon-form" style={{ marginTop: height }}>
+				<Cell size={SIX_COLUMNS} desktopOffset={THREE_COLUMNS}>
 					<h1>Add a Pokemon</h1>
 
 					<AddPokemonForm
-						pokemonTypes={this.state.pokemonTypes}
+						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
 					/>
@@ -66,3 +79,5 @@ export class AddPokemon extends Component {
 		);
 	}
 }
+
+export default connect(withPokemonTypesMapper.mapStateToProps)(AddPokemon);

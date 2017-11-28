@@ -29,12 +29,14 @@ class PokedexTypesFilter extends Component {
 	}
 
 	componentDidMount() {
-		pokemonTypes.getAll().then(types =>
-			this.props.dispatch({
-				type: LOAD_POKEMON_TYPES,
-				payload: types
-			})
-		);
+		if (!this.props.pokemonTypes.length) {
+			pokemonTypes.getAll().then(types =>
+				this.props.dispatch({
+					type: LOAD_POKEMON_TYPES,
+					payload: types
+				})
+			);
+		}
 	}
 
 	render() {

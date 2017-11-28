@@ -1,5 +1,5 @@
 export const withPokemonTypesMapper = {
 	mapStateToProps(state) {
-		return { pokemonTypes: state.pokemonTypes || [] };
+		return { ...state, pokemonTypes: state.pokemonTypes || [] };
 	}
 };
