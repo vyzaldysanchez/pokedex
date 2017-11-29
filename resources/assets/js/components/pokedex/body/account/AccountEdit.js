@@ -92,7 +92,7 @@ class AccountEdit extends Component {
 
 					<AccountEditForm
 						csrfToken={this.state.csrfToken}
-                        userId={this.state.user.id}
+						userId={this.state.user.id}
 						fullName={this.state.user.fullName}
 						telephone={this.state.user.telephone}
 						email={this.state.user.email}
@@ -106,7 +106,7 @@ class AccountEdit extends Component {
 }
 
 const mapStateToProps = state => {
-	return { user: state.user || {} };
+	return { ...state, user: state.user || {} };
 };
 
 export default connect(mapStateToProps)(AccountEdit);

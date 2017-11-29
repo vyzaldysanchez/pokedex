@@ -1,11 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-md';
+import { Button, FontIcon } from 'react-md';
+import { RED } from '@pokedex/assets/js/utils/colors';
 
-const PokedexNav = ({ className, onClick }) => (
-	<Button icon className={className} onClick={onClick}>
-		face
-	</Button>
+const PokedexNav = ({ className, onDisplayAccountBox, onAddPokemon }) => (
+	<div>
+		<Button
+			icon
+			className={className}
+			style={{ marginRight: 10, backgroundColor: RED }}
+			tooltipLabel="Add Pokemon"
+			tooltipPosition="left"
+			tooltipStyle={{ backgroundColor: RED, fontWeight: 900 }}
+			onClick={onAddPokemon}
+		>
+			add
+		</Button>
+		<Button icon className={className} onClick={onDisplayAccountBox}>
+			face
+		</Button>
+	</div>
 );
 
 PokedexNav.propTypes = {
