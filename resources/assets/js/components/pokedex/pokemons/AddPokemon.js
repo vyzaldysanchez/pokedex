@@ -107,7 +107,7 @@ class AddPokemon extends BaseFormContainer {
 	onSubmit(e) {
 		this.validateForm();
 
-		if (!this.validator.hasErrors()) {
+		if (this.validator.hasErrors()) {
 			e.preventDefault();
 		}
 	}
