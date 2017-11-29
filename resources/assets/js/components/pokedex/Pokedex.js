@@ -7,6 +7,8 @@ import PokedexHeader from './header/PokedexHeader';
 import { PokedexBody } from './body/PokedexBody';
 import AccountEdit from './body/account/AccountEdit';
 import reducer from './reducer';
+import { ACCOUNT_EDIT, ADD_POKEMON } from './routes-paths';
+import AddPokemon from './pokemons/AddPokemon';
 
 export const Pokedex = () => (
 	<Provider store={createStore(reducer)}>
@@ -17,12 +19,16 @@ export const Pokedex = () => (
 						<PokedexHeader
 							sendToHome={() => props.history.push('/')}
 							sendToAccountEdit={() =>
-								props.history.push('/account/edit')
+								props.history.push(ACCOUNT_EDIT)
+							}
+							sendToAddPokemon={() =>
+								props.history.push(ADD_POKEMON)
 							}
 						/>
 
 						<Route exact path="/" component={PokedexBody} />
-						<Route path="/account/edit" component={AccountEdit} />
+						<Route path={ACCOUNT_EDIT} component={AccountEdit} />
+						<Route path={ADD_POKEMON} component={AddPokemon} />
 					</div>
 				)}
 			/>

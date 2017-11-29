@@ -13,11 +13,13 @@ class PokedexHeader extends Component {
 		super(props);
 
 		this.state = { accountBoxCollapsed: true };
+
 		this.toggleAccountBox = this.toggleAccountBox.bind(this);
 		this.sendToAccountEdit = this.sendToAccountEdit.bind(this);
 		this.sendToHome = this.sendToHome.bind(this);
 		this.renderHomeButton = this.renderHomeButton.bind(this);
 		this.renderNav = this.renderNav.bind(this);
+		this.sendToAddPokemon = this.sendToAddPokemon.bind(this);
 	}
 
 	componentDidMount() {
@@ -44,6 +46,11 @@ class PokedexHeader extends Component {
 		this.props.sendToHome();
 	}
 
+	sendToAddPokemon() {
+		this.setState({ accountBoxCollapsed: true });
+		this.props.sendToAddPokemon();
+	}
+
 	renderHomeButton() {
 		return (
 			<Button icon primary onClick={this.sendToHome}>
@@ -56,7 +63,8 @@ class PokedexHeader extends Component {
 		return (
 			<PokedexNav
 				className="md-paper--2"
-				onClick={this.toggleAccountBox}
+				onDisplayAccountBox={this.toggleAccountBox}
+				onAddPokemon={this.sendToAddPokemon}
 			/>
 		);
 	}
@@ -85,7 +93,7 @@ class PokedexHeader extends Component {
 }
 
 const mapStateToProps = state => {
-	return { user: state.user || {} };
+	return { ...state, user: state.user || {} };
 };
 
 export default connect(mapStateToProps)(PokedexHeader);
