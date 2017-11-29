@@ -15,6 +15,7 @@ import {
 	TWELVE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { RED } from '@pokedex/assets/js/utils/colors';
+import { ErrorBox } from '@pokedex/assets/js/components/shared/ErrorBox';
 
 const renderPokemonTypeSelection = (onChange, type, index) => (
 	<SelectionControl
@@ -48,24 +49,32 @@ const AddPokemonForm = props => {
 		<form className="add-pokemon-form" method="post" onSubmit={onSubmit}>
 			<input type="hidden" name="_token" value={csrfToken} />
 
-			<TextField
-				name="name"
-				id="pokemon-name"
-				label="The pokemon name here"
-				value={pokemon.name.value}
-				required
-				error={pokemon.name.error}
-				errorText={pokemon.name.errorText}
-				onChange={pokemon.name.onChange}
-			/>
+			<Cell size={TWELVE_COLUMNS}>
+				<TextField
+					name="name"
+					id="pokemon-name"
+					label="The pokemon name here"
+					value={pokemon.name.value}
+					required
+					error={pokemon.name.error}
+					errorText={pokemon.name.errorText}
+					onChange={pokemon.name.onChange}
+				/>
+			</Cell>
 
 			<Cell size={TWELVE_COLUMNS}>
 				<label style={{ display: 'block' }}>
 					Select the types of this pokemon:
 				</label>
+
 				{pokemonTypes.map(
 					renderPokemonTypeSelection.bind(null, onTypeSelection)
 				)}
+
+				<ErrorBox
+					display={pokemon.typesIds.error}
+					message={pokemon.typesIds.errorText}
+				/>
 			</Cell>
 
 			<Cell size={SIX_COLUMNS}>
@@ -147,6 +156,11 @@ const AddPokemonForm = props => {
 					fullWidth={false}
 					value={pokemon.imageName.value}
 				/>
+
+				<ErrorBox
+					display={false}
+					message={''}
+				/>
 			</Cell>
 
 			<TextField
@@ -168,7 +182,7 @@ const AddPokemonForm = props => {
 					style={{ backgroundColor: RED }}
 					iconBefore
 					iconEl={<FontIcon>add</FontIcon>}
-                    type="submit"
+					type="submit"
 				>
 					Add To Pokedex
 				</Button>
