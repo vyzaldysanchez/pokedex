@@ -9,7 +9,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('api')->group(function () {
         Route::resource('/user', 'Auth\SessionsController');
 
-        Route::resource('/pokemons/types', 'PokemonTypesController');
+        Route::get('/pokemons/types', 'PokemonTypesController@index');
+        Route::resource('/pokemons', 'PokemonsController');
     });
 
     Route::put('/users/edit/', 'Auth\RegistrationController@update');
