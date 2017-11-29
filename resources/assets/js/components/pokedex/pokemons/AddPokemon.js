@@ -10,26 +10,20 @@ import { AddPokemonForm } from './AddPokemonForm';
 import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
 import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
+import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
+import { validator } from './AddPokemonFormValidator';
 
-class AddPokemon extends Component {
+class AddPokemon extends BaseFormContainer {
 	constructor(props) {
-		super(props);
+		super(props, validator);
 
 		this.state = {
-			numberMin: 1,
-			pokemon: {
-				name: '',
-				typesIds: [],
-				age: 0,
-				pounds: 0.0,
-				captured: false,
-				public: false,
-				image: '',
-				imageName: '',
-				description: ''
-			}
+			pokemon: this.generatePokemonFields({})
 		};
 		this.handleTypeSelection = this.handleTypeSelection.bind(this);
+		this.handleInput = this.handleInput.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+		this.updatePokemon = this.updatePokemon.bind(this);
 	}
 
 	componentDidMount() {
@@ -41,10 +35,10 @@ class AddPokemon extends Component {
 				})
 			);
 		}
-	}
-
+    }
+    
 	handleTypeSelection(id) {
-		let typesIds = this.state.pokemon.typesIds.slice();
+		let typesIds = this.state.pokemon.typesIds.value.slice();
 		const typeSelectedIndex = typesIds.indexOf(id);
 
 		if (typeSelectedIndex > -1) {
@@ -56,7 +50,123 @@ class AddPokemon extends Component {
 			typesIds.push(id);
 		}
 
-		this.setState({ pokemon: { ...this.state.pokemon, typesIds } });
+		this.setState({
+			pokemon: {
+				...this.state.pokemon,
+				typesIds: this.generateField(
+					{ value: typesIds },
+					'typesIds',
+					this.handleInput
+				)
+			}
+		});
+	}
+
+	onSubmit(e) {
+		this.validateForm();
+
+		if (this.validator.hasErrors()) {
+			e.preventDefault();
+		}
+	}
+
+	validateForm() {
+		this.validator.fields.name.validate(this.state.pokemon.name.value);
+		this.validator.fields.typesIds.validate(
+			this.state.pokemon.typesIds.value
+		);
+		this.validator.fields.age.validate(this.state.pokemon.age.value);
+		this.validator.fields.pounds.validate(this.state.pokemon.pounds.value);
+		this.validator.fields.description.validate(
+			this.state.pokemon.description.value
+        );
+        this.validator.fields.image.validate(
+			this.state.pokemon.image.value
+		);
+
+		this.setState({
+			pokemon: Object.assign(
+				{},
+				this.state.pokemon,
+				this.generatePokemonFields({
+					name: this.state.pokemon.name.value,
+					typesIds: this.state.pokemon.typesIds.value,
+					age: Number.parseFloat(this.state.pokemon.age.value),
+					pounds: Number.parseFloat(this.state.pokemon.pounds.value),
+                    description: this.state.pokemon.description.value,
+                    image: this.state.pokemon.image.value
+				})
+			)
+		});
+	}
+
+	generatePokemonFields({
+		name,
+		typesIds = [],
+		age,
+		pounds,
+		captured,
+		isPublic,
+        description,
+        image
+	}) {
+		return {
+			name: this.generateField(
+				{ value: name || '' },
+				'name',
+				this.handleInput
+			),
+			typesIds: this.generateField(
+				{ value: typesIds },
+				'typesIds',
+				this.handleInput
+			),
+			age: this.generateField(
+				{ value: age || 0 },
+				'age',
+				this.handleInput
+			),
+			pounds: this.generateField(
+				{ value: pounds || 0 },
+				'pounds',
+				this.handleInput
+            ),
+            image: this.generateField(
+				{ value: image || '' },
+				'image',
+				this.handleInput
+			),
+			description: this.generateField(
+				{ value: description || '' },
+				'description',
+				this.handleInput
+            ),
+			public: this.generateField(
+				{ value: isPublic || false },
+				'public',
+				this.handleInput
+			),
+			captured: this.generateField(
+				{ value: captured || false },
+				'captured',
+				this.handleInput
+			)
+		};
+	}
+
+	handleInput(fieldName, value) {
+		this.validator.fields[fieldName].validate(value);
+		this.updatePokemon(fieldName, value, this.handleInput);
+	}
+
+	updatePokemon(fieldName, value, callback) {
+		const newState = {
+			pokemon: Object.assign({}, this.state.pokemon, {
+				[fieldName]: this.generateField({ value }, fieldName, callback)
+			})
+		};
+
+		this.setState(newState);
 	}
 
 	render() {
@@ -71,6 +181,8 @@ class AddPokemon extends Component {
 						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
+						onImageSelected={this.updateImageName}
+						onSubmit={this.onSubmit}
 					/>
 				</Cell>
 			</Grid>
