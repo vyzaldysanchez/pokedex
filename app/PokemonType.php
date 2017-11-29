@@ -17,7 +17,7 @@ class PokemonType extends Model
     protected $dates = ['deleted_at'];
 
      /**
-     * @return HasMany
+     * @return BelongsToMany
      */
     public function pokemons(): BelongsToMany
     {
