@@ -6,6 +6,7 @@ import PokedexNav from './PokedexNav';
 import PokedexAccountBox from '@pokedex/assets/js/components/pokedex/account-box/PokedexAccountBox';
 import { styles } from './styles-vars';
 import { LOAD_USER } from '../actions';
+import users from '@pokedex/assets/js/services/users.service';
 
 class PokedexHeader extends Component {
 	constructor(props) {
@@ -22,11 +23,13 @@ class PokedexHeader extends Component {
 	}
 
 	componentDidMount() {
-		axios
-			.get('/api/user')
-			.then(({ data }) =>
-				this.props.dispatch({ type: LOAD_USER, payload: data })
-			);
+		if (!Object.keys(this.props.user).length) {
+			users
+				.getCurrent()
+				.then(({ data }) =>
+					this.props.dispatch({ type: LOAD_USER, payload: data })
+				);
+		}
 	}
 
 	toggleAccountBox() {
