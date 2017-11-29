@@ -14,14 +14,17 @@ class AccountEdit extends Component {
 		super(props);
 
 		this.validator = validator;
+
+		const { id, fullName, city, email, telephone } = this.props.user;
+
 		this.state = {
 			csrfToken: '',
 			user: {
-				id: 0,
-				fullName: this.generateField({ value: '' }, 'fullName'),
-				city: this.generateField({ value: '' }, 'city'),
-				email: this.generateField({ value: '' }, 'email'),
-				telephone: this.generateField({ value: '' }, 'telephone')
+				id: id,
+				fullName: this.generateField({ value: fullName }, 'fullName'),
+				city: this.generateField({ value: city }, 'city'),
+				email: this.generateField({ value: email }, 'email'),
+				telephone: this.generateField({ value: telephone }, 'telephone')
 			}
 		};
 
@@ -43,20 +46,6 @@ class AccountEdit extends Component {
 			csrfToken: document
 				.querySelector('meta[name="csrf-token"]')
 				.getAttribute('value')
-		});
-	}
-
-	componentWillReceiveProps({ user }) {
-		const { id, fullName, city, email, telephone } = user;
-
-		this.setState({
-			user: {
-				id,
-				fullName: this.generateField({ value: fullName }, 'fullName'),
-				city: this.generateField({ value: city }, 'city'),
-				email: this.generateField({ value: email }, 'email'),
-				telephone: this.generateField({ value: telephone }, 'telephone')
-			}
 		});
 	}
 
@@ -92,7 +81,7 @@ class AccountEdit extends Component {
 
 					<AccountEditForm
 						csrfToken={this.state.csrfToken}
-                        userId={this.state.user.id}
+						userId={this.state.user.id}
 						fullName={this.state.user.fullName}
 						telephone={this.state.user.telephone}
 						email={this.state.user.email}
