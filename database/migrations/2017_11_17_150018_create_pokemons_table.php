@@ -23,9 +23,7 @@ class CreatePokemonsTable extends Migration
                 $table->integer('pounds');
                 $table->boolean('public')->default(false);
                 $table->boolean('captured')->default(false);
-                $table->integer('type_id');
-                $table->integer('location_id');
-                $table->integer('image_id');
+                $table->integer('location_id')->nullable();
                 $table->integer('user_id');
                 $table->timestamps();
                 $table->softDeletes();

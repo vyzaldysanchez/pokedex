@@ -149,7 +149,7 @@ const AddPokemonForm = props => {
 					className="file-inputs__upload-form__file-upload"
 					primary
 					iconBefore
-					onLoad={({ name }) => pokemon.image.onChange(name)}
+					onLoad={pokemon.image.onChange}
 				/>
 
 				<TextField
