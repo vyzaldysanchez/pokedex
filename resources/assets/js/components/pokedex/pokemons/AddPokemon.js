@@ -18,12 +18,15 @@ class AddPokemon extends BaseFormContainer {
 		super(props, validator);
 
 		this.state = {
-			pokemon: this.generatePokemonFields({})
+			csrfToken: '',
+			pokemon: this.generatePokemonFields({}),
+			pokemonImage: null
 		};
 		this.handleTypeSelection = this.handleTypeSelection.bind(this);
 		this.handleInput = this.handleInput.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.updatePokemon = this.updatePokemon.bind(this);
+		this.loadImage = this.loadImage.bind(this);
 	}
 
 	componentDidMount() {
@@ -35,8 +38,14 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
-    }
-    
+
+		this.setState({
+			csrfToken: document
+				.querySelector('meta[name="csrf-token"]')
+				.getAttribute('value')
+		});
+	}
+
 	handleTypeSelection(id) {
 		let typesIds = this.state.pokemon.typesIds.value.slice();
 		const typeSelectedIndex = typesIds.indexOf(id);
@@ -63,10 +72,11 @@ class AddPokemon extends BaseFormContainer {
 	}
 
 	onSubmit(e) {
+		e.preventDefault();
 		this.validateForm();
 
-		if (this.validator.hasErrors()) {
-			e.preventDefault();
+		if (!this.validator.hasErrors()) {
+			this.submitForm();
 		}
 	}
 
@@ -79,10 +89,8 @@ class AddPokemon extends BaseFormContainer {
 		this.validator.fields.pounds.validate(this.state.pokemon.pounds.value);
 		this.validator.fields.description.validate(
 			this.state.pokemon.description.value
-        );
-        this.validator.fields.image.validate(
-			this.state.pokemon.image.value
 		);
+		this.validator.fields.image.validate(this.state.pokemon.image.value);
 
 		this.setState({
 			pokemon: Object.assign(
@@ -93,10 +101,39 @@ class AddPokemon extends BaseFormContainer {
 					typesIds: this.state.pokemon.typesIds.value,
 					age: Number.parseFloat(this.state.pokemon.age.value),
 					pounds: Number.parseFloat(this.state.pokemon.pounds.value),
-                    description: this.state.pokemon.description.value,
-                    image: this.state.pokemon.image.value
+					description: this.state.pokemon.description.value,
+					image: this.state.pokemon.image.value,
+					captured: this.state.pokemon.captured.value,
+					public: this.state.pokemon.public.value
 				})
 			)
+		});
+	}
+
+	submitForm() {
+		const formData = new FormData();
+		const pokemon = this.state.pokemon;
+
+		formData.append('_token', this.state.csrfToken);
+		formData.append('name', pokemon.name.value);
+		formData.append('age', Number.parseFloat(pokemon.age.value));
+		formData.append('pounds', Number.parseFloat(pokemon.pounds.value));
+		formData.append('captured', pokemon.captured.value);
+		formData.append('public', pokemon.public.value);
+		formData.append('description', pokemon.description.value);
+		formData.append('image', this.state.pokemonImage);
+		pokemon.typesIds.value.forEach(id =>
+			formData.append('pokemon_types_ids[]', id)
+		);
+
+		const formElements = document.querySelectorAll(
+			'.md-cell input, .md-cell button, .md-cell textarea'
+		);
+
+		formElements.forEach(elem => (elem.disabled = true));
+
+		axios.post('/pokemons', formData).then(res => {
+			formElements.forEach(elem => (elem.disabled = false));
 		});
 	}
 
@@ -107,8 +144,8 @@ class AddPokemon extends BaseFormContainer {
 		pounds,
 		captured,
 		isPublic,
-        description,
-        image
+		description,
+		image
 	}) {
 		return {
 			name: this.generateField(
@@ -130,17 +167,17 @@ class AddPokemon extends BaseFormContainer {
 				{ value: pounds || 0 },
 				'pounds',
 				this.handleInput
-            ),
-            image: this.generateField(
+			),
+			image: this.generateField(
 				{ value: image || '' },
 				'image',
-				this.handleInput
+				this.loadImage
 			),
 			description: this.generateField(
 				{ value: description || '' },
 				'description',
 				this.handleInput
-            ),
+			),
 			public: this.generateField(
 				{ value: isPublic || false },
 				'public',
@@ -152,6 +189,11 @@ class AddPokemon extends BaseFormContainer {
 				this.handleInput
 			)
 		};
+	}
+
+	loadImage(name, file) {
+		this.setState({ pokemonImage: file });
+		this.handleInput(name, file.name);
 	}
 
 	handleInput(fieldName, value) {
@@ -178,6 +220,7 @@ class AddPokemon extends BaseFormContainer {
 					<h1>Add a Pokemon</h1>
 
 					<AddPokemonForm
+						csrfToken={this.state.csrfToken}
 						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
