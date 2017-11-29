@@ -21,8 +21,8 @@ class CreatePokemonsTable extends Migration
                 $table->text('description');
                 $table->integer('age');
                 $table->integer('pounds');
-                $table->boolean('public');
-                $table->boolean('captured');
+                $table->boolean('public')->default(false);
+                $table->boolean('captured')->default(false);
                 $table->integer('type_id');
                 $table->integer('location_id');
                 $table->integer('image_id');
