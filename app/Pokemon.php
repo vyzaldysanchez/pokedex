@@ -16,11 +16,21 @@ class Pokemon extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $table = 'pokemons';
+
     /**
      * @return BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function types(): BelongsToMany
+    {
+        return $this->belongsToMany(PokemonType::class);
     }
 }
