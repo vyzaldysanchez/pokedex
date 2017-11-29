@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\PokemonCreationRequest;
+use App\Pokemon;
+use App\Repositories\Pokemons;
 
 class PokemonsController extends Controller
 {
@@ -14,7 +16,7 @@ class PokemonsController extends Controller
      */
     public function index()
     {
-        return \App\Pokemon::all();
+        return Pokemons::getAll();
     }
 
     /**
@@ -26,6 +28,8 @@ class PokemonsController extends Controller
     public function store(PokemonCreationRequest $request)
     {
         $request->validate();
+
+        return Pokemons::store($request);
     }
 
     /**
