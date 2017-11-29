@@ -14,30 +14,18 @@ class AccountEdit extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
+		this.validator = validator;
+
+		const { id, fullName, city, email, telephone } = this.props.user;
+
 		this.state = {
 			csrfToken: '',
 			user: {
-				id: 0,
-				fullName: this.generateField(
-					{ value: '' },
-					'fullName',
-					this.handleUserInput
-				),
-				city: this.generateField(
-					{ value: '' },
-					'city',
-					this.handleUserInput
-				),
-				email: this.generateField(
-					{ value: '' },
-					'email',
-					this.handleUserInput
-				),
-				telephone: this.generateField(
-					{ value: '' },
-					'telephone',
-					this.handleUserInput
-				)
+				id: id,
+				fullName: this.generateField({ value: fullName }, 'fullName', this.handleUserInput),
+				city: this.generateField({ value: city }, 'city', this.handleUserInput),
+				email: this.generateField({ value: email }, 'email', this.handleUserInput),
+				telephone: this.generateField({ value: telephone }, 'telephone', this.handleUserInput)
 			}
 		};
 
@@ -63,36 +51,6 @@ class AccountEdit extends BaseFormContainer {
 			csrfToken: document
 				.querySelector('meta[name="csrf-token"]')
 				.getAttribute('value')
-		});
-	}
-
-	componentWillReceiveProps({ user }) {
-		const { id, fullName, city, email, telephone } = user;
-
-		this.setState({
-			user: {
-				id,
-				fullName: this.generateField(
-					{ value: fullName },
-					'fullName',
-					this.handleUserInput
-				),
-				city: this.generateField(
-					{ value: city },
-					'city',
-					this.handleUserInput
-				),
-				email: this.generateField(
-					{ value: email },
-					'email',
-					this.handleUserInput
-				),
-				telephone: this.generateField(
-					{ value: telephone },
-					'telephone',
-					this.handleUserInput
-				)
-			}
 		});
 	}
 
