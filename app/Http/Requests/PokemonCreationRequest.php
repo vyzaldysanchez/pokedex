@@ -25,11 +25,12 @@ class PokemonCreationRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2',
-            'description' => 'required|min:6',
-            'age' => 'required|integers',
+            'age' => 'required|integer',
             'pounds' => 'required|numeric',
-            'image' => 'required',
-            'type_id' => 'required|exists:pokemon_types,id'
+            'description' => 'required|min:6',
+            'image' => 'required|image',
+            'pokemon_types_ids' => 'required|array',
+            'pokemon_types_ids.*' => 'required|distinct|exists:pokemon_types,id'
         ];
     }
 }
