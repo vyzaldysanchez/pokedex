@@ -6,7 +6,8 @@ import * as axios from 'axios';
 import {
 	EIGHT_COLUMNS,
 	SIX_COLUMNS,
-	TWELVE_COLUMNS
+	TWELVE_COLUMNS,
+    TWO_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import commonFormatter from '@pokedex/assets/js/utils/common-formatter';
 
@@ -83,7 +84,7 @@ export class RegistrationForm extends Component {
 		return (
 			<div>
 				<Grid className="registration-form">
-					<Cell size={EIGHT_COLUMNS}>
+					<Cell size={EIGHT_COLUMNS} desktopOffset={TWO_COLUMNS}>
 						<h1 className="text-center md-text--theme-primary no-margin-top">
 							Create an account
 						</h1>
