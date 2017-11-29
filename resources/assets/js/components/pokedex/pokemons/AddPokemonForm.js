@@ -41,12 +41,16 @@ const AddPokemonForm = props => {
 		pokemonTypes,
 		pokemon,
 		onSubmit,
-		onTypeSelection,
-		onImageSelected
+		onTypeSelection
 	} = props;
 
 	return (
-		<form className="add-pokemon-form" method="post" onSubmit={onSubmit}>
+		<form
+			className="add-pokemon-form"
+			method="post"
+			encType="multipart/form-data"
+			onSubmit={onSubmit}
+		>
 			<input type="hidden" name="_token" value={csrfToken} />
 
 			<Cell size={TWELVE_COLUMNS}>
@@ -145,7 +149,7 @@ const AddPokemonForm = props => {
 					className="file-inputs__upload-form__file-upload"
 					primary
 					iconBefore
-					onLoad={onImageSelected}
+					onLoad={({ name }) => pokemon.image.onChange(name)}
 				/>
 
 				<TextField
@@ -154,12 +158,12 @@ const AddPokemonForm = props => {
 					className="file-inputs__upload-form__file-field"
 					readOnly
 					fullWidth={false}
-					value={pokemon.imageName.value}
+					value={pokemon.image.value}
 				/>
 
 				<ErrorBox
-					display={false}
-					message={''}
+					display={pokemon.image.error}
+					message={pokemon.image.errorText}
 				/>
 			</Cell>
 

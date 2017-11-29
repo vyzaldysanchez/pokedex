@@ -22,7 +22,8 @@ export const validator = {
 			...baseValidationField,
 			error: 'Must provide the correct pounds this pokemon has!',
 			validate(value) {
-				this.displayError = Number.parseFloat(value) <= POKEMON_POUNDS_MIN;
+				this.displayError =
+					Number.parseFloat(value) <= POKEMON_POUNDS_MIN;
 			}
 		},
 		description: Object.assign({}, baseValidationField, {
@@ -48,6 +49,9 @@ export const validator = {
 			validate(ids) {
 				this.displayError = false;
 			}
-		}
+		},
+		image: Object.assign({}, baseValidationField, {
+			error: 'An image must be selected'
+		})
 	}
 };

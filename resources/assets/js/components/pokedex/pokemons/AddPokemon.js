@@ -18,49 +18,7 @@ class AddPokemon extends BaseFormContainer {
 		super(props, validator);
 
 		this.state = {
-			pokemon: {
-				name: this.generateField(
-					{ value: '' },
-					'name',
-					this.handleInput
-				),
-				typesIds: this.generateField(
-					{ value: [] },
-					'typesIds',
-					this.handleInput
-				),
-				age: this.generateField({ value: 0 }, 'age', this.handleInput),
-				pounds: this.generateField(
-					{ value: 0.0 },
-					'pounds',
-					this.handleInput
-				),
-				captured: this.generateField(
-					{ value: false },
-					'captured',
-					this.handleInput
-				),
-				public: this.generateField(
-					{ value: false },
-					'public',
-					this.handleInput
-				),
-				image: this.generateField(
-					{ value: '' },
-					'name',
-					this.handleInput
-				),
-				imageName: this.generateField(
-					{ value: '' },
-					'name',
-					this.handleInput
-				),
-				description: this.generateField(
-					{ value: '' },
-					'description',
-					this.handleInput
-				)
-			}
+			pokemon: this.generatePokemonFields({})
 		};
 		this.handleTypeSelection = this.handleTypeSelection.bind(this);
 		this.handleInput = this.handleInput.bind(this);
@@ -77,8 +35,8 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
-	}
-
+    }
+    
 	handleTypeSelection(id) {
 		let typesIds = this.state.pokemon.typesIds.value.slice();
 		const typeSelectedIndex = typesIds.indexOf(id);
@@ -105,6 +63,7 @@ class AddPokemon extends BaseFormContainer {
 	}
 
 	onSubmit(e) {
+        e.preventDefault();
 		this.validateForm();
 
 		if (this.validator.hasErrors()) {
@@ -121,6 +80,9 @@ class AddPokemon extends BaseFormContainer {
 		this.validator.fields.pounds.validate(this.state.pokemon.pounds.value);
 		this.validator.fields.description.validate(
 			this.state.pokemon.description.value
+        );
+        this.validator.fields.image.validate(
+			this.state.pokemon.image.value
 		);
 
 		this.setState({
@@ -132,7 +94,8 @@ class AddPokemon extends BaseFormContainer {
 					typesIds: this.state.pokemon.typesIds.value,
 					age: Number.parseFloat(this.state.pokemon.age.value),
 					pounds: Number.parseFloat(this.state.pokemon.pounds.value),
-					description: this.state.pokemon.description.value
+                    description: this.state.pokemon.description.value,
+                    image: this.state.pokemon.image.value
 				})
 			)
 		});
@@ -140,12 +103,13 @@ class AddPokemon extends BaseFormContainer {
 
 	generatePokemonFields({
 		name,
-		typesIds,
+		typesIds = [],
 		age,
 		pounds,
 		captured,
 		isPublic,
-		description
+        description,
+        image
 	}) {
 		return {
 			name: this.generateField(
@@ -167,12 +131,17 @@ class AddPokemon extends BaseFormContainer {
 				{ value: pounds || 0 },
 				'pounds',
 				this.handleInput
+            ),
+            image: this.generateField(
+				{ value: image || '' },
+				'image',
+				this.handleInput
 			),
 			description: this.generateField(
 				{ value: description || '' },
 				'description',
 				this.handleInput
-			),
+            ),
 			public: this.generateField(
 				{ value: isPublic || false },
 				'public',
@@ -213,6 +182,7 @@ class AddPokemon extends BaseFormContainer {
 						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
+						onImageSelected={this.updateImageName}
 						onSubmit={this.onSubmit}
 					/>
 				</Cell>
