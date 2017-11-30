@@ -16,6 +16,8 @@ import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars
 import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
 import { validator } from './AddPokemonFormValidator';
 import domUtils from '@pokedex/assets/js/utils/dom.utils';
+import { sendNotificationMessage } from '@pokedex/assets/js/services/notifications.service';
+import { getErrorsFrom } from '@pokedex/assets/js/utils/http-helper';
 
 class AddPokemon extends BaseFormContainer {
 	constructor(props) {
@@ -131,30 +133,20 @@ class AddPokemon extends BaseFormContainer {
 		axios
 			.post('/api/pokemons', formData)
 			.then(res => {
-				this.props.dispatch({
-					type: ADD_NOTIFICATION,
-					payload: {
-						toast: {
-							text: 'Your pokemon has been created correctly'
-						},
-						autohide: true
-					}
-				});
+				sendNotificationMessage(
+					this.props.dispatch,
+					'Your pokemon has been created correctly'
+				);
 				domUtils.enableElements(formElements);
 			})
-			.catch(() => {
-                this.props.dispatch({
-					type: ADD_NOTIFICATION,
-					payload: {
-						toast: {
-							text: 'An error has occured, please contact the administration.'
-						},
-						autohide: true
-					}
-				});
-                domUtils.enableElements(formElements);
-            });
-    }
+			.catch(({ response }) => {
+				sendNotificationMessage(
+					this.props.dispatch,
+					getErrorsFrom(response.data)
+				);
+				domUtils.enableElements(formElements);
+			});
+	}
 
 	generatePokemonFields({
 		name,
