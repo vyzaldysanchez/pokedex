@@ -108,7 +108,6 @@ class AddPokemon extends BaseFormContainer {
 		const formData = new FormData();
 		const pokemon = this.state.pokemon;
 
-		formData.append('_token', this.state.csrfToken);
 		formData.append('name', pokemon.name.value);
 		formData.append('age', Number.parseFloat(pokemon.age.value));
 		formData.append('pounds', Number.parseFloat(pokemon.pounds.value));
