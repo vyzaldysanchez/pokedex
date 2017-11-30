@@ -7,8 +7,11 @@ import {
 	SIX_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { AddPokemonForm } from './AddPokemonForm';
-import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
-import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
+import {
+	LOAD_POKEMON_TYPES,
+	ADD_NOTIFICATION
+} from '@pokedex/assets/js/components/pokedex/actions';
+import { withPokemonTypesAndNotification } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
 import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
 import { validator } from './AddPokemonFormValidator';
@@ -128,10 +131,30 @@ class AddPokemon extends BaseFormContainer {
 		axios
 			.post('/api/pokemons', formData)
 			.then(res => {
+				this.props.dispatch({
+					type: ADD_NOTIFICATION,
+					payload: {
+						toast: {
+							text: 'Your pokemon has been created correctly'
+						},
+						autohide: true
+					}
+				});
 				domUtils.enableElements(formElements);
 			})
-			.catch(() => domUtils.enableElements(formElements));
-	}
+			.catch(() => {
+                this.props.dispatch({
+					type: ADD_NOTIFICATION,
+					payload: {
+						toast: {
+							text: 'An error has occured, please contact the administration.'
+						},
+						autohide: true
+					}
+				});
+                domUtils.enableElements(formElements);
+            });
+    }
 
 	generatePokemonFields({
 		name,
@@ -228,4 +251,6 @@ class AddPokemon extends BaseFormContainer {
 	}
 }
 
-export default connect(withPokemonTypesMapper.mapStateToProps)(AddPokemon);
+export default connect(withPokemonTypesAndNotification.mapStateToProps)(
+	AddPokemon
+);

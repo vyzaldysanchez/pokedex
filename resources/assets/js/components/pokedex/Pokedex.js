@@ -9,6 +9,7 @@ import AccountEdit from './body/account/AccountEdit';
 import reducer from './reducer';
 import { ACCOUNT_EDIT, ADD_POKEMON } from './routes-paths';
 import AddPokemon from './pokemons/AddPokemon';
+import SnackNotification from '@pokedex/assets/js/components/shared/SnackNotification';
 
 export const Pokedex = () => (
 	<Provider store={createStore(reducer)}>
@@ -29,6 +30,8 @@ export const Pokedex = () => (
 						<Route exact path="/" component={PokedexBody} />
 						<Route path={ACCOUNT_EDIT} component={AccountEdit} />
 						<Route path={ADD_POKEMON} component={AddPokemon} />
+
+						<SnackNotification />
 					</div>
 				)}
 			/>
