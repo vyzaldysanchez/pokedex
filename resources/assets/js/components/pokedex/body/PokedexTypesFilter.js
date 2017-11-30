@@ -23,7 +23,7 @@ class PokedexTypesFilter extends Component {
 				style={{ backgroundColor: type.color, width: '30%', margin: 2 }}
 				labelStyle={{ width: '100%', textAlign: 'center' }}
 				className="md-paper--1 text-capitalize"
-				onClick={() => onPokemonTypeSelected(type.id)}
+				onClick={() => onPokemonTypeSelected(type)}
 			/>
 		);
 	}

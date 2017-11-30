@@ -10,6 +10,24 @@ class PokedexList extends Component {
 		super(props);
 	}
 
+	renderTypes() {
+		const { pokemonTypes } = this.props.filters;
+
+		return pokemonTypes.map((type, index) => (
+			<label
+				className="label"
+				key={index}
+				style={{
+					backgroundColor: type.color,
+					fontWeight: 900,
+					fontSize: 14
+				}}
+			>
+				{type.name}
+			</label>
+		));
+	}
+
 	render() {
 		const { search, pokemonTypes } = this.props.filters;
 
@@ -18,7 +36,7 @@ class PokedexList extends Component {
 				<Cell size={TWELVE_COLUMNS}>
 					<PokedexSearchDetails
 						searching={search}
-						types={pokemonTypes}
+						types={this.renderTypes()}
 					/>
 				</Cell>
 			</Grid>
