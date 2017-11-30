@@ -133,20 +133,15 @@ class AddPokemon extends BaseFormContainer {
 		formElements.forEach(elem => (elem.disabled = true));
 
 		axios.post('/pokemons', formData).then(res => {
+            this.resetForm();
 			formElements.forEach(elem => (elem.disabled = false));
 		});
 	}
 
-	generatePokemonFields({
-		name,
-		typesIds = [],
-		age,
-		pounds,
-		captured,
-		isPublic,
-		description,
-		image
-	}) {
+	generatePokemonFields(fields) {
+		const { name, typesIds = [], age, pounds } = fields;
+		const { captured, isPublic, description, image } = fields;
+
 		return {
 			name: this.generateField(
 				{ value: name || '' },
@@ -209,6 +204,10 @@ class AddPokemon extends BaseFormContainer {
 		};
 
 		this.setState(newState);
+	}
+
+	resetForm() {
+		this.setState({ pokemon: this.generatePokemonFields({}) });
 	}
 
 	render() {
