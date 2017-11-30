@@ -7,3 +7,8 @@ export const addPokemonTypeToFilter = (state, type) => {
 
 	return { ...state, filters: { ...state.filters, pokemonTypes: types } };
 };
+
+export const addSearchText = (state, text) => ({
+	...state,
+	filters: { ...state.filters, search: text }
+});

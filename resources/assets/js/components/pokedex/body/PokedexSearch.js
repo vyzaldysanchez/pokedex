@@ -3,15 +3,21 @@ import { FontIcon, TextField } from 'react-md';
 import axios from 'axios';
 import PokedexTypesFilter from './PokedexTypesFilter';
 import { connect } from 'react-redux';
-import { ADD_POKEMON_TYPE_FILTER } from '@pokedex/assets/js/components/pokedex/actions';
+import {
+	ADD_POKEMON_TYPE_FILTER,
+	ADD_SEARCH_TEXT_FILTER
+} from '@pokedex/assets/js/components/pokedex/actions';
 
 export class PokedexSearch extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { search: '' };
-
+		this.search = this.search.bind(this);
 		this.searchByPokemonType = this.searchByPokemonType.bind(this);
+	}
+
+	search(text) {
+		this.props.dispatch({ type: ADD_SEARCH_TEXT_FILTER, payload: text });
 	}
 
 	searchByPokemonType(type) {
@@ -26,8 +32,8 @@ export class PokedexSearch extends Component {
 					type="search"
 					leftIcon={<FontIcon>search</FontIcon>}
 					label="Search by name/description..."
-					value={this.state.search}
-					onChange={search => this.setState({ search })}
+					value={this.props.search}
+					onChange={this.search}
 				/>
 
 				<PokedexTypesFilter
@@ -41,6 +47,7 @@ export class PokedexSearch extends Component {
 const mapStateToProps = state => ({
 	...state,
 	filters: {
+		search: '',
 		pokemonTypes: []
 	}
 });
