@@ -5,7 +5,7 @@ import {
 	ADD_NOTIFICATION
 } from './actions';
 
-export default (state = { user: null }, action) => {
+export default (state = {}, action) => {
 	switch (action.type) {
 		case LOAD_USER:
 			return { ...state, user: action.payload };
