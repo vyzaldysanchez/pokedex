@@ -17,13 +17,14 @@ import {
 import { RED } from '@pokedex/assets/js/utils/colors';
 import { ErrorBox } from '@pokedex/assets/js/components/shared/ErrorBox';
 
-const renderPokemonTypeSelection = (onChange, type, index) => (
+const renderPokemonTypeSelection = (onChange, selectedTypes, type, index) => (
 	<SelectionControl
 		id={`pokemon-types-checkbox-${index}`}
 		key={index}
 		name="pokemon_types_ids"
 		type="checkbox"
 		label={type.name}
+		checked={selectedTypes.indexOf(type.id) > -1}
 		checkedCheckboxIcon={
 			<FontIcon style={{ color: type.color }}>check</FontIcon>
 		}
@@ -64,7 +65,11 @@ const AddPokemonForm = props => {
 				</label>
 
 				{pokemonTypes.map(
-					renderPokemonTypeSelection.bind(null, onTypeSelection)
+					renderPokemonTypeSelection.bind(
+						null,
+						onTypeSelection,
+						pokemon.typesIds.value
+					)
 				)}
 
 				<ErrorBox

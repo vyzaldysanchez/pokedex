@@ -136,7 +136,8 @@ class AddPokemon extends BaseFormContainer {
 				sendNotificationMessage(
 					this.props.dispatch,
 					'Your pokemon has been created correctly'
-				);
+                );
+                this.resetForm();
 				domUtils.enableElements(formElements);
 			})
 			.catch(({ response }) => {
@@ -148,16 +149,10 @@ class AddPokemon extends BaseFormContainer {
 			});
 	}
 
-	generatePokemonFields({
-		name,
-		typesIds = [],
-		age,
-		pounds,
-		captured,
-		isPublic,
-		description,
-		image
-	}) {
+	generatePokemonFields(fields) {
+		const { name, typesIds = [], age, pounds } = fields;
+		const { captured, isPublic, description, image } = fields;
+
 		return {
 			name: this.generateField(
 				{ value: name || '' },
@@ -220,6 +215,10 @@ class AddPokemon extends BaseFormContainer {
 		};
 
 		this.setState(newState);
+	}
+
+	resetForm() {
+		this.setState({ pokemon: this.generatePokemonFields({}) });
 	}
 
 	render() {
