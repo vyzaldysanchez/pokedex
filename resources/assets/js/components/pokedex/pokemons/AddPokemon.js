@@ -7,18 +7,23 @@ import {
 	SIX_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { AddPokemonForm } from './AddPokemonForm';
-import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
-import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
+import {
+	LOAD_POKEMON_TYPES,
+	ADD_NOTIFICATION
+} from '@pokedex/assets/js/components/pokedex/actions';
+import { withPokemonTypesAndNotification } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
 import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
 import { validator } from './AddPokemonFormValidator';
+import domUtils from '@pokedex/assets/js/utils/dom.utils';
+import { sendNotificationMessage } from '@pokedex/assets/js/services/notifications.service';
+import { getErrorsFrom } from '@pokedex/assets/js/utils/http-helper';
 
 class AddPokemon extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
 		this.state = {
-			csrfToken: '',
 			pokemon: this.generatePokemonFields({}),
 			pokemonImage: null
 		};
@@ -38,12 +43,6 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
-
-		this.setState({
-			csrfToken: document
-				.querySelector('meta[name="csrf-token"]')
-				.getAttribute('value')
-		});
 	}
 
 	handleTypeSelection(id) {
@@ -114,7 +113,6 @@ class AddPokemon extends BaseFormContainer {
 		const formData = new FormData();
 		const pokemon = this.state.pokemon;
 
-		formData.append('_token', this.state.csrfToken);
 		formData.append('name', pokemon.name.value);
 		formData.append('age', Number.parseFloat(pokemon.age.value));
 		formData.append('pounds', Number.parseFloat(pokemon.pounds.value));
@@ -130,11 +128,24 @@ class AddPokemon extends BaseFormContainer {
 			'.md-cell input, .md-cell button, .md-cell textarea'
 		);
 
-		formElements.forEach(elem => (elem.disabled = true));
+		domUtils.disableElements(formElements);
 
-		axios.post('/pokemons', formData).then(res => {
-			formElements.forEach(elem => (elem.disabled = false));
-		});
+		axios
+			.post('/api/pokemons', formData)
+			.then(res => {
+				sendNotificationMessage(
+					this.props.dispatch,
+					'Your pokemon has been created correctly'
+				);
+				domUtils.enableElements(formElements);
+			})
+			.catch(({ response }) => {
+				sendNotificationMessage(
+					this.props.dispatch,
+					getErrorsFrom(response.data)
+				);
+				domUtils.enableElements(formElements);
+			});
 	}
 
 	generatePokemonFields({
@@ -220,7 +231,6 @@ class AddPokemon extends BaseFormContainer {
 					<h1>Add a Pokemon</h1>
 
 					<AddPokemonForm
-						csrfToken={this.state.csrfToken}
 						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
@@ -233,4 +243,6 @@ class AddPokemon extends BaseFormContainer {
 	}
 }
 
-export default connect(withPokemonTypesMapper.mapStateToProps)(AddPokemon);
+export default connect(withPokemonTypesAndNotification.mapStateToProps)(
+	AddPokemon
+);
