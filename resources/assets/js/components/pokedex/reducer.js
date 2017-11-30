@@ -4,7 +4,8 @@ import {
 	REMOVE_NOTIFICATION,
 	ADD_NOTIFICATION,
 	ADD_POKEMON_TYPE_FILTER,
-	ADD_SEARCH_TEXT_FILTER
+	ADD_SEARCH_TEXT_FILTER,
+	REMOVE_POKEMON_TYPE_FILTER
 } from './actions';
 import {
 	addNotification,
@@ -12,6 +13,7 @@ import {
 } from './reducers/notifications.reducer';
 import {
 	addPokemonTypeToFilter,
+	removePokemonTypeToFilter,
 	addSearchText
 } from './reducers/pokemon-search.reducer';
 
@@ -23,7 +25,7 @@ const initialState = {
 		autohide: true
 	},
 	filters: {
-		search: '',
+		search: '...',
 		pokemonTypes: []
 	}
 };
@@ -42,6 +44,8 @@ export default (state = initialState, action) => {
 			return addSearchText(state, action.payload);
 		case ADD_POKEMON_TYPE_FILTER:
 			return addPokemonTypeToFilter(state, action.payload);
+		case REMOVE_POKEMON_TYPE_FILTER:
+			return removePokemonTypeToFilter(state, action.payload);
 		default:
 			return state;
 	}
