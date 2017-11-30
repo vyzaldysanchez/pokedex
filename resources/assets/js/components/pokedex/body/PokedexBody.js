@@ -6,7 +6,7 @@ import {
 	NINE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
-import { PokedexSearch } from './PokedexSearch';
+import PokedexSearch from './PokedexSearch';
 
 export class PokedexBody extends Component {
 	render() {
