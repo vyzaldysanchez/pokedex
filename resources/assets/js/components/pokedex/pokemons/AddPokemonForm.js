@@ -36,13 +36,7 @@ export const POKEMON_AGE_MIN = 1;
 export const POKEMON_POUNDS_MIN = 0.0;
 
 const AddPokemonForm = props => {
-	const {
-		csrfToken,
-		pokemonTypes,
-		pokemon,
-		onSubmit,
-		onTypeSelection
-	} = props;
+	const { pokemonTypes, pokemon, onSubmit, onTypeSelection } = props;
 
 	return (
 		<form
@@ -51,8 +45,6 @@ const AddPokemonForm = props => {
 			encType="multipart/form-data"
 			onSubmit={onSubmit}
 		>
-			<input type="hidden" name="_token" value={csrfToken} />
-
 			<Cell size={TWELVE_COLUMNS}>
 				<TextField
 					name="name"

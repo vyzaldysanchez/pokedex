@@ -12,13 +12,13 @@ import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/st
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
 import { BaseFormContainer } from '@pokedex/assets/js/components/shared/BaseFormContainer';
 import { validator } from './AddPokemonFormValidator';
+import domUtils from '@pokedex/assets/js/utils/dom.utils';
 
 class AddPokemon extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
 		this.state = {
-			csrfToken: '',
 			pokemon: this.generatePokemonFields({}),
 			pokemonImage: null
 		};
@@ -38,12 +38,6 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
-
-		this.setState({
-			csrfToken: document
-				.querySelector('meta[name="csrf-token"]')
-				.getAttribute('value')
-		});
 	}
 
 	handleTypeSelection(id) {
@@ -130,11 +124,14 @@ class AddPokemon extends BaseFormContainer {
 			'.md-cell input, .md-cell button, .md-cell textarea'
 		);
 
-		formElements.forEach(elem => (elem.disabled = true));
+		domUtils.disableElements(formElements);
 
-		axios.post('/pokemons', formData).then(res => {
-			formElements.forEach(elem => (elem.disabled = false));
-		});
+		axios
+			.post('/api/pokemons', formData)
+			.then(res => {
+				domUtils.enableElements(formElements);
+			})
+			.catch(() => domUtils.enableElements(formElements));
 	}
 
 	generatePokemonFields({
@@ -220,7 +217,6 @@ class AddPokemon extends BaseFormContainer {
 					<h1>Add a Pokemon</h1>
 
 					<AddPokemonForm
-						csrfToken={this.state.csrfToken}
 						pokemonTypes={this.props.pokemonTypes}
 						pokemon={this.state.pokemon}
 						onTypeSelection={this.handleTypeSelection}
