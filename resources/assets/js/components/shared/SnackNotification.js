@@ -19,10 +19,6 @@ class SnackNotification extends Component {
 			payload: { toasts, autohide }
 		});
     }
-    
-    componentDidUpdate(props) {
-        console.log(props);
-    }
 
 	render() {
 		const { toasts, autohide } = this.props.notifications;
