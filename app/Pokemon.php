@@ -53,13 +53,16 @@ class Pokemon extends Model
 
     public function toArray(): array
     {
-        return [
+        $fields = [
+            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'age' => $this->age . ' years.',
             'pounds' => $this->pounds . ' pounds.',
-            'isPublic' => $this->public,
+            'public' => $this->public,
             'captured' => $this->captured
         ];
+
+        return $fields + $this->relations;
     }
 }

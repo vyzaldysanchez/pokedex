@@ -18,7 +18,7 @@ class Pokemons
     public static function getAll(array $columns = ['*'], array $relations = []): Collection
     {
         if ($relations) {
-            return Pokemon::with(['types'])->get($columns);
+            return Pokemon::with($relations)->get($columns);
         }
 
         return Pokemon::all($columns);
