@@ -4,6 +4,7 @@ export const LabelChip = props => (
 	<label
 		className="label"
 		style={{
+			display: 'inline-block',
 			backgroundColor: props.backgroundColor,
 			fontWeight: 900,
 			fontSize: 14,
