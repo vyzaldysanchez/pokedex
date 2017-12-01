@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Cell, Grid } from 'react-md';
 import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
+import pokemons from '@pokedex/assets/js/services/pokemons.service';
 import {
 	THREE_COLUMNS,
 	SIX_COLUMNS
@@ -43,6 +44,34 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
+
+		if (this.props.edit) {
+			this.loadPokemonToEdit();
+		}
+	}
+
+	loadPokemonToEdit() {
+		pokemons.find(this.props.pokemonId).then(pokemon => {
+			this.setState({
+				pokemon: Object.assign(
+					{},
+					this.state.pokemon,
+					this.generatePokemonFields({
+						name: pokemon.name,
+						typesIds: pokemon.types.map(type => type.id),
+						age: Number.parseFloat(pokemon.age),
+						pounds: Number.parseFloat(pokemon.pounds),
+						description: pokemon.description,
+						captured: pokemon.captured,
+						public: pokemon.public
+					})
+				)
+			});
+		});
+	}
+
+	get title() {
+		return this.props.edit ? 'Edit your Pokemon' : 'Add a Pokemon';
 	}
 
 	handleTypeSelection(id) {
@@ -136,8 +165,8 @@ class AddPokemon extends BaseFormContainer {
 				sendNotificationMessage(
 					this.props.dispatch,
 					'Your pokemon has been created correctly'
-                );
-                this.resetForm();
+				);
+				this.resetForm();
 				domUtils.enableElements(formElements);
 			})
 			.catch(({ response }) => {
@@ -227,7 +256,7 @@ class AddPokemon extends BaseFormContainer {
 		return (
 			<Grid className="add-pokemon-form" style={{ marginTop: height }}>
 				<Cell size={SIX_COLUMNS} desktopOffset={THREE_COLUMNS}>
-					<h1>Add a Pokemon</h1>
+					<h1>{this.title}</h1>
 
 					<AddPokemonForm
 						pokemonTypes={this.props.pokemonTypes}
