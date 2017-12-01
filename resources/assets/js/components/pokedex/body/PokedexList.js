@@ -6,6 +6,7 @@ import { PokedexSearchDetails } from './PokedexSearchDetails';
 import { TWELVE_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 import { REMOVE_POKEMON_TYPE_FILTER } from '@pokedex/assets/js/components/pokedex/actions';
+import { PokemonCard } from '@pokedex/assets/js/components/pokedex/pokemons/pokemon-card/PokemonCard';
 
 class PokedexList extends Component {
 	constructor(props) {
@@ -45,6 +46,12 @@ class PokedexList extends Component {
 						searching={search}
 						types={this.renderTypes()}
 					/>
+				</Cell>
+
+				<Cell size={TWELVE_COLUMNS}>
+					{this.props.pokemons.map(pokemon => (
+						<PokemonCard key={pokemon.id} pokemon={pokemon} />
+					))}
 				</Cell>
 			</Grid>
 		);

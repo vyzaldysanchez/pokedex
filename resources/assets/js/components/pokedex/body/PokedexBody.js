@@ -6,9 +6,8 @@ import {
 	NINE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
-import { PokedexSearch } from './PokedexSearch';
+import PokedexSearch from './PokedexSearch';
 import pokemons from '@pokedex/assets/js/services/pokemons.service';
-import { PokemonCard } from '@pokedex/assets/js/components/pokedex/pokemons/pokemon-card/PokemonCard';
 import PokedexList from './PokedexList';
 
 export class PokedexBody extends Component {
@@ -33,9 +32,7 @@ export class PokedexBody extends Component {
 				style={{ marginTop: height }}
 			>
 				<Cell size={NINE_COLUMNS}>
-					{pokemons.map(pokemon => (
-						<PokemonCard key={pokemon.id} pokemon={pokemon} />
-					))}
+					<PokedexList pokemons={pokemons} />
 				</Cell>
 				<Cell size={THREE_COLUMNS}>
 					<PokedexSearch />

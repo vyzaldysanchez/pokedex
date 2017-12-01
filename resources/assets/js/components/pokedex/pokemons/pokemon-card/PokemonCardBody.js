@@ -1,24 +1,27 @@
 import React from 'react';
-import { CardText } from 'react-md';
+import { CardText, Divider } from 'react-md';
+import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 
 export const PokemonCardBody = ({ types = [], age, pounds, description }) => (
 	<CardText>
 		<div>
 			{types.map((type, id) => (
-				<label
+				<LabelChip
+					backgroundColor={type.color}
+					label={type.name}
 					key={id}
-					className="label"
-					style={{ backgroundColor: type.color }}
-				>
-					{type.name}
-				</label>
+				/>
 			))}
 		</div>
 
 		<div>
-			{age}, {pounds}
+			<b>Age:</b> {age}
+			<br />
+			<b>Weight:</b> {pounds}
 		</div>
 
-		<p>{description}</p>
+		<div style={{ marginTop: 10 }}>
+			<p>{description}</p>
+		</div>
 	</CardText>
 );

@@ -9,7 +9,7 @@ import {
 } from '@pokedex/assets/js/components/pokedex/actions';
 import { TWELVE_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
 
-export class PokedexSearch extends Component {
+class PokedexSearch extends Component {
 	constructor(props) {
 		super(props);
 
