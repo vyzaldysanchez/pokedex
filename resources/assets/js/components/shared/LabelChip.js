@@ -2,7 +2,7 @@ import React from 'react';
 
 export const LabelChip = props => (
 	<label
-		className="label"
+		className="label md-paper--2"
 		style={{
 			display: 'inline-block',
 			backgroundColor: props.backgroundColor,
@@ -12,6 +12,13 @@ export const LabelChip = props => (
 		}}
 		onClick={props.onClick}
 	>
-		<span className="text-capitalize">{props.label}</span>
+		<span
+			className="text-capitalize"
+			style={{
+				textShadow: '1px 1px 2px black'
+			}}
+		>
+			{props.label}
+		</span>
 	</label>
 );

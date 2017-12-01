@@ -6,12 +6,25 @@ import {
 	NINE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
-import PokedexList from './PokedexList';
 import PokedexSearch from './PokedexSearch';
+import pokemons from '@pokedex/assets/js/services/pokemons.service';
+import PokedexList from './PokedexList';
+import { fixedRight } from '@pokedex/assets/js/utils/styles';
 
 export class PokedexBody extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = { pokemons: [] };
+	}
+
+	componentDidMount() {
+		pokemons.getAll().then(pokemons => this.setState({ pokemons }));
+	}
+
 	render() {
 		const { height } = styles;
+		const { pokemons } = this.state;
 
 		return (
 			<Grid
@@ -20,9 +33,9 @@ export class PokedexBody extends Component {
 				style={{ marginTop: height }}
 			>
 				<Cell size={NINE_COLUMNS}>
-					<PokedexList />
+					<PokedexList pokemons={pokemons} />
 				</Cell>
-				<Cell size={THREE_COLUMNS}>
+				<Cell size={THREE_COLUMNS} style={fixedRight}>
 					<PokedexSearch />
 				</Cell>
 			</Grid>

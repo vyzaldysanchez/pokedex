@@ -22,6 +22,9 @@ export const PokedexSearchDetails = props => {
 
 	return (
 		<div>
+			<span>
+				Remember to click on <b>Search</b> to apply your filters...
+			</span>
 			<h3 style={{ wordWrap: 'break-word' }}>
 				Searching:&nbsp;
 				<i style={{ whiteSpace: 'normal' }}>
