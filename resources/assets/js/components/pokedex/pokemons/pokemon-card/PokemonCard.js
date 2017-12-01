@@ -8,6 +8,7 @@ export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
 	<Cell size={SIX_COLUMNS} style={{ display: 'inline-block' }}>
 		<Card>
 			<PokemonCardHeader
+				id={pokemon.id}
 				name={pokemon.name}
 				image={{ src: `/api/pokemons/${pokemon.id}/image` }}
 				captured={pokemon.captured}
