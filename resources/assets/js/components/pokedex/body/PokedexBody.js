@@ -9,6 +9,7 @@ import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars
 import PokedexSearch from './PokedexSearch';
 import pokemons from '@pokedex/assets/js/services/pokemons.service';
 import PokedexList from './PokedexList';
+import { fixedRight } from '@pokedex/assets/js/utils/styles';
 
 export class PokedexBody extends Component {
 	constructor(props) {
@@ -34,7 +35,7 @@ export class PokedexBody extends Component {
 				<Cell size={NINE_COLUMNS}>
 					<PokedexList pokemons={pokemons} />
 				</Cell>
-				<Cell size={THREE_COLUMNS}>
+				<Cell size={THREE_COLUMNS} style={fixedRight}>
 					<PokedexSearch />
 				</Cell>
 			</Grid>
