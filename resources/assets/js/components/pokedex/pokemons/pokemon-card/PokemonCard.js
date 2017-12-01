@@ -5,7 +5,7 @@ import { PokemonCardHeader } from './PokemonCardHeader';
 import { PokemonCardBody } from './PokemonCardBody';
 
 export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
-	<Cell size={SIX_COLUMNS}>
+	<Cell size={SIX_COLUMNS} style={{ display: 'inline-block' }}>
 		<Card>
 			<PokemonCardHeader
 				name={pokemon.name}
