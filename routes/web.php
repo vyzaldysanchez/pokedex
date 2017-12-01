@@ -10,6 +10,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/user', 'Auth\SessionsController');
 
         Route::get('/pokemons/types', 'PokemonTypesController@index');
+        Route::get('/pokemons/{pokemon}/image', 'PokemonsImagesController@find');
         Route::resource('/pokemons', 'PokemonsController');
     });
 
