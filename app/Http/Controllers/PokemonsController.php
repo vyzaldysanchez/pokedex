@@ -16,7 +16,7 @@ class PokemonsController extends Controller
      */
     public function index()
     {
-        return Pokemons::getAll();
+        return Pokemons::getAll(['*'], ['types']);
     }
 
     /**

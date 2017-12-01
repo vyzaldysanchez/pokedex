@@ -15,8 +15,12 @@ class Pokemons
      * @param array $columns
      * @return Collection
      */
-    public static function getAll(array $columns = ['*']): Collection
+    public static function getAll(array $columns = ['*'], array $relations = []): Collection
     {
+        if ($relations) {
+            return Pokemon::with($relations)->get($columns);
+        }
+
         return Pokemon::all($columns);
     }
     /**
