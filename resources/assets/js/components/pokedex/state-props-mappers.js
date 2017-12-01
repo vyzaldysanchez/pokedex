@@ -26,3 +26,14 @@ export const withPokemonTypesAndNotification = {
 		};
 	}
 };
+
+export const withSearchData = {
+	mapStateToProps({ filters }) {
+		return {
+			filters: {
+				search: filters.search || '',
+				pokemonTypes: filters.pokemonTypes || []
+			}
+		};
+	}
+};

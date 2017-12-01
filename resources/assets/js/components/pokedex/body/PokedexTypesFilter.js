@@ -5,6 +5,7 @@ import { Chip } from 'react-md';
 import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
 import { LOAD_POKEMON_TYPES } from '@pokedex/assets/js/components/pokedex/actions';
 import { withPokemonTypesMapper } from '@pokedex/assets/js/components/pokedex/state-props-mappers';
+import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 
 class PokedexTypesFilter extends Component {
 	constructor(props) {
@@ -17,13 +18,17 @@ class PokedexTypesFilter extends Component {
 		const onPokemonTypeSelected = this.props.onPokemonTypeSelected;
 
 		return (
-			<Chip
+			<LabelChip
+				backgroundColor={type.color}
 				label={type.name}
 				key={index}
-				style={{ backgroundColor: type.color, width: '30%', margin: 2 }}
-				labelStyle={{ width: '100%', textAlign: 'center' }}
-				className="md-paper--1"
-				onClick={() => onPokemonTypeSelected(type.id)}
+				style={{
+					margin: 2,
+					width: '31%',
+					display: 'inline-block',
+					cursor: 'pointer'
+				}}
+				onClick={() => onPokemonTypeSelected(type)}
 			/>
 		);
 	}

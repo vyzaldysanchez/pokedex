@@ -6,9 +6,14 @@ import {
 	NINE_COLUMNS
 } from '@pokedex/assets/js/utils/ui-columns';
 import { styles } from '@pokedex/assets/js/components/pokedex/header/styles-vars';
+<<<<<<< HEAD
 import { PokedexSearch } from './PokedexSearch';
 import pokemons from '@pokedex/assets/js/services/pokemons.service';
 import { PokemonCard } from '@pokedex/assets/js/components/pokedex/pokemons/pokemon-card/PokemonCard';
+=======
+import PokedexList from './PokedexList';
+import PokedexSearch from './PokedexSearch';
+>>>>>>> 6b2710d2231f0e53c01e425e4ce80c034ac301a0
 
 export class PokedexBody extends Component {
 	constructor(props) {
