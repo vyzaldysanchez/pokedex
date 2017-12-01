@@ -50,4 +50,16 @@ class Pokemon extends Model
     {
         return $this->hasOne(Image::class);
     }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'age' => $this->age . ' years.',
+            'pounds' => $this->pounds . ' pounds.',
+            'isPublic' => $this->public,
+            'captured' => $this->captured
+        ];
+    }
 }
