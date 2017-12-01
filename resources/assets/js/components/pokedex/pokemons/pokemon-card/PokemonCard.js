@@ -4,12 +4,22 @@ import { SIX_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
 import { PokemonCardHeader } from './PokemonCardHeader';
 import { PokemonCardBody } from './PokemonCardBody';
 
-export const PokemonCard = ({ image = {}, captured, isPublic }) => (
+export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
 	<Cell size={SIX_COLUMNS}>
 		<Card>
-			<PokemonCardHeader image={image} />
+			<PokemonCardHeader
+				name={pokemon.name}
+				image={{ src: `/api/pokemons/${pokemon.id}/image` }}
+				captured={pokemon.captured}
+				isPublic={pokemon.public}
+			/>
 
-			<PokemonCardBody />
+			<PokemonCardBody
+				age={pokemon.age}
+				pounds={pokemon.pounds}
+				description={pokemon.description}
+				types={pokemon.types}
+			/>
 		</Card>
 	</Cell>
 );
