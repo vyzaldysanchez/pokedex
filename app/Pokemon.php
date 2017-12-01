@@ -59,8 +59,8 @@ class Pokemon extends Model
             'description' => $this->description,
             'age' => $this->age . ' years.',
             'pounds' => $this->pounds . ' pounds.',
-            'public' => $this->public,
-            'captured' => $this->captured
+            'public' => (bool)$this->public,
+            'captured' => (bool)$this->captured
         ];
 
         return $fields + $this->relations;
