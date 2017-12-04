@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, CardTitle, Media, MediaOverlay } from 'react-md';
 
 const getPrivacyIcon = isPublic => (isPublic ? 'lock_open' : 'lock_outline');
@@ -7,6 +8,7 @@ const getStatusIcon = captured => (captured ? 'favorite' : 'favorite_border');
 const imgHeight = 410;
 
 export const PokemonCardHeader = ({
+	id,
 	image,
 	name = 'Pokemon Name',
 	captured,
@@ -26,9 +28,11 @@ export const PokemonCardHeader = ({
 						{getPrivacyIcon(isPublic)}
 					</Button>
 
-					<Button icon className="md-paper--1">
-						edit
-					</Button>
+					<Link to={`/pokemons/${id}/edit`}>
+						<Button icon className="md-paper--1">
+							edit
+						</Button>
+					</Link>
 				</div>
 			</CardTitle>
 		</MediaOverlay>

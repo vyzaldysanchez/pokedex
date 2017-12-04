@@ -53,5 +53,12 @@ export const validator = {
 		image: Object.assign({}, baseValidationField, {
 			error: 'An image must be selected'
 		})
+	},
+	validate(fields, noValidateFields = []) {
+		Object.keys(fields).forEach(fieldName => {
+			if (noValidateFields.indexOf(fieldName) === -1) {
+				this.fields[fieldName].validate(fields[fieldName].value);
+			}
+		});
 	}
 };

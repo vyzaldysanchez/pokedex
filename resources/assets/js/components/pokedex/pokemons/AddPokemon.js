@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Cell, Grid } from 'react-md';
 import pokemonTypes from '@pokedex/assets/js/services/pokemon-types.service';
+import pokemons from '@pokedex/assets/js/services/pokemons.service';
 import {
 	THREE_COLUMNS,
 	SIX_COLUMNS
@@ -23,6 +24,8 @@ class AddPokemon extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
+		this.buttonText = this.props.edit ? 'Update Pokedex' : 'Add to Pokedex';
+
 		this.state = {
 			pokemon: this.generatePokemonFields({}),
 			pokemonImage: null
@@ -43,6 +46,44 @@ class AddPokemon extends BaseFormContainer {
 				})
 			);
 		}
+
+		if (this.props.edit) {
+			this.loadPokemonToEdit();
+		}
+	}
+
+	loadPokemonToEdit() {
+		pokemons.find(this.props.pokemonId).then(pokemon => {
+			this.setState({
+				pokemon: Object.assign(
+					{},
+					this.state.pokemon,
+					this.generatePokemonFields({
+						name: pokemon.name,
+						typesIds: pokemon.types.map(type => type.id),
+						age: Number.parseFloat(pokemon.age),
+						pounds: Number.parseFloat(pokemon.pounds),
+						description: pokemon.description,
+						captured: pokemon.captured,
+						public: pokemon.public
+					})
+				)
+			});
+		});
+	}
+
+	get submitFunc() {
+		return this.props.edit ? axios.put : axios.post;
+	}
+
+	get submitUrl() {
+		return this.props.edit
+			? `/api/pokemons/${this.props.pokemonId}`
+			: '/api/pokemons';
+	}
+
+	get title() {
+		return this.props.edit ? 'Edit your Pokemon' : 'Add a Pokemon';
 	}
 
 	handleTypeSelection(id) {
@@ -80,16 +121,8 @@ class AddPokemon extends BaseFormContainer {
 	}
 
 	validateForm() {
-		this.validator.fields.name.validate(this.state.pokemon.name.value);
-		this.validator.fields.typesIds.validate(
-			this.state.pokemon.typesIds.value
-		);
-		this.validator.fields.age.validate(this.state.pokemon.age.value);
-		this.validator.fields.pounds.validate(this.state.pokemon.pounds.value);
-		this.validator.fields.description.validate(
-			this.state.pokemon.description.value
-		);
-		this.validator.fields.image.validate(this.state.pokemon.image.value);
+		const ignoreFields = this.props.edit ? ['image'] : [];
+		this.validator.validate(this.state.pokemon, ignoreFields);
 
 		this.setState({
 			pokemon: Object.assign(
@@ -130,14 +163,13 @@ class AddPokemon extends BaseFormContainer {
 
 		domUtils.disableElements(formElements);
 
-		axios
-			.post('/api/pokemons', formData)
+		this.submitFunc(this.submitUrl, formData)
 			.then(res => {
 				sendNotificationMessage(
 					this.props.dispatch,
 					'Your pokemon has been created correctly'
-                );
-                this.resetForm();
+				);
+				this.resetForm();
 				domUtils.enableElements(formElements);
 			})
 			.catch(({ response }) => {
@@ -227,7 +259,7 @@ class AddPokemon extends BaseFormContainer {
 		return (
 			<Grid className="add-pokemon-form" style={{ marginTop: height }}>
 				<Cell size={SIX_COLUMNS} desktopOffset={THREE_COLUMNS}>
-					<h1>Add a Pokemon</h1>
+					<h1>{this.title}</h1>
 
 					<AddPokemonForm
 						pokemonTypes={this.props.pokemonTypes}
@@ -235,6 +267,7 @@ class AddPokemon extends BaseFormContainer {
 						onTypeSelection={this.handleTypeSelection}
 						onImageSelected={this.updateImageName}
 						onSubmit={this.onSubmit}
+						buttonText={this.buttonText}
 					/>
 				</Cell>
 			</Grid>
