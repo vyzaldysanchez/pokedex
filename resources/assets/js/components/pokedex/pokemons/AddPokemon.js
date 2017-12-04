@@ -24,6 +24,8 @@ class AddPokemon extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
+		this.buttonText = this.props.edit ? 'Update Pokedex' : 'Add to Pokedex';
+
 		this.state = {
 			pokemon: this.generatePokemonFields({}),
 			pokemonImage: null
@@ -72,6 +74,12 @@ class AddPokemon extends BaseFormContainer {
 
 	get submitFunc() {
 		return this.props.edit ? axios.put : axios.post;
+	}
+
+	get submitUrl() {
+		return this.props.edit
+			? `/api/pokemons/${this.props.pokemonId}`
+			: '/api/pokemons';
 	}
 
 	get title() {
@@ -155,7 +163,7 @@ class AddPokemon extends BaseFormContainer {
 
 		domUtils.disableElements(formElements);
 
-		this.submitFunc('/api/pokemons', formData)
+		this.submitFunc(this.submitUrl, formData)
 			.then(res => {
 				sendNotificationMessage(
 					this.props.dispatch,
@@ -259,6 +267,7 @@ class AddPokemon extends BaseFormContainer {
 						onTypeSelection={this.handleTypeSelection}
 						onImageSelected={this.updateImageName}
 						onSubmit={this.onSubmit}
+						buttonText={this.buttonText}
 					/>
 				</Cell>
 			</Grid>

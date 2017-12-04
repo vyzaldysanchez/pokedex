@@ -37,7 +37,13 @@ export const POKEMON_AGE_MIN = 1;
 export const POKEMON_POUNDS_MIN = 0.0;
 
 const AddPokemonForm = props => {
-	const { pokemonTypes, pokemon, onSubmit, onTypeSelection } = props;
+	const {
+		pokemonTypes,
+		pokemon,
+		onSubmit,
+		onTypeSelection,
+		buttonText
+	} = props;
 
 	return (
 		<form
@@ -185,7 +191,7 @@ const AddPokemonForm = props => {
 					iconEl={<FontIcon>add</FontIcon>}
 					type="submit"
 				>
-					Add To Pokedex
+					{buttonText}
 				</Button>
 			</Cell>
 		</form>
