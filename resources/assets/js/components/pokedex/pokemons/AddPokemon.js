@@ -78,6 +78,12 @@ class AddPokemon extends BaseFormContainer {
 			: '/api/pokemons';
 	}
 
+	get submitSuccessMessage() {
+		return this.props.edit
+			? 'Your pokemon has been updated correctly'
+			: 'Your pokemon has been created correctly';
+	}
+
 	get title() {
 		return this.props.edit ? 'Edit your Pokemon' : 'Add a Pokemon';
 	}
@@ -168,7 +174,7 @@ class AddPokemon extends BaseFormContainer {
 			.then(res => {
 				sendNotificationMessage(
 					this.props.dispatch,
-					'Your pokemon has been created correctly'
+					this.submitSuccessMessage
 				);
 				this.resetForm();
 				domUtils.enableElements(formElements);
