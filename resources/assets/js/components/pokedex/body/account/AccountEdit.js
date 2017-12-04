@@ -22,10 +22,26 @@ class AccountEdit extends BaseFormContainer {
 			csrfToken: '',
 			user: {
 				id: id,
-				fullName: this.generateField({ value: fullName }, 'fullName', this.handleUserInput),
-				city: this.generateField({ value: city }, 'city', this.handleUserInput),
-				email: this.generateField({ value: email }, 'email', this.handleUserInput),
-				telephone: this.generateField({ value: telephone }, 'telephone', this.handleUserInput)
+				fullName: this.generateField(
+					{ value: fullName || '' },
+					'fullName',
+					this.handleUserInput
+				),
+				city: this.generateField(
+					{ value: city || '' },
+					'city',
+					this.handleUserInput
+				),
+				email: this.generateField(
+					{ value: email || '' },
+					'email',
+					this.handleUserInput
+				),
+				telephone: this.generateField(
+					{ value: telephone || '' },
+					'telephone',
+					this.handleUserInput
+				)
 			}
 		};
 
@@ -51,6 +67,36 @@ class AccountEdit extends BaseFormContainer {
 			csrfToken: document
 				.querySelector('meta[name="csrf-token"]')
 				.getAttribute('value')
+		});
+	}
+
+	componentWillReceiveProps({ user }) {
+		const { id, fullName, city, email, telephone } = user;
+
+		this.setState({
+			user: {
+				id: id,
+				fullName: this.generateField(
+					{ value: fullName || '' },
+					'fullName',
+					this.handleUserInput
+				),
+				city: this.generateField(
+					{ value: city || '' },
+					'city',
+					this.handleUserInput
+				),
+				email: this.generateField(
+					{ value: email || '' },
+					'email',
+					this.handleUserInput
+				),
+				telephone: this.generateField(
+					{ value: telephone || '' },
+					'telephone',
+					this.handleUserInput
+				)
+			}
 		});
 	}
 
