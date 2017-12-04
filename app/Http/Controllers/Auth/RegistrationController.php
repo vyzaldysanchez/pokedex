@@ -14,6 +14,12 @@ class RegistrationController extends Controller
         return view('auth.register');
     }
 
+    /**
+     * Creates a new user account
+     *
+     * @param RegistrationRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(RegistrationRequest $request)
     {
         $request->validate();
@@ -34,11 +40,17 @@ class RegistrationController extends Controller
         return redirect('/');
     }
 
+    /**
+     * Updates user account
+     *
+     * @param RegistrationUpdateRequest $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(RegistrationUpdateRequest $request)
     {
-        $validFields = $request->validate();
+        $request->validate();
 
-        \Auth::user()->update($validFields);
+        \Auth::user()->update($request->only(['full_name', 'city', 'telephone']));
 
         \Session::flash('status', 'Your information has been successfully updated.');
 
