@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PokemonCreationRequest;
 use App\Pokemon;
 use App\Repositories\Pokemons;
+use App\Http\Requests\PokemonCreationRequest;
+use App\Http\Requests\PokemonUpdateRequest;
 
 class PokemonsController extends Controller
 {
@@ -22,7 +23,7 @@ class PokemonsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PokemonCreationRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(PokemonCreationRequest $request)
@@ -57,13 +58,15 @@ class PokemonsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\PokemonUpdateRequest  $request
+     * @param  \App\Pokemon  $pokemon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PokemonUpdateRequest $request, Pokemon $pokemon)
     {
-        //
+        $request->validate();
+
+        return Pokemons::update($request, $pokemon);
     }
 
     /**
