@@ -9,6 +9,19 @@ use Illuminate\Support\Collection;
 
 class Pokemons
 {
+
+    /**
+     * Retrieve a pokemon by id.
+     *
+     * @param int $id
+     * @param array $relations
+     * @return Pokemon
+     */
+    public static function getById(int $id, array $relations = []): Pokemon
+    {
+        return Pokemon::with($relations)->find($id);
+    }
+
     /**
      * Retrieve all stored pokemons.
      *

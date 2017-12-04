@@ -38,9 +38,9 @@ class PokemonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        return Pokemons::getById($id, ['types']);
     }
 
     /**
@@ -51,7 +51,7 @@ class PokemonsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('home.index');
     }
 
     /**

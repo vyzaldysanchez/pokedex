@@ -14,6 +14,8 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/pokemons', 'PokemonsController');
     });
 
+    Route::resource('/pokemons', 'PokemonsController');
+    
     Route::put('/users/edit/', 'Auth\RegistrationController@update');
 });
 
