@@ -2,9 +2,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" value="{{ csrf_token() }}">
+	<meta name="csrf-token" value="{{ csrf_token() }}">
 
-	<title>Laravel</title>
+	<title>Pokedex</title>
+
+	<link rel="icon" href="/img/logo.png" />
 
 	<!-- Fonts -->
 	<link href="/css/app.css" rel="stylesheet" type="text/css">
@@ -21,9 +23,9 @@
 			margin: 0;
 		}
 
-        body > .container {
-            height: 100%;
-        }
+		body>.container {
+			height: 100%;
+		}
 
 		.full-height {
 			height: 100vh;
