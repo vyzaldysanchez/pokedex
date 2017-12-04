@@ -73,7 +73,7 @@ class Pokemons
     {
         $fields = [
             'captured' => $request->get('captured') !== 'false',
-            'public' => $request->get('captured') !== 'false',
+            'public' => $request->get('public') !== 'false',
             'user_id' => \Auth::user()->id
         ] + $request->only(['name', 'description', 'age', 'pounds']);
 
