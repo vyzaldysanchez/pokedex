@@ -14,8 +14,6 @@ class AccountEdit extends BaseFormContainer {
 	constructor(props) {
 		super(props, validator);
 
-		this.validator = validator;
-
 		const { id, fullName, city, email, telephone } = this.props.user;
 
 		this.state = {
@@ -110,7 +108,10 @@ class AccountEdit extends BaseFormContainer {
 
 	validate() {
 		this.handleUserInput('fullName', this.state.user.fullName.value);
-		this.handleUserInput('telephone', this.state.user.telephone.value);
+		this.handleUserInput(
+			'telephone',
+			this.state.user.telephone.value.replace(/\D/g, '')
+		);
 		this.handleUserInput('city', this.state.user.city.value);
 	}
 
