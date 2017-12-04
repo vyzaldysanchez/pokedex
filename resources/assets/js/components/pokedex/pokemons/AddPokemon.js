@@ -28,7 +28,7 @@ class AddPokemon extends BaseFormContainer {
 
 		this.state = {
 			pokemon: this.generatePokemonFields({}),
-			pokemonImage: null
+			pokemonImage: ''
 		};
 		this.handleTypeSelection = this.handleTypeSelection.bind(this);
 		this.handleInput = this.handleInput.bind(this);
@@ -65,21 +65,23 @@ class AddPokemon extends BaseFormContainer {
 						pounds: Number.parseFloat(pokemon.pounds),
 						description: pokemon.description,
 						captured: pokemon.captured,
-						public: pokemon.public
+						isPublic: pokemon.public
 					})
 				)
 			});
 		});
 	}
 
-	get submitFunc() {
-		return this.props.edit ? axios.put : axios.post;
-	}
-
 	get submitUrl() {
 		return this.props.edit
 			? `/api/pokemons/${this.props.pokemonId}`
 			: '/api/pokemons';
+	}
+
+	get submitSuccessMessage() {
+		return this.props.edit
+			? 'Your pokemon has been updated correctly'
+			: 'Your pokemon has been created correctly';
 	}
 
 	get title() {
@@ -136,7 +138,7 @@ class AddPokemon extends BaseFormContainer {
 					description: this.state.pokemon.description.value,
 					image: this.state.pokemon.image.value,
 					captured: this.state.pokemon.captured.value,
-					public: this.state.pokemon.public.value
+					isPublic: this.state.pokemon.public.value
 				})
 			)
 		});
@@ -145,6 +147,10 @@ class AddPokemon extends BaseFormContainer {
 	submitForm() {
 		const formData = new FormData();
 		const pokemon = this.state.pokemon;
+
+		if (this.props.edit) {
+			formData.append('_method', 'PUT');
+		}
 
 		formData.append('name', pokemon.name.value);
 		formData.append('age', Number.parseFloat(pokemon.age.value));
@@ -163,11 +169,12 @@ class AddPokemon extends BaseFormContainer {
 
 		domUtils.disableElements(formElements);
 
-		this.submitFunc(this.submitUrl, formData)
+		axios
+			.post(this.submitUrl, formData)
 			.then(res => {
 				sendNotificationMessage(
 					this.props.dispatch,
-					'Your pokemon has been created correctly'
+					this.submitSuccessMessage
 				);
 				this.resetForm();
 				domUtils.enableElements(formElements);
