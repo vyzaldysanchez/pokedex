@@ -5,7 +5,7 @@ import { Button, CardTitle, Media, MediaOverlay } from 'react-md';
 const getPrivacyIcon = isPublic => (isPublic ? 'lock_open' : 'lock_outline');
 const getStatusIcon = captured => (captured ? 'favorite' : 'favorite_border');
 
-const imgHeight = 270;
+const imgHeight = 250;
 
 export const PokemonCardHeader = ({
 	id,
@@ -15,7 +15,7 @@ export const PokemonCardHeader = ({
 	isPublic
 }) => (
 	<Media style={{ height: imgHeight, width: '100%' }}>
-		<img src={image.src} alt={name} />
+		<img src={image.src} alt={name} style={{ objectFit: 'contain' }} />
 
 		<MediaOverlay>
 			<CardTitle title={name}>
