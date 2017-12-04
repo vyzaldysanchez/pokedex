@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { Card, Cell } from 'react-md';
-import { SIX_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
+import {
+	FOUR_COLUMNS,
+	SIX_COLUMNS,
+	TWELVE_COLUMNS
+} from '@pokedex/assets/js/utils/ui-columns';
 import { PokemonCardHeader } from './PokemonCardHeader';
 import { PokemonCardBody } from './PokemonCardBody';
 
 export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
-	<Cell size={SIX_COLUMNS} style={{ display: 'inline-block' }}>
+	<Cell
+		desktopSize={FOUR_COLUMNS}
+		phoneSize={TWELVE_COLUMNS}
+		tabletSize={SIX_COLUMNS}
+		style={{ display: 'inline-block' }}
+	>
 		<Card>
 			<PokemonCardHeader
 				id={pokemon.id}

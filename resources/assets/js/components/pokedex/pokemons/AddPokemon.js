@@ -70,6 +70,10 @@ class AddPokemon extends BaseFormContainer {
 		});
 	}
 
+	get submitFunc() {
+		return this.props.edit ? axios.put : axios.post;
+	}
+
 	get title() {
 		return this.props.edit ? 'Edit your Pokemon' : 'Add a Pokemon';
 	}
@@ -109,16 +113,8 @@ class AddPokemon extends BaseFormContainer {
 	}
 
 	validateForm() {
-		this.validator.fields.name.validate(this.state.pokemon.name.value);
-		this.validator.fields.typesIds.validate(
-			this.state.pokemon.typesIds.value
-		);
-		this.validator.fields.age.validate(this.state.pokemon.age.value);
-		this.validator.fields.pounds.validate(this.state.pokemon.pounds.value);
-		this.validator.fields.description.validate(
-			this.state.pokemon.description.value
-		);
-		this.validator.fields.image.validate(this.state.pokemon.image.value);
+		const ignoreFields = this.props.edit ? ['image'] : [];
+		this.validator.validate(this.state.pokemon, ignoreFields);
 
 		this.setState({
 			pokemon: Object.assign(
@@ -159,8 +155,7 @@ class AddPokemon extends BaseFormContainer {
 
 		domUtils.disableElements(formElements);
 
-		axios
-			.post('/api/pokemons', formData)
+		this.submitFunc('/api/pokemons', formData)
 			.then(res => {
 				sendNotificationMessage(
 					this.props.dispatch,
