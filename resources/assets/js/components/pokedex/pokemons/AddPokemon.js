@@ -66,7 +66,10 @@ class AddPokemon extends BaseFormContainer {
 						description: pokemon.description,
 						captured: pokemon.captured,
 						isPublic: pokemon.public,
-						location: pokemon.location
+						location: {
+							lat: Number.parseFloat(pokemon.location.latitude),
+							lng: Number.parseFloat(pokemon.location.longitude)
+						}
 					})
 				)
 			});
@@ -166,6 +169,8 @@ class AddPokemon extends BaseFormContainer {
 		pokemon.typesIds.value.forEach(id =>
 			formData.append('pokemon_types_ids[]', id)
 		);
+		formData.append('location[lat]', pokemon.location.value.lat);
+		formData.append('location[lng]', pokemon.location.value.lng);
 
 		const formElements = document.querySelectorAll(
 			'.md-cell input, .md-cell button, .md-cell textarea'
@@ -284,6 +289,7 @@ class AddPokemon extends BaseFormContainer {
 						onImageSelected={this.updateImageName}
 						onSubmit={this.onSubmit}
 						buttonText={this.buttonText}
+						useCurrentLocation={!this.props.edit}
 					/>
 				</Cell>
 			</Grid>

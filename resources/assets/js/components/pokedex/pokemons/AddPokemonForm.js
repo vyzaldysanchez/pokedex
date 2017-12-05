@@ -43,7 +43,8 @@ const AddPokemonForm = props => {
 		pokemon,
 		onSubmit,
 		onTypeSelection,
-		buttonText
+		buttonText,
+		useCurrentLocation
 	} = props;
 
 	return (
@@ -186,7 +187,12 @@ const AddPokemonForm = props => {
 			<Cell size={TWELVE_COLUMNS}>
 				<label>Where did you find the pokemon...?</label>
 
-				<Map onPositionSelected={pokemon.location.onChange} />
+				<Map
+					lat={pokemon.location.value.lat}
+					lng={pokemon.location.value.lng}
+					currentLocationAsDefault={useCurrentLocation}
+					onPositionSelected={pokemon.location.onChange}
+				/>
 
 				<ErrorBox
 					display={pokemon.location.error}
