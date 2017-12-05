@@ -29,6 +29,7 @@ export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
 				pounds={pokemon.pounds}
 				description={pokemon.description}
 				types={pokemon.types}
+				location={pokemon.location}
 			/>
 		</Card>
 	</Cell>
