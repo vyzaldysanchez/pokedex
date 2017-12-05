@@ -28,4 +28,13 @@ class PokemonLocation extends Model
     {
         return $this->belongsTo(Pokemon::class);
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'latitude' => (float)$this->latitude,
+            'longitude' => (float)$this->longitude
+        ];
+    }
 }

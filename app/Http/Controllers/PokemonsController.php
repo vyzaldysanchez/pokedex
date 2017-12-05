@@ -10,6 +10,8 @@ use App\Http\Requests\PokemonUpdateRequest;
 
 class PokemonsController extends Controller
 {
+    protected $commonRelations = ['types', 'location'];
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class PokemonsController extends Controller
      */
     public function index()
     {
-        return Pokemons::getAll(['*'], ['types']);
+        return Pokemons::getAll(['*'], $this->commonRelations);
     }
 
     /**
@@ -41,7 +43,7 @@ class PokemonsController extends Controller
      */
     public function show(int $id)
     {
-        return Pokemons::getById($id, ['types']);
+        return Pokemons::getById($id, $this->commonRelations);
     }
 
     /**
