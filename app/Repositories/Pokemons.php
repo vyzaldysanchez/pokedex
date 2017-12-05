@@ -88,6 +88,10 @@ class Pokemons
             $pokemon->types()->sync($pokemonTypes);
         }
 
+        if ($location = $request->get('location')) {
+            Locations::update(['latitude' => $location['lat'], 'longitude' => $location['lng']], $pokemon->id);
+        }
+
         if ($image = $request->get('image')) {
             Images::store($image, $pokemon->id);
         }

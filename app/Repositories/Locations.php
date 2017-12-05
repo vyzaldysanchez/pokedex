@@ -23,4 +23,16 @@ class Locations
     {
         return PokemonLocation::create($fields + ['pokemon_id' => $pokemonId]);
     }
+
+    /**
+     * Updates the pokemon location
+     *
+     * @param array $fields
+     * @param int $pokemonId
+     * @return bool
+     */
+    public static function update(array $fields, int $pokemonId): bool
+    {
+        return PokemonLocation::where('pokemon_id', '=', $pokemonId)->update($fields);
+    }
 }
