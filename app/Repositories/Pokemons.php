@@ -30,7 +30,7 @@ class Pokemons
      * @param array $columns
      * @return array|Length
      */
-    public static function getAll(array $columns = ['*'], array $relations = [])
+    public static function getAll(array $columns = ['*'], array $relations = [], int $amount = self::POKEMONS_PER_PAGE)
     {
         $query = Pokemon::select($columns);
 
@@ -38,7 +38,7 @@ class Pokemons
             $query = $query->with($relations);
         }
          
-        return $query->paginate(static::POKEMONS_PER_PAGE);
+        return $query->paginate($amount);
     }
     /**
      * Stores a Pokemon in the DB from a http request
