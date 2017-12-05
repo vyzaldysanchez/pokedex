@@ -53,5 +53,5 @@ Map.defaultProps = {
 	position: 'relative',
 	height: 300,
 	width: '100%',
-	zoom: 15
+	zoom: 17
 };
