@@ -185,7 +185,13 @@ const AddPokemonForm = props => {
 
 			<Cell size={TWELVE_COLUMNS}>
 				<label>Where did you find the pokemon...?</label>
-				<Map />
+
+				<Map onPositionSelected={pokemon.location.onChange} />
+
+				<ErrorBox
+					display={pokemon.location.error}
+					message={pokemon.location.errorText}
+				/>
 			</Cell>
 
 			<Cell size={TWELVE_COLUMNS}>

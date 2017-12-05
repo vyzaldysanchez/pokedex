@@ -65,7 +65,8 @@ class AddPokemon extends BaseFormContainer {
 						pounds: Number.parseFloat(pokemon.pounds),
 						description: pokemon.description,
 						captured: pokemon.captured,
-						isPublic: pokemon.public
+						isPublic: pokemon.public,
+						location: pokemon.location
 					})
 				)
 			});
@@ -124,21 +125,24 @@ class AddPokemon extends BaseFormContainer {
 
 	validateForm() {
 		const ignoreFields = this.props.edit ? ['image'] : [];
+		const { pokemon } = this.state;
+
 		this.validator.validate(this.state.pokemon, ignoreFields);
 
 		this.setState({
 			pokemon: Object.assign(
 				{},
-				this.state.pokemon,
+				pokemon,
 				this.generatePokemonFields({
-					name: this.state.pokemon.name.value,
-					typesIds: this.state.pokemon.typesIds.value,
-					age: Number.parseFloat(this.state.pokemon.age.value),
-					pounds: Number.parseFloat(this.state.pokemon.pounds.value),
-					description: this.state.pokemon.description.value,
-					image: this.state.pokemon.image.value,
-					captured: this.state.pokemon.captured.value,
-					isPublic: this.state.pokemon.public.value
+					name: pokemon.name.value,
+					typesIds: pokemon.typesIds.value,
+					age: Number.parseFloat(pokemon.age.value),
+					pounds: Number.parseFloat(pokemon.pounds.value),
+					description: pokemon.description.value,
+					image: pokemon.image.value,
+					captured: pokemon.captured.value,
+					isPublic: pokemon.public.value,
+					location: pokemon.location.value
 				})
 			)
 		});
@@ -189,7 +193,7 @@ class AddPokemon extends BaseFormContainer {
 	}
 
 	generatePokemonFields(fields) {
-		const { name, typesIds = [], age, pounds } = fields;
+		const { name, typesIds = [], age, pounds, location } = fields;
 		const { captured, isPublic, description, image } = fields;
 
 		return {
@@ -231,6 +235,11 @@ class AddPokemon extends BaseFormContainer {
 			captured: this.generateField(
 				{ value: captured || false },
 				'captured',
+				this.handleInput
+			),
+			location: this.generateField(
+				{ value: location || { lat: null, lng: null } },
+				'location',
 				this.handleInput
 			)
 		};
