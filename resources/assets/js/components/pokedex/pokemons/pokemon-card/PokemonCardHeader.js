@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, CardTitle, Media, MediaOverlay } from 'react-md';
+import { POKEMON_HEADER_HEIGHT } from '@pokedex/assets/js/utils/styles';
 
 const getPrivacyIcon = isPublic => (isPublic ? 'lock_open' : 'lock_outline');
 const getStatusIcon = captured => (captured ? 'favorite' : 'favorite_border');
-
-const imgHeight = 250;
 
 export const PokemonCardHeader = ({
 	id,
@@ -14,7 +13,7 @@ export const PokemonCardHeader = ({
 	captured,
 	isPublic
 }) => (
-	<Media style={{ height: imgHeight, width: '100%' }}>
+	<Media style={{ ...POKEMON_HEADER_HEIGHT, width: '100%' }}>
 		<img src={image.src} alt={name} style={{ objectFit: 'contain' }} />
 
 		<MediaOverlay>
