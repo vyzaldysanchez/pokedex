@@ -19,8 +19,8 @@ export class Map extends Component {
 	}
 
 	updatePinLocation({ lat, lng }) {
-        this.setState({ lat, lng });
-        this.props.onPositionSelected({lat, lng});
+		this.setState({ lat, lng });
+		this.props.onPositionSelected({ lat, lng });
 	}
 
 	render() {
@@ -47,14 +47,14 @@ Map.propTypes = {
 	position: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    zoom: PropTypes.number,
-    onPositionSelected: PropTypes.func
+	zoom: PropTypes.number,
+	onPositionSelected: PropTypes.func
 };
 
 Map.defaultProps = {
 	position: 'relative',
 	height: 300,
 	width: '100%',
-    zoom: 17,
-    onPositionSelected = () => null
+	zoom: 17,
+	onPositionSelected: () => null
 };
