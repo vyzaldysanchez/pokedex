@@ -3,6 +3,7 @@
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::redirect('/home', '/');
+    Route::redirect('/pokemons', '/');
     Route::view('/account/edit', 'home.index');
     Route::view('/pokemons/add', 'home.index');
 

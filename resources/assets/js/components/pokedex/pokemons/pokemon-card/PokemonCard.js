@@ -13,7 +13,7 @@ export const PokemonCard = ({ pokemon = {}, captured, isPublic }) => (
 		desktopSize={FOUR_COLUMNS}
 		phoneSize={TWELVE_COLUMNS}
 		tabletSize={SIX_COLUMNS}
-		style={{ display: 'inline-block' }}
+		style={{ display: 'inline-flex', flexFlow: 'column' }}
 	>
 		<Card>
 			<PokemonCardHeader
