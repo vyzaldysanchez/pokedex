@@ -16,7 +16,7 @@ import {
 } from '@pokedex/assets/js/utils/ui-columns';
 import { RED } from '@pokedex/assets/js/utils/colors';
 import { ErrorBox } from '@pokedex/assets/js/components/shared/ErrorBox';
-import { Map } from '@pokedex/assets/js/components/shared/Map';
+import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 
 const renderPokemonTypeSelection = (onChange, selectedTypes, type, index) => (
 	<SelectionControl
@@ -184,6 +184,7 @@ const AddPokemonForm = props => {
 			/>
 
 			<Cell size={TWELVE_COLUMNS}>
+				<label>Where did you find the pokemon...?</label>
 				<Map />
 			</Cell>
 
