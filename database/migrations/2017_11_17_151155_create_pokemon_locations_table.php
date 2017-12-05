@@ -17,8 +17,8 @@ class CreatePokemonLocationsTable extends Migration
             'pokemon_locations',
             function (Blueprint $table) {
                 $table->increments('id');
-                $table->float('latitude', 20, 20);
-                $table->float('longitude', 20, 20);
+                $table->float('latitude', 18, 13);
+                $table->decimal('longitude', 18, 13);
                 $table->integer('pokemon_id');
                 $table->timestamps();
                 $table->softDeletes();
