@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
-use App\Repositories\Images;
 use App\Pokemon;
+use App\Repositories\Images;
+use App\Repositories\Locations;
 use App\Http\Requests\PokemonCreationRequest;
 use App\Http\Requests\PokemonUpdateRequest;
+use Illuminate\Support\Collection;
 
 class Pokemons
 {
@@ -55,8 +56,12 @@ class Pokemons
         ];
 
         $pokemon = Pokemon::create($fieldsToSave + $missingFields);
- 
+        
         $pokemon->types()->sync($request->get('pokemon_types_ids'));
+
+        $location = $request->get('location');
+        
+        Locations::store(['latitude' => $location['lat'], 'longitude' => $location['lng']], $pokemon->id);
         Images::store($request->image, $pokemon->id);
 
         return $pokemon;
