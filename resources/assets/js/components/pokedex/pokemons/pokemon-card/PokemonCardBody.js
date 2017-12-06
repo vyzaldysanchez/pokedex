@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Button, CardText, Collapse, FontIcon } from 'react-md';
+import {
+	Button,
+	CardText,
+	Collapse,
+	DialogContainer,
+	FontIcon
+} from 'react-md';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 
@@ -66,14 +72,22 @@ export class PokemonCardBody extends Component {
 						{this.getButtonText()}
 					</Button>
 
-					<Collapse collapsed={mapCollapsed} animate={false}>
+					<DialogContainer
+						id="pokemon-deletion-confirmation"
+						title="This pokemon was found at:"
+						visible={!mapCollapsed}
+						onHide={this.toggleCollapse}
+						focusOnMount={false}
+						width={500}
+					>
 						<Map
 							updatePinLocation={false}
 							currentLocationAsDefault={false}
 							lat={location.latitude}
 							lng={location.longitude}
+							width={'100%'}
 						/>
-					</Collapse>
+					</DialogContainer>
 				</div>
 			</CardText>
 		);
