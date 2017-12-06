@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, CardText, Collapse } from 'react-md';
+import { Button, CardText, Collapse, FontIcon } from 'react-md';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 
@@ -10,6 +10,14 @@ export class PokemonCardBody extends Component {
 		this.state = { mapCollapsed: true };
 
 		this.toggleCollapse = this.toggleCollapse.bind(this);
+	}
+
+	getPrivacyIcon() {
+		return this.props.isPublic ? 'visibility' : 'visibility_off';
+	}
+
+	getStatusIcon() {
+		return this.props.captured ? 'copyright' : 'block';
 	}
 
 	toggleCollapse() {
@@ -28,6 +36,11 @@ export class PokemonCardBody extends Component {
 
 		return (
 			<CardText>
+				<div>
+					<FontIcon>{this.getStatusIcon()}</FontIcon>
+					<FontIcon>{this.getPrivacyIcon()}</FontIcon>
+				</div>
+
 				<div>
 					{types.map((type, id) => (
 						<LabelChip
