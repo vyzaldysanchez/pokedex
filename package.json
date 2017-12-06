@@ -9,15 +9,15 @@
 	"scripts": {
 		"dev": "npm run development",
 		"development":
-			"cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+			"cross-env NODE_ENV=development env-cmd ./.env node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"watch":
-			"cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+			"cross-env NODE_ENV=development env-cmd ./.env node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"watch-poll": "npm run watch -- --watch-poll",
 		"hot":
-			"cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+			"cross-env NODE_ENV=development env-cmd ./.env node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"prod": "npm run production",
 		"production":
-			"cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+			"cross-env NODE_ENV=production env-cmd ./.env node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"test": "jest --setupFiles=./setupTests.js"
 	},
 	"devDependencies": {
@@ -28,6 +28,7 @@
 		"babel-preset-react": "^6.24.1",
 		"bootstrap-sass": "^3.3.7",
 		"cross-env": "^5.1",
+		"env-cmd": "^7.0.0",
 		"enzyme": "^3.2.0",
 		"enzyme-adapter-react-15": "^1.0.5",
 		"jest": "^21.2.1",
@@ -45,10 +46,10 @@
 		"react-test-renderer": "^15.1.1"
 	},
 	"dependencies": {
+		"google-map-react": "^0.25.0",
 		"react-infinite-scroll-component": "^2.5.0",
 		"react-redux": "^5.0.6",
 		"react-router-dom": "^4.2.2",
-		"redux": "^3.7.2",
-		"redux-thunk": "^2.2.0"
+		"redux": "^3.7.2"
 	}
 }

@@ -16,6 +16,7 @@ import {
 } from '@pokedex/assets/js/utils/ui-columns';
 import { RED } from '@pokedex/assets/js/utils/colors';
 import { ErrorBox } from '@pokedex/assets/js/components/shared/ErrorBox';
+import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 
 const renderPokemonTypeSelection = (onChange, selectedTypes, type, index) => (
 	<SelectionControl
@@ -42,7 +43,8 @@ const AddPokemonForm = props => {
 		pokemon,
 		onSubmit,
 		onTypeSelection,
-		buttonText
+		buttonText,
+		useCurrentLocation
 	} = props;
 
 	return (
@@ -181,6 +183,22 @@ const AddPokemonForm = props => {
 				errorText={pokemon.description.errorText}
 				onChange={pokemon.description.onChange}
 			/>
+
+			<Cell size={TWELVE_COLUMNS}>
+				<label>Where did you find the pokemon...?</label>
+
+				<Map
+					lat={pokemon.location.value.lat}
+					lng={pokemon.location.value.lng}
+					currentLocationAsDefault={useCurrentLocation}
+					onPositionSelected={pokemon.location.onChange}
+				/>
+
+				<ErrorBox
+					display={pokemon.location.error}
+					message={pokemon.location.errorText}
+				/>
+			</Cell>
 
 			<Cell size={TWELVE_COLUMNS}>
 				<Button

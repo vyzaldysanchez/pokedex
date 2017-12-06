@@ -52,7 +52,14 @@ export const validator = {
 		},
 		image: Object.assign({}, baseValidationField, {
 			error: 'An image must be selected'
-		})
+		}),
+		location: {
+			...baseValidationField,
+			error: 'Must select a location',
+			validate({ lat, lng }) {
+				this.displayError = !lat || !lng;
+			}
+		}
 	},
 	validate(fields, noValidateFields = []) {
 		Object.keys(fields).forEach(fieldName => {

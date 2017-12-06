@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Pagination\Length;
 use App\Repositories\Images;
 use App\Pokemon;
+use App\Repositories\Locations;
 use App\Http\Requests\PokemonCreationRequest;
 use App\Http\Requests\PokemonUpdateRequest;
 
@@ -58,8 +59,12 @@ class Pokemons
         ];
 
         $pokemon = Pokemon::create($fieldsToSave + $missingFields);
- 
+        
         $pokemon->types()->sync($request->get('pokemon_types_ids'));
+
+        $location = $request->get('location');
+        
+        Locations::store(['latitude' => $location['lat'], 'longitude' => $location['lng']], $pokemon->id);
         Images::store($request->image, $pokemon->id);
 
         return $pokemon;
@@ -84,6 +89,10 @@ class Pokemons
 
         if ($pokemonTypes = $request->get('pokemon_types_ids')) {
             $pokemon->types()->sync($pokemonTypes);
+        }
+
+        if ($location = $request->get('location')) {
+            Locations::update(['latitude' => $location['lat'], 'longitude' => $location['lng']], $pokemon->id);
         }
 
         if ($image = $request->get('image')) {
