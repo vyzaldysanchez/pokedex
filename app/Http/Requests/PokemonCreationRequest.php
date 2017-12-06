@@ -30,7 +30,9 @@ class PokemonCreationRequest extends FormRequest
             'description' => 'required|min:6',
             'image' => 'required|image',
             'pokemon_types_ids' => 'required|array',
-            'pokemon_types_ids.*' => 'required|distinct|exists:pokemon_types,id'
+            'pokemon_types_ids.*' => 'required|distinct|exists:pokemon_types,id',
+            'location' => 'required|array',
+            'location.*' => 'required|numeric'
         ];
     }
 }

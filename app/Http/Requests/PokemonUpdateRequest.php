@@ -30,7 +30,9 @@ class PokemonUpdateRequest extends FormRequest
             'description' => 'nullable|min:6',
             'image' => 'nullable|image',
             'pokemon_types_ids' => 'nullable|array',
-            'pokemon_types_ids.*' => 'nullable|distinct|exists:pokemon_types,id'
+            'pokemon_types_ids.*' => 'nullable|distinct|exists:pokemon_types,id',
+            'location' => 'nullable|array',
+            'location.*' => 'nullable|numeric'
         ];
     }
 }

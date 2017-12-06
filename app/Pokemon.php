@@ -46,9 +46,20 @@ class Pokemon extends Model
         return $this->belongsToMany(PokemonType::class);
     }
 
+    /**
+     * @return HasOne
+     */
     public function image(): HasOne
     {
         return $this->hasOne(Image::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function location(): HasOne
+    {
+        return $this->hasOne(PokemonLocation::class);
     }
 
     public function toArray(): array
