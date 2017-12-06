@@ -11,7 +11,8 @@ export const PokemonCardHeader = ({
 	image,
 	name = 'Pokemon Name',
 	captured,
-	isPublic
+	isPublic,
+	onPokemonDeletion
 }) => (
 	<Media style={styles.header}>
 		<img src={image.src} alt={name} style={{ objectFit: 'contain' }} />
@@ -34,6 +35,7 @@ export const PokemonCardHeader = ({
 						icon
 						className="md-paper--1"
 						style={styles.deleteButton}
+						onClick={onPokemonDeletion}
 					>
 						delete
 					</Button>
