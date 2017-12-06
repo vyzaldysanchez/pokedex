@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\Length;
 use App\Repositories\Images;
 use App\Pokemon;
 use App\Http\Requests\PokemonCreationRequest;
@@ -10,6 +10,7 @@ use App\Http\Requests\PokemonUpdateRequest;
 
 class Pokemons
 {
+    const POKEMONS_PER_PAGE = 15;
 
     /**
      * Retrieve a pokemon by id.
@@ -27,15 +28,17 @@ class Pokemons
      * Retrieve all stored pokemons.
      *
      * @param array $columns
-     * @return Collection
+     * @return array|Length
      */
-    public static function getAll(array $columns = ['*'], array $relations = []): Collection
+    public static function getAll(array $columns = ['*'], array $relations = [], int $amount = self::POKEMONS_PER_PAGE)
     {
-        if ($relations) {
-            return Pokemon::with($relations)->get($columns);
-        }
+        $query = Pokemon::select($columns);
 
-        return Pokemon::all($columns);
+        if ($relations) {
+            $query = $query->with($relations);
+        }
+         
+        return $query->paginate($amount);
     }
     /**
      * Stores a Pokemon in the DB from a http request

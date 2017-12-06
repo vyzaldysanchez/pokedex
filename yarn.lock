@@ -6037,6 +6037,16 @@ react-event-listener@^0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
+react-infinite-scroll-component@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-2.5.0.tgz#978b036577e1e8728882935f905a4685f2847ebe"
+
+react-infinite-scroller@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroller/-/react-infinite-scroller-1.1.1.tgz#957ac692fdb90e02ca265c6b597d1b5c6c9ce42a"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-md@^1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/react-md/-/react-md-1.2.8.tgz#727762efb17a6dd2d00a87f671f72f21330fc853"

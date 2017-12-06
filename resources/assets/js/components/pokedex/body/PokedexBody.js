@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Cell, Grid } from 'react-md';
+import { Cell, Grid, CircularProgress } from 'react-md';
 import axios from 'axios';
 import {
 	THREE_COLUMNS,
@@ -10,21 +10,55 @@ import PokedexSearch from './PokedexSearch';
 import pokemons from '@pokedex/assets/js/services/pokemons.service';
 import PokedexList from './PokedexList';
 import { fixedRight } from '@pokedex/assets/js/utils/styles';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export class PokedexBody extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { pokemons: [] };
+		this.state = {
+			pokemons: [],
+			nextPokemonsUrl: '',
+			currentPage: 0,
+			lastPage: 0,
+			hasMorePokemons: true
+		};
+
+		this.loadPokemons = this.loadPokemons.bind(this);
+		this.updatePokemons = this.updatePokemons.bind(this);
 	}
 
 	componentDidMount() {
-		pokemons.getAll().then(pokemons => this.setState({ pokemons }));
+		pokemons.getAll().then(this.updatePokemons);
+	}
+
+	loadPokemons() {
+		const { pokemons, nextPokemonsUrl, hasMorePokemons } = this.state;
+
+		if (hasMorePokemons) {
+			axios
+				.get(nextPokemonsUrl)
+				.then(({ data }) => this.updatePokemons(data));
+		} else {
+			this.setState({ hasMorePokemons: false });
+		}
+	}
+
+	updatePokemons({ data, next_page_url, current_page, last_page }) {
+		const { pokemons } = this.state;
+
+		this.setState({
+			pokemons: [...pokemons, ...(data || [])],
+			currentPage: current_page,
+			lastPage: last_page,
+			nextPokemonsUrl: next_page_url,
+			hasMorePokemons: !!next_page_url
+		});
 	}
 
 	render() {
 		const { height } = styles;
-		const { pokemons } = this.state;
+		const { pokemons, isLoading, nextPokemonsUrl } = this.state;
 
 		return (
 			<Grid
@@ -33,7 +67,14 @@ export class PokedexBody extends Component {
 				style={{ marginTop: height }}
 			>
 				<Cell size={NINE_COLUMNS}>
-					<PokedexList pokemons={pokemons} />
+					<InfiniteScroll
+						next={this.loadPokemons}
+						hasMore={this.state.hasMorePokemons}
+						loader={<CircularProgress id="pokemons-loader" />}
+						style={{ overflow: 'hidden' }}
+					>
+						<PokedexList pokemons={pokemons} />
+					</InfiniteScroll>
 				</Cell>
 				<Cell size={THREE_COLUMNS} style={fixedRight}>
 					<PokedexSearch />
