@@ -1,45 +1,68 @@
-import React from 'react';
-import { CardText, FontIcon } from 'react-md';
+import React, { Component } from 'react';
+import { Button, CardText, Collapse } from 'react-md';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
+import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 
-const getStatusIcon = captured => (
-	<FontIcon>{captured ? 'copyright' : 'block'}</FontIcon>
-);
-const getPrivacyIcon = isPublic => (
-	<FontIcon>{isPublic ? 'visibility' : 'visibility_off'}</FontIcon>
-);
+export class PokemonCardBody extends Component {
+	constructor(props) {
+		super(props);
 
-export const PokemonCardBody = ({
-	types = [],
-	age,
-	pounds,
-	description,
-	captured,
-	isPublic
-}) => (
-	<CardText>
-		<div>
-			{getStatusIcon(captured)}
-			{getPrivacyIcon(isPublic)}
-		</div>
-		<div>
-			{types.map((type, id) => (
-				<LabelChip
-					backgroundColor={type.color}
-					label={type.name}
-					key={id}
-				/>
-			))}
-		</div>
+		this.state = { mapCollapsed: true };
 
-		<div>
-			<b>Age:</b> {age}
-			<br />
-			<b>Weight:</b> {pounds}
-		</div>
+		this.toggleCollapse = this.toggleCollapse.bind(this);
+	}
 
-		<div style={{ marginTop: 10 }}>
-			<p>{description}</p>
-		</div>
-	</CardText>
-);
+	toggleCollapse() {
+		this.setState({ mapCollapsed: !this.state.mapCollapsed });
+	}
+
+	getButtonText() {
+		return this.state.mapCollapsed
+			? 'See Map Location'
+			: 'Hide Map Location';
+	}
+
+	render() {
+		const { types = [], age, pounds, description, location } = this.props;
+		const { mapCollapsed } = this.state;
+
+		return (
+			<CardText>
+				<div>
+					{types.map((type, id) => (
+						<LabelChip
+							backgroundColor={type.color}
+							label={type.name}
+							key={id}
+						/>
+					))}
+				</div>
+
+				<div>
+					<b>Age:</b> {age}
+					<br />
+					<b>Weight:</b> {pounds}
+				</div>
+
+				<div style={{ marginTop: 10 }}>
+					<p>{description}</p>
+				</div>
+
+				<div style={{ marginTop: 10 }}>
+					<Button raised onClick={this.toggleCollapse}>
+						{this.getButtonText()}
+					</Button>
+
+					<Collapse collapsed={mapCollapsed} animate={false}>
+						<Map
+							updatePinLocation={false}
+							currentLocationAsDefault={false}
+							lat={location.latitude}
+							lng={location.longitude}
+						/>
+					</Collapse>
+				</div>
+			</CardText>
+		);
+	}
+}
