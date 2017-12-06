@@ -49,8 +49,8 @@ class PokedexList extends Component {
 				</Cell>
 
 				<Cell size={TWELVE_COLUMNS}>
-					{this.props.pokemons.map(pokemon => (
-						<PokemonCard key={pokemon.id} pokemon={pokemon} />
+					{this.props.pokemons.map((pokemon, index) => (
+						<PokemonCard key={index} pokemon={pokemon} />
 					))}
 				</Cell>
 			</Grid>
