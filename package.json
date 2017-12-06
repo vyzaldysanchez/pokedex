@@ -1,9 +1,11 @@
 {
     "private": true,
     "jest": {
-        "moduleDirectories": ["node_modules"],
+        "moduleDirectories": [
+            "node_modules"
+        ],
         "moduleNameMapper": {
-          "^@pokedex(.*)$": "<rootDir>/resources$1"
+            "^@pokedex(.*)$": "<rootDir>/resources$1"
         }
     },
     "scripts": {
@@ -43,6 +45,7 @@
     "dependencies": {
         "react-redux": "^5.0.6",
         "react-router-dom": "^4.2.2",
-        "redux": "^3.7.2"
+        "redux": "^3.7.2",
+        "redux-thunk": "^2.2.0"
     }
 }
