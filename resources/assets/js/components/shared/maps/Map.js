@@ -7,15 +7,23 @@ export class Map extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { lat: null, lng: null };
+		this.state = { lat: this.props.lat, lng: this.props.lng };
 
 		this.updatePinLocation = this.updatePinLocation.bind(this);
 	}
 
 	componentDidMount() {
-		navigator.geolocation.getCurrentPosition(({ coords }) =>
-			this.setState({ lat: coords.latitude, lng: coords.longitude })
-		);
+		if (this.props.currentLocationAsDefault) {
+			navigator.geolocation.getCurrentPosition(({ coords }) => {
+				this.setState({ lat: coords.latitude, lng: coords.longitude });
+			});
+		}
+	}
+
+	componentWillReceiveProps({ lat, lng }) {
+		if (lat && lng) {
+			this.setState({ lat: lat, lng: lng });
+		}
 	}
 
 	updatePinLocation({ lat, lng }) {
@@ -48,7 +56,10 @@ Map.propTypes = {
 	width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	zoom: PropTypes.number,
-	onPositionSelected: PropTypes.func
+	onPositionSelected: PropTypes.func,
+	lat: PropTypes.number,
+	lng: PropTypes.number,
+	currentLocationAsDefault: PropTypes.bool
 };
 
 Map.defaultProps = {
@@ -56,5 +67,6 @@ Map.defaultProps = {
 	height: 300,
 	width: '100%',
 	zoom: 17,
+	currentLocationAsDefault: true,
 	onPositionSelected: () => null
 };
