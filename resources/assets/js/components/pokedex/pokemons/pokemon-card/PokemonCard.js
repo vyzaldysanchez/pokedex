@@ -52,8 +52,6 @@ export class PokemonCard extends Component {
 						id={pokemon.id}
 						name={pokemon.name}
 						image={{ src: `/api/pokemons/${pokemon.id}/image` }}
-						captured={pokemon.captured}
-						isPublic={pokemon.public}
 						onPokemonDeletion={this.showDeletionConfirmation}
 					/>
 
@@ -62,6 +60,8 @@ export class PokemonCard extends Component {
 						pounds={pokemon.pounds}
 						description={pokemon.description}
 						types={pokemon.types}
+						captured={pokemon.captured}
+						isPublic={pokemon.public}
 					/>
 
 					<DialogContainer

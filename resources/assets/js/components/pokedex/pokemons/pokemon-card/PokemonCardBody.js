@@ -1,9 +1,27 @@
 import React from 'react';
-import { CardText, Divider } from 'react-md';
+import { CardText, FontIcon } from 'react-md';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 
-export const PokemonCardBody = ({ types = [], age, pounds, description }) => (
+const getStatusIcon = captured => (
+	<FontIcon>{captured ? 'copyright' : 'block'}</FontIcon>
+);
+const getPrivacyIcon = isPublic => (
+	<FontIcon>{isPublic ? 'visibility' : 'visibility_off'}</FontIcon>
+);
+
+export const PokemonCardBody = ({
+	types = [],
+	age,
+	pounds,
+	description,
+	captured,
+	isPublic
+}) => (
 	<CardText>
+		<div>
+			{getStatusIcon(captured)}
+			{getPrivacyIcon(isPublic)}
+		</div>
 		<div>
 			{types.map((type, id) => (
 				<LabelChip
