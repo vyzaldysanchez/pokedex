@@ -7,7 +7,7 @@ import {
 } from '@pokedex/assets/js/utils/ui-columns';
 import { PokemonCardHeader } from './PokemonCardHeader';
 import { PokemonCardBody } from './PokemonCardBody';
-import { PokemonDeletionForm } from './PokemonDeletionForm';
+import PokemonDeletionForm from './PokemonDeletionForm';
 
 export class PokemonCard extends Component {
 	constructor(props) {
@@ -21,6 +21,7 @@ export class PokemonCard extends Component {
 		this.showDeletionConfirmation = this.showDeletionConfirmation.bind(
 			this
 		);
+		this.handlePokemonDeletion = this.handlePokemonDeletion.bind(this);
 	}
 
 	showDeletionConfirmation() {
@@ -29,6 +30,10 @@ export class PokemonCard extends Component {
 
 	hideDeletionConfirmation() {
 		this.setState({ deletionConfirmationDisplayed: false });
+	}
+
+	handlePokemonDeletion() {
+		window.location.reload();
 	}
 
 	render() {
@@ -61,12 +66,15 @@ export class PokemonCard extends Component {
 
 					<DialogContainer
 						id="pokemon-deletion-confirmation"
-						title="Write the name of the pokemon to delete it!!"
+						title="Type the name of the pokemon to delete it!!"
 						visible={deletionConfirmationDisplayed}
 						onHide={this.hideDeletionConfirmation}
-						focusOnMount={false}
 					>
-						<PokemonDeletionForm />
+						<PokemonDeletionForm
+							pokemonId={pokemon.id}
+							pokemonName={pokemon.name}
+							onPokemonDeleted={this.handlePokemonDeletion}
+						/>
 					</DialogContainer>
 				</Card>
 			</Cell>
