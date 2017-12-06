@@ -6,14 +6,14 @@ import { BrowserRouter as Router, Child, Route } from 'react-router-dom';
 import PokedexHeader from './header/PokedexHeader';
 import { PokedexBody } from './body/PokedexBody';
 import AccountEdit from './body/account/AccountEdit';
-import reducer from './reducer';
 import { ACCOUNT_EDIT, ADD_POKEMON, EDIT_POKEMON } from './routes-paths';
 import AddPokemon from './pokemons/AddPokemon';
 import SnackNotification from '@pokedex/assets/js/components/shared/SnackNotification';
 import EditPokemon from './pokemons/EditPokemon';
+import { store } from './store';
 
 export const Pokedex = () => (
-	<Provider store={createStore(reducer)}>
+	<Provider store={store}>
 		<Router>
 			<Route
 				render={props => (
