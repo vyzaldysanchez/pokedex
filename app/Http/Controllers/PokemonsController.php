@@ -15,9 +15,10 @@ class PokemonsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Pokemons::getAll(['*'], ['types']);
+        $amount = $request->has('amount') ? $request->get('amount') : Pokemons::POKEMONS_PER_PAGE;
+        return Pokemons::getAll(['*'], ['types'], $amount);
     }
 
     /**
