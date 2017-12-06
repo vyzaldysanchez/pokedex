@@ -62,6 +62,7 @@ export class PokemonCard extends Component {
 						types={pokemon.types}
 						captured={pokemon.captured}
 						isPublic={pokemon.public}
+						location={pokemon.location}
 					/>
 
 					<DialogContainer
