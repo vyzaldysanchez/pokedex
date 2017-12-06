@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, CardText, Collapse, Divider } from 'react-md';
+import { Button, CardText, Collapse } from 'react-md';
 import { LabelChip } from '@pokedex/assets/js/components/shared/LabelChip';
 import { Map } from '@pokedex/assets/js/components/shared/maps/Map';
 

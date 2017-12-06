@@ -3,17 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, CardTitle, Media, MediaOverlay } from 'react-md';
 import styles from './card-header.style';
 
-const getPrivacyIcon = isPublic => (isPublic ? 'lock_open' : 'lock_outline');
-const getStatusIcon = captured => (captured ? 'favorite' : 'favorite_border');
-
-export const PokemonCardHeader = ({
-	id,
-	image,
-	name = 'Pokemon Name',
-	captured,
-	isPublic,
-	onPokemonDeletion
-}) => (
+export const PokemonCardHeader = ({ id, image, name, onPokemonDeletion }) => (
 	<Media style={styles.header}>
 		<img src={image.src} alt={name} style={{ objectFit: 'contain' }} />
 
