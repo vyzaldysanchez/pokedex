@@ -7,6 +7,8 @@ use App\Pokemon;
 use App\Repositories\Pokemons;
 use App\Http\Requests\PokemonCreationRequest;
 use App\Http\Requests\PokemonUpdateRequest;
+use App\Http\Requests\PokemonDeletionRequest;
+use App\Enums\HttpStatus;
 
 class PokemonsController extends Controller
 {
@@ -72,11 +74,16 @@ class PokemonsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param PokemonDeletionRequest $request
+     * @param  Pokemon  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PokemonDeletionRequest $request, Pokemon $pokemon)
     {
-        //
+        $request->validate();
+
+        $pokemon->delete();
+
+        return \response('', HttpStatus::NO_CONTENT);
     }
 }
