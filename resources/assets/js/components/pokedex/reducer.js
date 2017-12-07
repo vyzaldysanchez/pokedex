@@ -32,7 +32,9 @@ const initialState = {
 	filters: {
 		search: '',
 		pokemonTypes: []
-	}
+	},
+	pokemons: {},
+	searchingPokemons: false
 };
 
 export default (state = initialState, action) => {

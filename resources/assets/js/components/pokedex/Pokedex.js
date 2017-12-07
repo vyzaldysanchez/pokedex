@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Child, Route } from 'react-router-dom';
 import PokedexHeader from './header/PokedexHeader';
-import { PokedexBody } from './body/PokedexBody';
+import PokedexBody from './body/PokedexBody';
 import AccountEdit from './body/account/AccountEdit';
 import { ACCOUNT_EDIT, ADD_POKEMON, EDIT_POKEMON } from './routes-paths';
 import AddPokemon from './pokemons/AddPokemon';
