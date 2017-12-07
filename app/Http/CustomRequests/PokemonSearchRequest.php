@@ -10,7 +10,9 @@ class PokemonSearchRequest
     public function __construct(string $search, array $pokemonTypes)
     {
         $this->search = $search;
-        $this->pokemonTypes = $pokemonTypes;
+        $this->pokemonTypes = array_filter($pokemonTypes, function ($type) {
+            return $type != null;
+        });
     }
 
     /**
