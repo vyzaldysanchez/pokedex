@@ -1,3 +1,10 @@
+import axios from 'axios';
+import {
+	startPokemonsSearch,
+	receivePokemons,
+	stopPokemonsSearch
+} from '@pokedex/assets/js/components/pokedex/actions';
+
 export const addPokemonTypeToFilter = (state, type) => {
 	const { pokemonTypes } = state.filters;
 	const types =
@@ -25,4 +32,40 @@ export const removePokemonTypeToFilter = (state, type) => {
 export const addSearchText = (state, text) => ({
 	...state,
 	filters: { ...state.filters, search: text }
+});
+
+export const setPokemonsSearchStatus = (state, searchingPokemons) => ({
+	...state,
+	searchingPokemons
+});
+
+export const searchPokemons = ({ filters }) => {
+	return dispatch => {
+		dispatch(startPokemonsSearch());
+
+		const typesQuery = filters.pokemonTypes
+			.map(type => type.id)
+			.join('&pokemonType[]=');
+
+		return axios
+			.get(
+				`/api/pokemons?search=${filters.search}&pokemonType[]=${
+					typesQuery
+				}`
+			)
+			.then(({ data }) =>
+				dispatch(
+					receivePokemons({
+						searchingPokemons: false,
+						pokemons: data
+					})
+				)
+			);
+	};
+};
+
+export const addPokemons = (state, { searchingPokemons, pokemons }) => ({
+	...state,
+	searchingPokemons,
+	pokemons
 });

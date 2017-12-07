@@ -8,6 +8,7 @@ import {
 	ADD_SEARCH_TEXT_FILTER
 } from '@pokedex/assets/js/components/pokedex/actions';
 import { TWELVE_COLUMNS } from '@pokedex/assets/js/utils/ui-columns';
+import { searchPokemons } from '@pokedex/assets/js/components/pokedex/reducers/pokemon-search.reducer';
 
 class PokedexSearch extends Component {
 	constructor(props) {
@@ -27,7 +28,7 @@ class PokedexSearch extends Component {
 	}
 
 	triggerSearch() {
-		this.props.dispatch({ type: SEARCH });
+		this.props.searchPokemons(this.props);
 	}
 
 	renderSearchIcon() {
@@ -74,9 +75,15 @@ class PokedexSearch extends Component {
 const mapStateToProps = state => ({
 	...state,
 	filters: {
-		search: '',
-		pokemonTypes: []
+		...state.filters,
+		search: state.filters.search,
+		pokemonTypes: state.filters.pokemonTypes
 	}
 });
 
-export default connect(mapStateToProps)(PokedexSearch);
+const mapDispatchToProps = dispatch => ({
+	searchPokemons: props => dispatch(searchPokemons(props)),
+	dispatch: action => dispatch(action)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokedexSearch);
