@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Pokemon
@@ -62,6 +63,37 @@ class Pokemon extends Model
         return $this->hasOne(PokemonLocation::class);
     }
 
+    /**
+     * Adds types filter to query
+     *
+     * @param Builder $query
+     * @param array $types
+     * @return void
+     */
+    public function scopeTypes(Builder $query, array $types = [])
+    {
+        return $query->whereHas('types', function ($query) use ($types) {
+            $query->whereIn('id', $types);
+        });
+    }
+
+    /**
+     * Adds name/description search filter to query
+     *
+     * @param Builder $query
+     * @param string $search
+     * @return void
+     */
+    public function scopeNameOrDescription(Builder $query, string $search)
+    {
+        return $query->where('name', $search)->orWhere('description', $search);
+    }
+
+    /**
+     * Array representation sent to the client
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         $fields = [
