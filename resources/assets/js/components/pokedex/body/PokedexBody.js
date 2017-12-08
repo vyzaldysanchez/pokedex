@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Cell, Grid, CircularProgress } from 'react-md';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import {
 	THREE_COLUMNS,
@@ -12,7 +13,7 @@ import PokedexList from './PokedexList';
 import { fixedRight } from '@pokedex/assets/js/utils/styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-export class PokedexBody extends Component {
+class PokedexBody extends Component {
 	constructor(props) {
 		super(props);
 
@@ -32,6 +33,10 @@ export class PokedexBody extends Component {
 		pokemons.getAll().then(this.updatePokemons);
 	}
 
+	componentWillReceiveProps({ pokemons }) {
+		this.updatePokemons(pokemons, true);
+	}
+
 	loadPokemons() {
 		const { pokemons, nextPokemonsUrl, hasMorePokemons } = this.state;
 
@@ -44,11 +49,15 @@ export class PokedexBody extends Component {
 		}
 	}
 
-	updatePokemons({ data, next_page_url, current_page, last_page }) {
+	updatePokemons(
+		{ data, next_page_url, current_page, last_page },
+		reset = true
+	) {
 		const { pokemons } = this.state;
+		const newPokemons = data || [];
 
 		this.setState({
-			pokemons: [...pokemons, ...(data || [])],
+			pokemons: reset ? newPokemons : [...pokemons, ...newPokemons],
 			currentPage: current_page,
 			lastPage: last_page,
 			nextPokemonsUrl: next_page_url,
@@ -83,3 +92,9 @@ export class PokedexBody extends Component {
 		);
 	}
 }
+
+const mapStateToProps = ({ pokemons }) => ({
+	pokemons: pokemons
+});
+
+export default connect(mapStateToProps)(PokedexBody);
