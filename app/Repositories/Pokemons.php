@@ -8,6 +8,8 @@ use App\Pokemon;
 use App\Repositories\Locations;
 use App\Http\Requests\PokemonCreationRequest;
 use App\Http\Requests\PokemonUpdateRequest;
+use App\Http\CustomRequests\PokemonSearchRequest;
+use App\Http\CustomRequests\PokemonSelectRequest;
 
 class Pokemons
 {
@@ -28,19 +30,38 @@ class Pokemons
     /**
      * Retrieve all stored pokemons.
      *
-     * @param array $columns
+     * @param PokemonSelectRequest $select
      * @return array|Length
      */
-    public static function getAll(array $columns = ['*'], array $relations = [], int $amount = self::POKEMONS_PER_PAGE)
+    public static function getAll(PokemonSelectRequest $select)
     {
-        $query = Pokemon::select($columns);
-
-        if ($relations) {
-            $query = $query->with($relations);
-        }
+        $query = Pokemon::select($select->columns)->with($select->relations);
          
-        return $query->paginate($amount);
+        return $query->paginate($select->amount);
     }
+
+    /**
+     * Finds pokemons based on name/description and types
+     *
+     * @param PokemonSearchRequest $searchRequest
+     * @param PokemonSelectRequest $select
+     * @return array|Length
+     */
+    public static function findAll(PokemonSearchRequest $searchRequest, PokemonSelectRequest $select)
+    {
+        $query = Pokemon::select($select->columns)->with($select->relations);
+
+        if ($searchRequest->performTextSearch()) {
+            $query->nameOrDescription($searchRequest->search);
+        }
+
+        if ($searchRequest->pokemonTypes) {
+            $query->types($searchRequest->pokemonTypes);
+        }
+
+        return $query->paginate($select->amount);
+    }
+
     /**
      * Stores a Pokemon in the DB from a http request
      *

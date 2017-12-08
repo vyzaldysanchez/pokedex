@@ -8,6 +8,8 @@ use App\Repositories\Pokemons;
 use App\Http\Requests\PokemonCreationRequest;
 use App\Http\Requests\PokemonUpdateRequest;
 use App\Http\Requests\PokemonDeletionRequest;
+use App\Http\CustomRequests\PokemonSelectRequest;
+use App\Http\CustomRequests\PokemonSearchRequest;
 use App\Enums\HttpStatus;
 
 class PokemonsController extends Controller
@@ -22,7 +24,15 @@ class PokemonsController extends Controller
     public function index(Request $request)
     {
         $amount = $request->has('amount') ? $request->get('amount') : Pokemons::POKEMONS_PER_PAGE;
-        return Pokemons::getAll(['*'], $this->commonRelations, $amount);
+        $select = new PokemonSelectRequest(['*'], $this->commonRelations, $amount);
+
+        if ($request->has('search') || $request->has('pokemonType')) {
+            $search = new PokemonSearchRequest((string)$request->get('search'), $request->get('pokemonType'));
+
+            return Pokemons::findAll($search, $select);
+        }
+
+        return Pokemons::getAll($select);
     }
 
     /**
