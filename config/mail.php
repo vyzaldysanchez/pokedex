@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'admin@pokedex.com'),
-        'name' => env('MAIL_FROM_NAME', 'Pokedex'),
+        'name' => env('MAIL_FROM_NAME', 'Pokedex')
     ],
 
     /*

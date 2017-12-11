@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
-    use Notifiable;
 
     protected $fillable = [
         'full_name', 'telephone', 'city', 'email', 'username', 'password',
