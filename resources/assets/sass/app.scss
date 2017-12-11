@@ -1,9 +1,16 @@
-
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import 'fonts';
 
 // Variables
-@import "variables";
+@import 'variables';
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+//React Material Design
+@import  "~react-md/src/scss/react-md";
+@include react-md-everything;
+
+//Components bundle
+@import 'generals/_generals';
+@import 'pages/pages';
+@import 'components/bundle';
+
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';

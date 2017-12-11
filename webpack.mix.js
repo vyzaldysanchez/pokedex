@@ -11,5 +11,14 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix
+	.webpackConfig({
+		resolve: {
+			alias: {
+				'@pokedex': path.resolve(__dirname, 'resources')
+			}
+		}
+	})
+	.react('resources/assets/js/app.js', 'public/js')
+	.sass('resources/assets/sass/app.scss', 'public/css')
+	.disableNotifications();
