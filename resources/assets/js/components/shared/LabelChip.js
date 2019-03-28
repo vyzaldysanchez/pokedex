@@ -8,14 +8,14 @@ export const LabelChip = props => (
 			backgroundColor: props.backgroundColor,
 			fontWeight: 900,
 			fontSize: 14,
-			...props.style
+			...props.style,
 		}}
 		onClick={props.onClick}
 	>
 		<span
 			className="text-capitalize"
 			style={{
-				textShadow: '1px 1px 2px black'
+				textShadow: '1px 1px 2px black',
 			}}
 		>
 			{props.label}

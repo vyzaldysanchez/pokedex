@@ -26,7 +26,9 @@ class PokedexTypesFilter extends Component {
 					margin: 2,
 					width: '31%',
 					display: 'inline-block',
-					cursor: 'pointer'
+					cursor: 'pointer',
+          'text-overflow': ellipsis,
+          'overflow-x': hidden,
 				}}
 				onClick={() => onPokemonTypeSelected(type)}
 			/>
@@ -38,7 +40,7 @@ class PokedexTypesFilter extends Component {
 			pokemonTypes.getAll().then(types =>
 				this.props.dispatch({
 					type: LOAD_POKEMON_TYPES,
-					payload: types
+					payload: types,
 				})
 			);
 		}
@@ -54,7 +56,7 @@ class PokedexTypesFilter extends Component {
 }
 
 PokedexTypesFilter.propTypes = {
-	onTypeSelected: PropTypes.func
+	onTypeSelected: PropTypes.func,
 };
 
 export default connect(withPokemonTypesMapper.mapStateToProps)(
