@@ -27,8 +27,8 @@ class PokedexTypesFilter extends Component {
 					width: '31%',
 					display: 'inline-block',
 					cursor: 'pointer',
-          'text-overflow': 'ellipsis',
-          'overflow-x': 'hidden',
+          textOverflow: 'ellipsis',
+          overflowX: 'hidden',
 				}}
 				onClick={() => onPokemonTypeSelected(type)}
 			/>
