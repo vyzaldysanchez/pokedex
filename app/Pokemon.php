@@ -72,7 +72,7 @@ class Pokemon extends Model
      */
     public function scopeTypes(Builder $query, array $types = [])
     {
-        return $query->whereHas('types', function ($query) use ($types) {
+        return $query->whereHas('types', function (Builder $query) use ($types) {
             $query->whereIn('id', $types);
         });
     }

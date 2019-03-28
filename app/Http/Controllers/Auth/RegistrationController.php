@@ -22,8 +22,6 @@ class RegistrationController extends Controller
      */
     public function register(RegistrationRequest $request)
     {
-        $request->validate();
-
         $user = User::create(
             [
             'username' => $request->get('username'),
@@ -48,8 +46,6 @@ class RegistrationController extends Controller
      */
     public function update(RegistrationUpdateRequest $request)
     {
-        $request->validate();
-
         \Auth::user()->update($request->only(['full_name', 'city', 'telephone']));
 
         \Session::flash('status', 'Your information has been successfully updated.');

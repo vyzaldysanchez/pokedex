@@ -19,8 +19,6 @@ class ForgotPasswordController extends Controller
 
     public function recover(PasswordReminderRequest $request)
     {
-        $request->validate();
-
         return $this->sendResetLinkEmail($request);
     }
 }

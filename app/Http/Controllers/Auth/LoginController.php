@@ -17,8 +17,6 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $request->validate();
-        
         $username = $request->get('identifier');
         $password = $request->get('password');
         $usernameFieldName = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
