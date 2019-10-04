@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Router, Switch } from 'react-router-dom';
+import { Login } from './components/auth/login/Login';
+import { RegistrationForm } from './components/auth/registration/RegistrationForm';
+import { Pokedex } from './components/pokedex/Pokedex';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <Pokedex />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+
+        <Route path="/sign-up">
+          <RegistrationForm />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
