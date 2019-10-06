@@ -38,7 +38,7 @@ export const baseValidator = {
     return this.fields[field].error;
   },
 
-  validate({ field, value }) {
-    return this.fields[field].validate(value);
+  validate({ field, value, nextValue }) {
+    return this.fields[field].validate(value, nextValue);
   },
 };
