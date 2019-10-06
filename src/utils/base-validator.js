@@ -1,4 +1,4 @@
-const validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validEmailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const validTelephoneRegex = /^\d{10}$/;
 
 export const validations = {
@@ -12,7 +12,7 @@ export const validations = {
     let isValid = !this.isEmpty(email);
 
     return isValid && validEmailRegex.test(email);
-  }
+  },
 };
 
 export const baseValidationField = {
@@ -20,7 +20,7 @@ export const baseValidationField = {
   error: '',
   validate(value) {
     this.displayError = validations.isEmpty(value);
-  }
+  },
 };
 
 export const baseValidator = {

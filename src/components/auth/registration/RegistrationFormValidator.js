@@ -46,7 +46,7 @@ export const validator = {
         }
 
         this.displayError = !isValid;
-      }
+      },
     },
     passwordConfirmation: {
       ...baseValidationField,

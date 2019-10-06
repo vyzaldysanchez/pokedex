@@ -94,7 +94,7 @@ class PokedexBody extends Component {
 }
 
 const mapStateToProps = ({ pokemons }) => ({
-	pokemons: pokemons
+	pokemons: pokemons,
 });
 
 export default connect(mapStateToProps)(PokedexBody);
