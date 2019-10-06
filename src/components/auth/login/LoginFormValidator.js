@@ -8,11 +8,11 @@ export const validator = {
   fields: {
     username: {
       ...baseValidationField,
-      error: 'Your must indicate your username!'
+      error: 'Your must indicate your username!',
     },
     password: {
       ...baseValidationField,
-      error: 'You must indicate a password!'
-    }
-  }
+      error: 'You must indicate a password!',
+    },
+  },
 };

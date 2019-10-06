@@ -23,7 +23,7 @@ const PokedexNav = ({ className, onDisplayAccountBox, onAddPokemon }) => (
 );
 
 PokedexNav.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
 
 export default PokedexNav;

@@ -10,20 +10,16 @@ import SnackNotification from '../shared/SnackNotification';
 import EditPokemon from './pokemons/EditPokemon';
 import { store } from './store';
 
-export const Pokedex = () => (
+export const Pokedex = props => (
 	<Provider store={store}>
 		<Router>
 			<Route
-				render={props => (
+				render={() => (
 					<div>
 						<PokedexHeader
 							sendToHome={() => props.history.push('/')}
-							sendToAccountEdit={() =>
-								props.history.push(ACCOUNT_EDIT)
-							}
-							sendToAddPokemon={() =>
-								props.history.push(ADD_POKEMON)
-							}
+							sendToAccountEdit={() => props.history.push(ACCOUNT_EDIT)}
+							sendToAddPokemon={() => props.history.push(ADD_POKEMON)}
 						/>
 
 						<Route exact path="/" component={PokedexBody} />

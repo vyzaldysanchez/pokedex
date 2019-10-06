@@ -28,5 +28,17 @@ export const baseValidator = {
     return Object.keys
       .call(this, this.fields)
       .some(field => this.fields[field].displayError);
-  }
+  },
+
+  getDisplayError(field) {
+    return this.fields[field].displayError;
+  },
+
+  getError(field) {
+    return this.fields[field].error;
+  },
+
+  validate({ field, value }) {
+    return this.fields[field].validate(value);
+  },
 };
