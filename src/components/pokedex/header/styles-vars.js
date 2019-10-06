@@ -1,3 +1,3 @@
 export const styles = {
-    height: 64
+    height: 64,
 };

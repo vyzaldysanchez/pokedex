@@ -9,29 +9,29 @@ export const validator = {
   fields: {
     fullName: {
       ...baseValidationField,
-      error: 'Your name is required!'
+      error: 'Your name is required!',
     },
     telephone: {
       ...baseValidationField,
       error: 'Your telephone is not valid!',
       validate(value) {
         this.displayError = !validations.isTelephoneValid(value);
-      }
+      },
     },
     city: {
       ...baseValidationField,
-      error: 'Please provide your city!'
+      error: 'Please provide your city!',
     },
     email: {
       ...baseValidationField,
       error: 'Your email must be valid!',
       validate(value) {
         this.displayError = !validations.isValidEmail(value);
-      }
+      },
     },
     username: {
       ...baseValidationField,
-      error: 'You must provide an username!'
+      error: 'You must provide an username!',
     },
     password: {
       ...baseValidationField,
@@ -42,11 +42,11 @@ export const validator = {
           isValid = isNotEmpty && isConfirmed;
 
         if (isNotEmpty && !isConfirmed) {
-          this.error = `Your password and it's confirmation must be equals.`;
+          this.error = 'Your password and it\'s confirmation must be equals.';
         }
 
         this.displayError = !isValid;
-      }
+      },
     },
     passwordConfirmation: {
       ...baseValidationField,
@@ -54,7 +54,7 @@ export const validator = {
       validate(value, against) {
         validator.fields.password.validate.call(this, value, against);
         validator.fields.password.validate(against, value);
-      }
-    }
-  }
+      },
+    },
+  },
 };

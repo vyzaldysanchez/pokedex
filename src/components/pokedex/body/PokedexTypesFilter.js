@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Chip } from 'react-md';
 import pokemonTypes from '../../../services/pokemon-types.service';
 import { LOAD_POKEMON_TYPES } from '../../pokedex/actions';
 import { withPokemonTypesMapper } from '../../pokedex/state-props-mappers';
 import { LabelChip } from '../../shared/LabelChip';
 
-class PokedexTypesFilter extends Component {
-	constructor(props) {
-		super(props);
+function PokedexTypesFilter({
+  onPokemonTypeSelected,
+  pokemonTypes: types,
+  dispatch,
+}) {
+  useEffect(() => {
+    if (!types.length) {
+			pokemonTypes.getAll().then(types =>
+				dispatch({
+					type: LOAD_POKEMON_TYPES,
+					payload: types,
+				}),
+			);
+		}
+  }, [types, dispatch]);
 
-		this.renderChip = this.renderChip.bind(this);
-	}
-
-	renderChip(type, index) {
-		const onPokemonTypeSelected = this.props.onPokemonTypeSelected;
-
+  function renderChip(type, index) {
 		return (
 			<LabelChip
 				backgroundColor={type.color}
@@ -35,24 +41,11 @@ class PokedexTypesFilter extends Component {
 		);
 	}
 
-	componentDidMount() {
-		if (!this.props.pokemonTypes.length) {
-			pokemonTypes.getAll().then(types =>
-				this.props.dispatch({
-					type: LOAD_POKEMON_TYPES,
-					payload: types,
-				})
-			);
-		}
-	}
-
-	render() {
-		return (
-			<div className="pokedex-search-filter" style={{ marginTop: 10 }}>
-				{this.props.pokemonTypes.map(this.renderChip)}
-			</div>
-		);
-	}
+  return (
+    <div className="pokedex-search-filter" style={{ marginTop: 10 }}>
+      {types.map(renderChip)}
+    </div>
+  );
 }
 
 PokedexTypesFilter.propTypes = {
@@ -60,5 +53,5 @@ PokedexTypesFilter.propTypes = {
 };
 
 export default connect(withPokemonTypesMapper.mapStateToProps)(
-	PokedexTypesFilter
+	PokedexTypesFilter,
 );

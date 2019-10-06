@@ -1,10 +1,15 @@
 import axios from 'axios';
 
 export default {
-	getAll() {
-		return axios.get('/api/pokemons').then(({ data }) => data || []);
+	async getAll() {
+    const { data } = await axios.get('/api/pokemons');
+
+    return data || [];
 	},
-	find(id) {
-		return axios.get(`/api/pokemons/${id}`).then(({ data }) => data || {});
-	}
+
+  async find(id) {
+    const { data } = await axios.get(`/api/pokemons/${id}`);
+
+    return data || {};
+	},
 };

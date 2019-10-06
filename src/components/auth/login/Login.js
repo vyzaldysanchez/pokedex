@@ -1,109 +1,72 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, useState, useEffect } from 'react';
 import { Grid, Cell } from 'react-md';
 import LoginForm from './LoginForm';
 import { validator } from './LoginFormValidator';
 import { TWO_COLUMNS, EIGHT_COLUMNS } from '../../../utils/ui-columns';
 
-export class Login extends Component {
-	constructor(props) {
-		super(props);
+function formIsValid() {
+  return !validator.hasErrors();
+}
 
-		this.validator = validator;
-		this.state = {
-			csrfToken: '',
-			username: {
-				value: '',
-				displayError: this.validator.fields.username.displayError,
-				error: this.validator.fields.username.error,
-				onChange: value => {
-					this.validator.fields.username.validate(value);
-					this.setState({
-						username: { ...this.state.username, value }
-					});
-				}
-			},
-			password: {
-				value: '',
-				displayError: this.validator.fields.password.displayError,
-				error: this.validator.fields.password.error,
-				onChange: value => {
-					this.validator.fields.password.validate(value);
-					this.setState({
-						password: { ...this.state.password, value }
-					});
-				}
-			}
-		};
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+function sendToForgotPassword() {
+  document.location.href = '/password/recover';
+}
 
-	validate() {
-		const username = this.state.username.value,
-			password = this.state.password.value;
+export function Login(props) {
+  const [csrfToken, setCsrfToken] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-		this.validator.fields.username.validate(username);
-		this.validator.fields.password.validate(password);
+  useEffect(function setupCSRFToken() {
+    setCsrfToken(
+      document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute('value'),
+    );
+  }, []);
 
-		this.setState({
-			username: {
-				...this.state.username,
-				value: username,
-				displayError: this.validator.fields.username.displayError,
-				error: this.validator.fields.username.error
-			},
-			password: {
-				...this.state.password,
-				value: password,
-				displayError: this.validator.fields.password.displayError,
-				error: this.validator.fields.password.error
-			}
-		});
-	}
+  function onUsernameChange(value) {
+    validator.validate({ field: 'username', value });
+    setUsername(value);
+  }
 
-	handleSubmit(e) {
-		this.validate();
+  function onPasswordChange(value) {
+    validator.validate({ field: 'password', value });
+    setPassword(value);
+  }
 
-		if (!this.formIsValid()) {
+  function validate() {
+    validator.validate({ field: 'username', value: username });
+    validator.validate({ field: 'password', value: password });
+  }
+
+  function handleSubmit(e) {
+		validate();
+
+		if (!formIsValid()) {
 			e.preventDefault();
 		}
-	}
+  }
 
-	formIsValid() {
-		return !this.validator.hasErrors();
-	}
+  return (
+    <div>
+      <Grid className="login">
+        <Cell size={EIGHT_COLUMNS} desktopOffset={TWO_COLUMNS}>
+          <h1 className="text-center md-text--theme-primary no-margin-top">
+            Enter your pokedex
+          </h1>
 
-	sendToForgotPassword() {
-		document.location.href = '/password/recover';
-	}
-
-	componentDidMount() {
-		this.setState({
-			csrfToken: document
-				.querySelector('meta[name="csrf-token"]')
-				.getAttribute('value')
-		});
-	}
-
-	render() {
-		return (
-			<div>
-				<Grid className="login">
-					<Cell size={EIGHT_COLUMNS} desktopOffset={TWO_COLUMNS}>
-						<h1 className="text-center md-text--theme-primary no-margin-top">
-							Enter your pokedex
-						</h1>
-
-						<LoginForm
-							csrfToken={this.state.csrfToken}
-							username={this.state.username}
-							password={this.state.password}
-							onForgotPassword={this.sendToForgotPassword}
-							onSubmit={this.handleSubmit}
-						/>
-					</Cell>
-				</Grid>
-			</div>
-		);
-	}
+          <LoginForm
+            csrfToken={csrfToken}
+            username={username}
+            password={password}
+            onForgotPassword={sendToForgotPassword}
+            onUsernameChange={onUsernameChange}
+            onPasswordChange={onPasswordChange}
+            onSubmit={handleSubmit}
+          />
+        </Cell>
+      </Grid>
+    </div>
+  );
 }
