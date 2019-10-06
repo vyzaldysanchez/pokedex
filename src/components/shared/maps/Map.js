@@ -1,56 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import { MapMarker } from './MapMarker';
 
-export class Map extends Component {
-	constructor(props) {
-		super(props);
+export function Map({
+  zoom,
+  position,
+  height,
+  width,
+  lat,
+  lng,
+  currentLocationAsDefault,
+  onPositionSelected,
+  updatePinLocation,
+}) {
+  const [latitude, setLatitude] = useState(lat);
+  const [longitude, setLongitude] = useState(lng);
 
-		this.state = { lat: this.props.lat, lng: this.props.lng };
-
-		this.updatePinLocation = this.updatePinLocation.bind(this);
-	}
-
-	componentDidMount() {
-		if (this.props.currentLocationAsDefault) {
-			navigator.geolocation.getCurrentPosition(({ coords }) => {
-				this.setState({ lat: coords.latitude, lng: coords.longitude });
+  useEffect(() => {
+    if (currentLocationAsDefault) {
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        setLatitude(coords.latitude);
+        setLongitude(coords.longitude);
 			});
+    }
+  }, [currentLocationAsDefault]);
+
+  useEffect(() => {
+    if (lat && lng) {
+      setLatitude(lat);
+      setLongitude(lng);
 		}
-	}
+  }, [lat, lng]);
 
-	componentWillReceiveProps({ lat, lng }) {
-		if (lat && lng) {
-			this.setState({ lat: lat, lng: lng });
+  function triggerPinLocationUpdate({ lat, lng }) {
+		if (updatePinLocation) {
+			setLatitude(lat);
+      setLongitude(lng);
+			onPositionSelected({ lat, lng });
 		}
-	}
+  }
 
-	updatePinLocation({ lat, lng }) {
-		if (this.props.updatePinLocation) {
-			this.setState({ lat, lng });
-			this.props.onPositionSelected({ lat, lng });
-		}
-	}
-
-	render() {
-		const { lat, lng } = this.state;
-		const { zoom, position, height, width } = this.props;
-
-		return (
-			<GoogleMapReact
-				zoom={zoom}
-				style={{ position, height, width }}
-				center={{ lat, lng }}
-				bootstrapURLKeys={{
-					key: process.env.MIX_MAPS_API_KEY
-				}}
-				onClick={this.updatePinLocation}
-			>
-				<MapMarker lat={lat} lng={lng} />
-			</GoogleMapReact>
-		);
-	}
+  return (
+    <GoogleMapReact
+      zoom={zoom}
+      style={{ position, height, width }}
+      center={{ lat: latitude, lng: longitude }}
+      bootstrapURLKeys={{
+        key: process.env.MIX_MAPS_API_KEY,
+      }}
+      onClick={triggerPinLocationUpdate}
+    >
+      <MapMarker lat={latitude} lng={longitude} />
+    </GoogleMapReact>
+  );
 }
 
 Map.propTypes = {
@@ -62,7 +65,7 @@ Map.propTypes = {
 	lat: PropTypes.number,
 	lng: PropTypes.number,
 	currentLocationAsDefault: PropTypes.bool,
-	updatePinLocation: PropTypes.bool
+	updatePinLocation: PropTypes.bool,
 };
 
 Map.defaultProps = {
@@ -72,5 +75,5 @@ Map.defaultProps = {
 	zoom: 17,
 	currentLocationAsDefault: true,
 	updatePinLocation: true,
-	onPositionSelected: () => null
+	onPositionSelected: () => null,
 };

@@ -4,5 +4,5 @@ export default {
 	},
 	disableElements(elements) {
 		elements.forEach(element => (element.disabled = true));
-	}
+	},
 };

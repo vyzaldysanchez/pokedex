@@ -5,6 +5,7 @@ import {
 	SIX_COLUMNS,
 	THREE_COLUMNS,
 } from '../../../utils/ui-columns';
+import { validator } from './LoginFormValidator';
 
 const LoginForm = props => (
 	<form method="POST" onSubmit={props.onSubmit}>
@@ -16,10 +17,10 @@ const LoginForm = props => (
 			lineDirection="right"
 			className="md-cell--bottom"
 			required
-			value={props.username.value}
-			onChange={username => props.username.onChange(username)}
-			error={props.username.displayError}
-			errorText={props.username.error}
+			value={props.username}
+			onChange={props.onUsernameChange}
+			error={validator.getDisplayError('username')}
+			errorText={validator.getError('username')}
 		/>
 		<TextField
 			id="password"
@@ -29,10 +30,10 @@ const LoginForm = props => (
 			lineDirection="right"
 			className="md-cell--bottom"
 			required
-			value={props.password.value}
-			onChange={password => props.password.onChange(password)}
-			error={props.password.displayError}
-			errorText={props.password.error}
+			value={props.password}
+			onChange={props.onPasswordChange}
+			error={validator.getDisplayError('password')}
+			errorText={validator.getError('password')}
 		/>
 		<Cell size={TWELVE_COLUMNS}>
 			<Button raised primary type="submit">

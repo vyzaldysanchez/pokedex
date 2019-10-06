@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Cell, FontIcon, Grid } from 'react-md';
+import { Cell, Grid } from 'react-md';
 import { withSearchData } from '../../pokedex/state-props-mappers';
 import { PokedexSearchDetails } from './PokedexSearchDetails';
 import { TWELVE_COLUMNS } from '../../../utils/ui-columns';
@@ -8,15 +8,16 @@ import { LabelChip } from '../../shared/LabelChip';
 import { REMOVE_POKEMON_TYPE_FILTER } from '../../pokedex/actions';
 import { PokemonCard } from '../../pokedex/pokemons/pokemon-card/PokemonCard';
 
-class PokedexList extends Component {
-	constructor(props) {
-		super(props);
+function PokedexList(props) {
+  function removePokemonType(type) {
+		props.dispatch({
+			type: REMOVE_POKEMON_TYPE_FILTER,
+			payload: type,
+		});
+  }
 
-		this.removePokemonType = this.removePokemonType.bind(this);
-	}
-
-	renderTypes() {
-		const { pokemonTypes } = this.props.filters;
+  function renderTypes() {
+		const { pokemonTypes } = props.filters;
 
 		return pokemonTypes.map((type, index) => (
 			<LabelChip
@@ -24,38 +25,27 @@ class PokedexList extends Component {
 				label={type.name}
 				key={index}
 				style={{ margin: 2, cursor: 'pointer' }}
-				onClick={() => this.removePokemonType(type)}
+				onClick={() => removePokemonType(type)}
 			/>
 		));
-	}
+  }
 
-	removePokemonType(type) {
-		this.props.dispatch({
-			type: REMOVE_POKEMON_TYPE_FILTER,
-			payload: type
-		});
-	}
+  return (
+    <Grid>
+      <Cell size={TWELVE_COLUMNS}>
+        <PokedexSearchDetails
+          searching={props.filters.search}
+          types={renderTypes()}
+        />
+      </Cell>
 
-	render() {
-		const { search, pokemonTypes } = this.props.filters;
-
-		return (
-			<Grid>
-				<Cell size={TWELVE_COLUMNS}>
-					<PokedexSearchDetails
-						searching={search}
-						types={this.renderTypes()}
-					/>
-				</Cell>
-
-				<Cell size={TWELVE_COLUMNS}>
-					{this.props.pokemons.map((pokemon, index) => (
-						<PokemonCard key={index} pokemon={pokemon} />
-					))}
-				</Cell>
-			</Grid>
-		);
-	}
+      <Cell size={TWELVE_COLUMNS}>
+        {props.pokemons.map((pokemon, index) => (
+          <PokemonCard key={index} pokemon={pokemon} />
+        ))}
+      </Cell>
+    </Grid>
+  );
 }
 
 export default connect(withSearchData.mapStateToProps)(PokedexList);

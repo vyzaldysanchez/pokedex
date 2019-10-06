@@ -7,7 +7,7 @@ export default {
 	removeTypeFromCollection(typeIndex, collection) {
 		return [
 			...collection.slice(0, typeIndex),
-			...collection.slice(typeIndex + 1)
+			...collection.slice(typeIndex + 1),
 		];
-	}
+	},
 };

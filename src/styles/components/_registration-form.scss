@@ -1,0 +1,10 @@
+@import 'login';
+
+.registration-form {
+    @extend .login-container;
+
+    form {
+        display: flex;
+        flex-flow: wrap;
+    }
+}

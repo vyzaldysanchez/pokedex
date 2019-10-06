@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 const inlineFlexWrap = { display: 'inline-flex', flexFlow: 'wrap' };
 const fullBlock = { display: 'block', width: '100%' };
 
-export const PokedexSearchDetails = props => {
+export const PokedexSearchDetails = ({ types, searching }) => {
 	let selections = null;
 
-	if (props.types.length) {
+	if (types.length) {
 		selections = (
 			<div style={{ ...inlineFlexWrap, width: '100%' }}>
 				<div style={fullBlock}>
@@ -15,7 +15,7 @@ export const PokedexSearchDetails = props => {
 						<i>Click on selection to remove.</i>
 					</p>
 				</div>
-				<div style={fullBlock}>{props.types}</div>
+				<div style={fullBlock}>{types}</div>
 			</div>
 		);
 	}
@@ -28,7 +28,7 @@ export const PokedexSearchDetails = props => {
 			<h3 style={{ wordWrap: 'break-word' }}>
 				Searching:&nbsp;
 				<i style={{ whiteSpace: 'normal' }}>
-					<small>{props.searching}</small>
+					<small>{searching}</small>
 				</i>
 			</h3>
 
@@ -38,9 +38,9 @@ export const PokedexSearchDetails = props => {
 };
 
 PokedexSearchDetails.propTypes = {
-	types: PropTypes.array
+	types: PropTypes.array,
 };
 
 PokedexSearchDetails.defaultProps = {
-	types: []
+	types: [],
 };
