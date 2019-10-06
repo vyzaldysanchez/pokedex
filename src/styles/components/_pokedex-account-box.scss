@@ -1,0 +1,9 @@
+@media (max-width: '1024px') {
+	.md-dialog-footer--card {
+        flex-flow: column;
+        
+        button {
+            width: 100%;
+        }
+	}
+}
